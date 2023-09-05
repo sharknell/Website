@@ -33,4 +33,18 @@ public class Member extends BaseEntity {
 
     @Column(length = 45, nullable = false)
     private String phoneNum;
+    
+    @Column(length = 45, nullable = false)
+    private String addr;//집주소
+    
+    @Column(length = 45, nullable = false)
+    private String landline;//일반전화
+    
+    @Column(length = 45, nullable = false)
+    private String birth;//생년월일
+    
+    
+    
+    
+    
 }
