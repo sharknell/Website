@@ -1,4 +1,4 @@
-package com.fullstack2.webSite.dtos;
+package com.fullstack2.website.dtos;
 
 import java.time.LocalDateTime;
 

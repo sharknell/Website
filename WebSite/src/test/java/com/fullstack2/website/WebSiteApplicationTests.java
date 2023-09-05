@@ -1,4 +1,4 @@
-package com.fullstack2.webSite;
+package com.fullstack2.website;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
