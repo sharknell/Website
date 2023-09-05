@@ -22,4 +22,7 @@ public class MemberDTO {
 	private LocalDateTime modDate;
 	private String name;
 	private String email;
+	private String addr;//집주소
+	private String landline;//일반전화
+	private String birth;//생년월일
 }
