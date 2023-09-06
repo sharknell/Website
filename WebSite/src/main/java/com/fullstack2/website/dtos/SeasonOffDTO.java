@@ -1,7 +1,6 @@
 package com.fullstack2.website.dtos;
 
 
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +23,5 @@ public class SeasonOffDTO {
     private String content;//상품설명
     private String image;//사진
     private Character useyn;//판매 유뮤, 기본값 y, y = 판매, n = 판매중단
-    private Date regdate;//등록일
+    private String size;//사이즈
 }
