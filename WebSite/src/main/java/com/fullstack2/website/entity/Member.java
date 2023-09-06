@@ -28,16 +28,22 @@ public class Member extends BaseEntity {
     private String pw;
     
     @Column(length = 45, nullable = false)
-    private String name;
+    private String userName;
     
     @Column(length = 45, nullable = false, unique = true)
     private String email;//로그인은 이걸로
 
     @Column(length = 45, nullable = false)
-    private String phoneNum;
+    private String phoneNum;//핸드폰
     
     @Column(length = 45, nullable = false)
-    private String addr;//집주소
+    private String addrBasic;//기본 주소
+    
+    @Column(length = 45, nullable = false)
+    private String addrCode;//우편번호
+    
+    @Column(length = 45)
+    private String addrRest;//나머지주소(선택입력가능)
     
     @Column(length = 45)
     private String landline;//일반전화

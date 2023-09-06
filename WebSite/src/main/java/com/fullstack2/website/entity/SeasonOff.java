@@ -1,14 +1,11 @@
 package com.fullstack2.website.entity;
 
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,10 +44,8 @@ public class SeasonOff {
     @Column(name = "useyn", length = 1, nullable = false, columnDefinition = "char default 'y'")
     private Character useyn;//판매 유뮤, 기본값 y, y = 판매, n = 판매중단
 
-    @Column(name = "regdate", nullable = false, columnDefinition = "date default current_date")
-    @Temporal(TemporalType.DATE)
-    private Date regdate;//등록일
-
+    @Column(name = "size", length = 5, nullable = false, columnDefinition = "varchar(200) default '0'")
+    private String size;//사이즈 
 
     @Override
     public String toString() {
@@ -63,7 +58,7 @@ public class SeasonOff {
                 ", content='" + content + '\'' +
                 ", image='" + image + '\'' +
                 ", useyn=" + useyn +
-                ", regdate=" + regdate +
+                ", size=" + size +
                 '}';
     }
 }
