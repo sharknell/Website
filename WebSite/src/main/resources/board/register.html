@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <h1 class="mt-4">GuestBook Register Page</h1>
+<div>
+        <form th:action="@{/board/register}" th:method="post">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Enter Title">
+        </div>
+        <div class="form-group">
+            <label>Content</label>
+            <textarea class="form-control" rows="5" name="content"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Writer</label>
+            <input type="email" class="form-control" name="writerEmail" placeholder="Writer Email">
+        </div>
+
+        <!-- 체크박스를 추가하여 비밀번호 입력을 트리거합니다. -->
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="passwordCheckbox"> 비밀번호 설정
+            </label>
+        </div>
+
+        <!-- 비밀번호 입력 폼 (기본적으로 숨겨져 있음) -->
+        <div class="form-group" style="display: none;" id="passwordForm">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" class="btn btn-primary">작성하기</button>
+    </form>
+
+</div>
+
+<!-- jQuery 및 Bootstrap 등의 스크립트 라이브러리를 추가하세요. -->
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        // 체크박스 클릭 이벤트 처리
+        $('#passwordCheckbox').click(function () {
+            if ($(this).is(':checked')) {
+                // 체크박스가 체크되면 비밀번호 입력 폼을 보여줍니다.
+                $('#passwordForm').show();
+            } else {
+                // 체크박스가 해제되면 비밀번호 입력 폼을 숨깁니다.
+                $('#passwordForm').hide();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

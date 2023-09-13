@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+async function showAvatar(){
+	// github 사용자 정보 읽기
+    let githubResponse = await fetch(`https://api.github.com/users/Violet-Bora-Lee`);
+    let githubUser = await githubResponse.json();
+  
+    console.log(githubUser);
+}
+</script>
+</head>
+<body onload="showAvatar();">
+<h2>콘솔보세요.</h2>
+</body>
+</html>
