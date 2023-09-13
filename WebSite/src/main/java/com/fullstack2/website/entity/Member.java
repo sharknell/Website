@@ -1,58 +1,44 @@
-package com.fullstack2.website.entity;
+package com.fullstack2.webSite.entity;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
-@Getter
-@Builder
-@NoArgsConstructor
+
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
-@ToString
-public class Member extends BaseEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 45, nullable = false)
-    private Long id;//회원 번호, 이걸로 로그인하는게 아니라 자동 생성됨
-    
-    @Column(length = 45, nullable = false)
-    private String pw;
-    
-    @Column(length = 45, nullable = false)
-    private String userName;
-    
-    @Column(length = 45, nullable = false, unique = true)
-    private String email;//로그인은 이걸로
+@NoArgsConstructor
+@Data
+@Entity
+@Builder
+public class Member extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(length = 45, nullable = false)
-    private String phoneNum;//핸드폰
-    
-    @Column(length = 45, nullable = false)
-    private String addrBasic;//기본 주소
-    
-    @Column(length = 45, nullable = false)
-    private String addrCode;//우편번호
-    
-    @Column(length = 45)
-    private String addrRest;//나머지주소(선택입력가능)
-    
-    @Column(length = 45)
-    private String landline;//일반전화
-    
-    @Column(length = 45, nullable = false)
-    private String birth;//생년월일
+    @Column(unique = true) 
+    private String email;
+    private String password;
+    private String name;
+    // 주소
+   
+    private String postalCode;
+    private String addressBasic;
+    private String addressRest;
+  
+    private String phone;
+    private String mobile;
+    private String birth;
+    private String role;
     
     
-    
-    
-    
+ // 회원가입 시 목록 추가할 곳
+    public static Member createUser(String email, String password, String name, String postalCode, String addressBasic, String addressRest, String phone, String mobile, String birth, PasswordEncoder passwordEncoder) {
+        return new Member(null, email, passwordEncoder.encode(password), name, postalCode, addressBasic, addressRest, phone, mobile, birth,"USER" );
+    }
+
+   
 }
