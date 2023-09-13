@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>menu header</title>
+<style>
+/* 기본 스타일 */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	overflow: auto;
+}
+
+header {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	height: 40px;
+	position: fixed; /* 헤더를 화면 상단에 고정 */
+	width: 100%;
+	top: 0;
+	z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
+}
+
+.menu-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 100px;
+}
+
+.menu-left, .menu-right {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+}
+
+.menu-item {
+	margin-right: 20px;
+	position: relative;
+}
+
+.menu-item .sub-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 10px;
+	z-index: 1;
+}
+
+.menu-item:hover .sub-menu {
+	display: block;
+}
+
+/* 링크 스타일 */
+a {
+	color: gray;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+/* 메뉴 항목 호버 시 스타일 변경 */
+.menu-item:hover a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 기본 메뉴 항목 스타일 */
+.menu-item a {
+	color: gray;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+/* 메뉴 아이템 호버 시 글자 색상 변경 및 밑줄 표시 */
+.menu-item:hover a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 서브 메뉴 항목 스타일 */
+.sub-menu a {
+	color: gray;
+	text-decoration: none !important;
+	font-size: 12px;
+	transition: text-decoration 0.3s;
+	display: block;
+	white-space: nowrap;
+}
+
+/* 서브 메뉴 아이템 호버 시 밑줄 표시 */
+.sub-menu a:hover {
+	text-decoration: underline;
+}
+
+/* 로고 스타일 */
+.logo {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 10px 0;
+	text-align: center;
+}
+
+.logo img {
+	width: 120px;
+	height: auto;
+	margin-bottom: 0;
+}
+
+.small-logo {
+	margin-top: -30px;
+	text-align: center;
+}
+
+.small-logo img {
+	width: 30px;
+	height: auto;
+	margin-right: 0;
+}
+</style>
+</head>
+<body>
+	<header>
+		<div class="menu-container">
+			<div class="menu-left">
+				<div class="menu-item">
+					<a href="/aboutus">About Us</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/newarrivals">Online Store</a>
+					<div class="sub-menu">
+						<a href="/newarrivals">NEW ARRIVALS</a> <a href="/outers">OUTERS</a>
+						<a href="/tops">TOPS</a> <a href="/bottoms">BOTTOMS</a> <a
+							href="/acc">ACC</a> <a href="/seasonoff">SEASON OFF</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/collection">Collection</a>
+					<div class="sub-menu">
+						<a href="/22fw">22fw</a> <a href="/23ss">23ss</a> <a href="/23fw">23fw</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/community">Community</a>
+					<div class="sub-menu">
+						<a href="/Notice">Notice</a> <a href="/Contact">Contact</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="logo">
+				<a href="/main"> <img src="/Long.png" alt="로고">
+				</a>
+				<div class="small-logo">
+					<img src="/short.png" alt="작은 로고">
+				</div>
+			</div>
+
+			<div class="menu-right">
+				<div class="menu-item">
+					<a href="#"
+						onclick="document.getElementById('logout-form').submit();">Sign
+						out</a>
+					<form id="logout-form" action="/logout" method="POST"></form>
+				</div>
+
+				<div class="menu-item">
+					<a href="/info/mypage">myPage</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/cart">Cart</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/sns">SNS</a>
+				</div>
+				<div class="menu-item">
+					<!--화면 우측 상단에 로그인 시 userName 출력  -->
+					<div th:if="${dto.name != null}">
+						<a href="/info/mypage"><span id="welcome"
+							th:text="'환영합니다 ' + ${dto.name} + ' 님!'"></span></a>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+
+</body>
+</html>

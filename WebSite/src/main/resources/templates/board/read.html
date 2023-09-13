@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="header.html"></div>
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+   <th:block th:fragment="content">
+    <h1 class="mt-4">Board Read Page</h1>
+
+    <!-- 비밀번호 입력 폼 -->
+    <div class="form-group2">
+        <label>Password</label>
+        <input type="password" class="form-control" id="passwordInput">
+        <button type="button" class="btn btn-primary mt-2" id="passwordSubmit">내용 확인하기</button>
+    </div>
+
+    <div class="content-container" style="display: none;">
+        <!-- 글 내용을 감싸는 컨테이너 -->
+        <div class="form-group">
+            <label>Bno</label>
+            <input type="text" class="form-control" name="gno" th:value="${dto.bno}" readonly>
+        </div>
+
+        <div class="form-group">
+         <label>Title</label> <input type="text" class="form-control"
+            name="title" th:value="${dto.title}" readonly>
+      </div>
+      <div class="form-group">
+         <label>Content</label>
+         <textarea class="form-control" rows="5" name="content" readonly>[[${dto.content}]]</textarea>
+      </div>
+      <div class="form-group">
+         <label>Writer</label> <input type="text" class="form-control"
+            name="writer" th:value="${dto.writerName}" readonly>
+      </div>
+      <div class="form-group">
+         <label>RegDate</label> <input type="text" class="form-control"
+            name="regDate"
+            th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"
+            readonly>
+      </div>
+      <div class="form-group">
+         <label>ModDate</label> <input type="text" class="form-control"
+            name="modDate"
+            th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}"
+            readonly>
+      </div>
+		</div>
+		<br>
+        <a th:href="@{/board/list(page=${requestDTO.page} , type=${requestDTO.type}, keyword =${requestDTO.keyword})}">
+            <button type="button" class="btn btn-info">목록으로 돌아가기</button>
+        </a>
+
+        <div>
+            <div class="mt-4">
+                <h5>
+                    <span class="badge badge-info addReply">댓글 쓰기</span>
+                </h5>
+                <h5>
+                    <span class="badge badge-secondary replyCount"> Reply Count [[${dto.replyCount}]]</span>
+                </h5>
+            </div>
+            <div class="list-group replyList"></div>
+        </div>
+
+<!-- jQuery 및 Bootstrap 등의 스크립트 라이브러리를 추가하세요. -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var bno = [[${dto.bno}]];
+        var hasPassword = [[${dto.password != null && dto.password != ''}]]; // 글의 비밀번호 여부 확인
+
+        // 비밀번호 확인 함수
+        function checkPassword(password, bno) {
+            $.get("/board/checkPassword", { bno: bno, password: password })
+                .done(function (data) {
+                    if (data) {
+                        // 비밀번호가 일치하는 경우 컨텐츠를 표시하고 입력창을 숨깁니다.
+                        $('.content-container').show();
+                        $('.form-group2').hide();
+                    } else {
+                        alert('비밀번호가 일치하지 않습니다.');
+                    }
+                })
+                .fail(function () {
+                    alert('서버와의 통신 중 오류가 발생했습니다.');
+                });
+        }
+
+        // 글이 비밀번호를 갖고 있는 경우에만 비밀번호 확인 UI를 표시
+        if (hasPassword) {
+            $('.form-group2').show();
+        } else {
+            // 글이 비밀번호를 갖고 있지 않으면 바로 내용 표시
+            $('.content-container').show();
+            $('.form-group2').hide();
+        }
+
+        $('#passwordSubmit').click(function () {
+            var password = $('#passwordInput').val();
+            checkPassword(password, bno);
+        });
+    });
+</script>
+
+   </th:block>
+
+</th:block>

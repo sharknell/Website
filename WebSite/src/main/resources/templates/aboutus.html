@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Team Introduction</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	text-align: center;
+}
+
+.team-member {
+	font-size: 12px;
+	margin-bottom: 20px;
+}
+
+.team {
+	font-size: 20px;
+	font-color: gary;
+	margin-bottom: 20px;
+	margin-top: 400px;
+}
+
+.small-text {
+	font-size: 12px;
+	color: #888;
+}
+/* 하단 정보 스타일 */
+.footer {
+	text-align: center;
+	margin-top: 242px;
+	padding: 10px;
+	background-color: #f5f5f5;
+}
+</style>
+</head>
+<body>
+	<div th:replace="header.html"></div>
+	<p class="team">Meet Our Team - GBO (GaeBal Office)</p>
+
+	<div class="team-member">
+		<p>
+			<strong>Site Design:</strong> 이도형
+		</p>
+	</div>
+
+	<div class="team-member">
+		<p>
+			<strong>Spring:</strong> 이교진
+		</p>
+	</div>
+	
+	<div class="team-member">
+		<p>
+			<strong>Database:</strong> 규호
+		</p>
+	</div>
+
+	<div class="team-member">
+		<p>
+			<strong>Forum:</strong> 이승민
+		</p>
+	</div>
+
+	<div class="team-member">
+		<p>
+			<strong>Team Leader:</strong> 백승현
+		</p>
+	</div>
+
+	<div class="footer">
+		<p class="small-text">BRAND NAMING: GBO</p>
+		<p class="small-text">PERMIT NUMBER: 791-12-00591</p>
+		<p class="small-text">DIRECTOR: LEE DO HYEONG</p>
+		<p class="small-text">ADDRESS: Central Tower, 6th and 7th Floor,
+			80 Sicheong-ro, Uijeongbu-si, Gyeonggi-do, Republic of Korea</p>
+		<p class="small-text">TEL: 02-499-9091</p>
+		<p class="small-text">FAX: 02-499-9091</p>
+		<p class="small-text">신한은행 110 - 253 - 111111 이도형</p>
+		<p class="small-text">E-MAIL: gaebalffice@gmail.com</p>
+	</div>
+</body>
+</html>

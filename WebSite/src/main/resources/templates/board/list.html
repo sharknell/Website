@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- <head> 내용 -->
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	overflow: auto;
+}
+
+header {
+	background-color: #fff;
+	border-bottom: 1px solㄴid #ccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	height: 40px;
+	position: fixed; /* 헤더를 화면 상단에 고정 */
+	width: 100%;
+	top: 0;
+	z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
+}
+
+.menu-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 100px;
+}
+
+.menu-left, .menu-right {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+}
+
+.menu-item {
+	margin-right: 20px;
+	position: relative;
+}
+
+.menu-item .sub-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 10px;
+	z-index: 1;
+}
+
+.menu-item:hover .sub-menu {
+	display: block;
+}
+
+/* 링크 스타일 */
+a {
+	color: gray;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+/* 메뉴 항목 호버 시 스타일 변경 */
+.menu-item:hover a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 기본 메뉴 항목 스타일 */
+.menu-item a {
+	color: gray;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+/* 메뉴 아이템 호버 시 글자 색상 변경 및 밑줄 표시 */
+.menu-item:hover a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 서브 메뉴 항목 스타일 */
+.sub-menu a {
+	color: gray;
+	text-decoration: none !important;
+	font-size: 12px;
+	transition: text-decoration 0.3s;
+	display: block;
+	white-space: nowrap;
+}
+
+/* 서브 메뉴 아이템 호버 시 밑줄 표시 */
+.sub-menu a:hover {
+	text-decoration: underline;
+}
+
+/* 로고 스타일 */
+.logo {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 10px 0;
+	text-align: center;
+}
+
+.logo img {
+	width: 120px;
+	height: auto;
+	margin-bottom: 0;
+}
+
+.small-logo {
+	margin-top: -20px;
+	text-align: center;
+}
+
+.small-logo img {
+	margin-top: -10px;
+	 width : 30px;
+	height: auto;
+	margin-right: 0;
+	width: 30px;
+}
+
+.mg {
+	margin-top: 40px;
+}
+</style>
+</head>
+<body>
+	<header>
+		<div class="menu-container">
+			<div class="menu-left">
+				<div class="menu-item">
+					<a href="/aboutus">About Us</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/newarrivals">Online Store</a>
+					<div class="sub-menu">
+						<a href="/newarrivals">NEW ARRIVALS</a> <a href="/outers">OUTERS</a>
+						<a href="/tops">TOPS</a> <a href="/bottoms">BOTTOMS</a> <a
+							href="/acc">ACC</a> <a href="/seasonoff">SEASON OFF</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/collection">Collection</a>
+					<div class="sub-menu">
+						<a href="/22fw">22fw</a> <a href="/23ss">23ss</a> <a href="/23fw">23fw</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/community">Community</a>
+					<div class="sub-menu">
+						<a href="/Notice">Notice</a> <a href="/Contact">Contact</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="logo">
+				<a href="/main"> <img src="/Long.png" alt="로고">
+				</a>
+				<div class="small-logo">
+					<img src="/short.png" alt="작은 로고">
+				</div>
+			</div>
+
+			<div class="menu-right">
+				<div class="menu-item">
+					<a href="/login">Login</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/join">Join</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/cart">Cart</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/sns">SNS</a>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+		<th:block th:fragment="content">
+			<div class="mg"></div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">제목</th>
+						<th scope="col">글쓴이</th>
+						<th scope="col">작성일</th>
+					</tr>
+				</thead>
+
+				<!-- QnAPageResultDTO.dtoList 의 이름으로 호출한다.. -->
+				<tbody>
+					<tr th:each="dto : ${result.dtoList}">
+						<th scope="row">
+							<!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
+							[[${dto.bno}]]
+						</th>
+						<td><a
+							th:href="@{/board/read(bno=${dto.bno}, page=${result.page})}">[[${dto.title}]]</a>
+							----------- [<b th:text="${dto.replyCount}"></b>]</td>
+						<td>[[${dto.writerName}]]</td>
+						<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+					</tr>
+				</tbody>
+			</table>
+			<span> <a th:href="@{/board/register}">
+					<button type="button" class="btn btn-outline-primary">문의하기
+					</button>
+			</a>
+			</span>
+
+			<ul
+				class="pagination h-100 justify-content-center align-items-center">
+				<li class="page-item" th:if="${result.prev}"><a
+					class="page-link"
+					th:href="@{/board/list(page=${result.start - 1}, type=${qnaPageRequestDTO.type}, keyword=${qnaPageRequestDTO.keyword})}"
+					tabindex="-1">Previous</a></li>
+
+
+				<li th:class=" 'page-item ' + ${result.page == page?'active':''} "
+					th:each="page: ${result.pageList}"><a class="page-link"
+					th:href="@{/board/list(page=${page}, type=${qnaPageRequestDTO.type}, keyword=${qnaPageRequestDTO.keyword})}">
+						[[${page}]] </a></li>
+
+				<li class="page-item" th:if="${result.next}"><a
+					class="page-link"
+					th:href="@{/board/list(page=${result.end + 1}, type=${qnaPageRequestDTO.type}, keyword=${qnaPageRequestDTO.keyword})}">Next</a>
+				</li>
+			</ul>
+			<!-- list 모달.txt 의 내용을 여기에 붙입니다. -->
+
+			<div class="modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Modal title</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Modal body text goes here.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save
+								changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script th:inline="javascript">
+        
+                var newBno = [[${newBno}]];
+                
+                console.log(newBno);
+                if(newBno){
+                    $(".modal").modal();
+                }
+                var searchForm = $("#searchForm");
+                $('.btn-search').click(function(e){
+    
+                    searchForm.submit();
+                });
+                $('.btn-clear').click(function(e){
+    
+                    searchForm.empty().submit();
+                });
+            </script>
+		</th:block>
+	</th:block>
+</body>
+</html>

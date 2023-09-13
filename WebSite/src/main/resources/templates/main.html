@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Website</title>
+<style>
+/* 기본 스타일 */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	overflow: auto;
+}
+
+header {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	height: 40px;
+	position: fixed; /* 헤더를 화면 상단에 고정 */
+	width: 100%;
+	top: 0;
+	z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
+}
+
+.menu-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 100px;
+}
+
+.menu-left, .menu-right {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+}
+
+.menu-item {
+	margin-right: 20px;
+	position: relative;
+}
+
+.menu-item .sub-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 10px;
+	z-index: 1;
+}
+
+.menu-item:hover .sub-menu {
+	display: block;
+}
+
+/* 링크 스타일 */
+a {
+	color: gray;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+/* 메뉴 항목 호버 시 스타일 변경 */
+.menu-item:hover a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 기본 메뉴 항목 스타일 */
+.menu-item a {
+	color: gray;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+/* 메뉴 아이템 호버 시 글자 색상 변경 및 밑줄 표시 */
+.menu-item:hover a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 서브 메뉴 항목 스타일 */
+.sub-menu a {
+	color: gray;
+	text-decoration: none !important;
+	font-size: 12px;
+	transition: text-decoration 0.3s;
+	display: block;
+	white-space: nowrap;
+}
+
+/* 서브 메뉴 아이템 호버 시 밑줄 표시 */
+.sub-menu a:hover {
+	text-decoration: underline;
+}
+
+/* 로고 스타일 */
+.logo {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 10px 0;
+	text-align: center;
+}
+
+.logo img {
+	width: 120px;
+	height: auto;
+	margin-bottom: 0;
+}
+
+.small-logo {
+	margin-top: -30px;
+	text-align: center;
+}
+
+.small-logo img {
+	width: 30px;
+	height: auto;
+	margin-right: 0;
+}
+
+/* 기본 스타일 생략 */
+.content {
+	padding: 20px;
+	margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* 큰 사진 스타일 수정 */
+.large-photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* 왼쪽과 오른쪽 여백 균등하게 설정 */
+    margin-bottom: 20px;
+    margin-left:150px;
+}
+
+.large-photos .photo {
+    flex-basis: calc(50% - 5px); /* 한 줄에 2개의 사진, 여백 균등하게 설정 */
+    margin-bottom: 10px; /* 아래 여백 추가 */
+    box-sizing: border-box; /* 요소의 경계 상자 크기를 설정합니다. */
+}
+
+ 
+/* 스몰 포토 스타일 수정 */
+.small-photos {
+    display: flex;
+    overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
+    white-space: nowrap;
+    margin-top: 20px;
+    overflow-x: hidden; /* 가로 스크롤바 숨김 */
+    animation: scroll 60s linear infinite; /* 가로로 무한 스크롤 애니메이션 적용 */
+}
+
+.small-photos .photo {
+    margin-right: 10px; /* 사진 간 여백 */
+}
+
+.small-photos .photo:last-child {
+    margin-right: 0; /* 마지막 사진의 여백 제거 */
+}
+
+/* 스몰 포토 가로 스크롤 애니메이션 */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%); /* 가로로 반만큼 스크롤하면 다시 시작 */
+    }
+}
+
+</style>
+
+<script src="/js/menu.js"></script>
+
+</head>
+<body>
+	<header>
+		<div class="menu-container">
+			<div class="menu-left">
+				<div class="menu-item">
+					<a href="/aboutus">About Us</a>
+				</div>
+
+				<div class="menu-item">
+					<a href="/newarrivals">Online Store</a>
+					<div class="sub-menu">
+						<a href="/newarrivals">NEW ARRIVALS</a> <a href="/outers">OUTERS</a>
+						<a href="/tops">TOPS</a> <a href="/bottoms">BOTTOMS</a> <a
+							href="/acc">ACC</a> <a href="/seasonoff">SEASON OFF</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/collection">Collection</a>
+					<div class="sub-menu">
+						<a href="/22fw">22fw</a> <a href="/23ss">23ss</a> <a href="/23fw">23fw</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/community">Community</a>
+					<div class="sub-menu">
+						<a href="/Notice">Notice</a> <a href="/Contact">Contact</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="logo">
+				<img src="/Long.png" alt="로고">
+				<div class="small-logo">
+					<img src="/short.png" alt="작은 로고">
+				</div>
+			</div>
+
+			<div class="menu-right">
+				<div class="menu-item">
+					<a href="/login">Login</a>
+				</div>
+
+				<div class="menu-item">
+					<div id="sub-menu-join">
+						<a href="/join">Join</a>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<div class="menu-item">
+						<div id="sub-menu-cart">
+							<a href="/cart">Cart</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="menu-item">
+					<a href="/sns">SNS</a>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<!-- 본문 부분 -->
+	<div class="content">
+		<div class="large-photos">
+			<div class="photo">
+				<a href="/newarrivals"> <img src="top1.jpg" alt="Photo 1">
+					<p>New Arrivals</p>
+				</a>
+			</div>
+			<div class="photo">
+				<a href="/collection"> <img src="top2.jpg" alt="Photo 2">
+					<p>Collection</p>
+				</a>
+			</div>
+			<div class="photo">
+				<a href="/aboutus"> <img src="top3.jpg" alt="Photo 3">
+					<p>About Us</p>
+				</a>
+			</div>
+			<div class="photo">
+				<a href="/contact"> <img src="top4.jpg" alt="Photo 4">
+					<p>Contact</p>
+				</a>
+			</div>
+		</div>
+		<div class="small-photos">
+			<div class="photo">
+				<img src="/outer1.jpg" alt="Photo 5">
+			</div>
+			<div class="photo">
+				<img src="outer2.jpg" alt="Photo 6">
+			</div>
+			<div class="photo">
+				<img src="outer3.jpg" alt="Photo 7">
+			</div>
+			<div class="photo">
+				<img src="outer4.jpg" alt="Photo 8">
+			</div>
+			<div class="photo">
+				<img src="outer5.jpg" alt="Photo 9">
+			</div>
+			<div class="photo">
+				<img src="outer6.jpg" alt="Photo 10">
+			</div>
+		</div>
+	</div>
+	 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+    /* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
+    var message = /*[[${param.message}]]*/ '';
+    
+    $(document).ready(function() {
+        // 로그인 성공 또는 실패 메시지를 가져와서 표시
+        console.log('message 변수 값:', message[0]); // 변수 값을 로깅
+        if (message[0] === '탈퇴완료') {
+            console.log(message[0]);
+            alert("회원탈퇴가 정상적으로 처리되었습니다.");
+        } 
+    });
+    </script>
+	
+	
+	
+</body>
+</html>

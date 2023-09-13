@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장바구니</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* 추가된 스타일 */
+body {
+	background-color: #f4f4f4;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	margin-top: 40px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+	margin-bottom: 20px;
+	color: #333;
+}
+
+.cart-items {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	overflow-x: auto; /* 가로 스크롤 활성화 */
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	text-align: center;
+	padding: 10px;
+}
+
+th {
+	background-color: #f0f0f0;
+}
+
+.cart-item-checkbox {
+	appearance: none;
+	width: 18px;
+	height: 18px;
+	background-color: #fff;
+	border: 2px solid #ccc;
+	border-radius: 3px;
+	cursor: pointer;
+	position: relative;
+	margin-right: 10px;
+}
+
+.cart-item-checkbox::before {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: #007BFF;
+	border-radius: 2px;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.cart-item-checkbox:checked::before {
+	opacity: 1;
+}
+
+.page-steps {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.page-step {
+	flex: 1;
+	text-align: center;
+}
+
+.page-step-icon {
+	font-size: 24px;
+	margin-bottom: 5px;
+	color: #007BFF;
+}
+
+.page-step-title {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+}
+
+.benefit-info {
+	background-color: white;
+	color: black;
+	border-radius: 5px;
+	padding: 20px;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+	font-family: "Arial", sans-serif;
+}
+
+.benefit-info p {
+	margin: 10px 0; /* 글자 사이 여백 추가 */
+	font-size: 16px;
+}
+
+.benefit-info p:first-child {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px; /* 첫 번째 항목 아래 여백 추가 */
+}
+/* 두 번째 테이블 스타일 */
+.summary-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.summary-table th, .summary-table td {
+	text-align: center;
+	padding: 10px;
+}
+
+.summary-table th {
+	background-color: #f0f0f0;
+	font-weight: bold;
+	color: #333;
+}
+
+/* 두 번째 테이블 내용 행 스타일 */
+.summary-table tbody tr {
+	font-size: 18px;
+	font-weight: bold;
+	color: #007BFF;
+}
+
+.summary-table tbody td {
+	padding: 10px 20px;
+	border-top: 1px solid #ccc;
+	font-size: 18px;
+}
+
+/* 두 번째 테이블 총합 금액 스타일 */
+.summary-table tfoot {
+	background-color: #f0f0f0;
+}
+
+.summary-table tfoot tr td {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	padding: 10px 20px;
+}
+
+/* 버튼 스타일 */
+.order-all, .order-check {
+	padding: 10px 20px; /* 버튼 내부 여백 */
+	background-color: #007BFF; /* 배경색 */
+	color: #fff; /* 텍스트 색상 */
+	border: none; /* 테두리 제거 */
+	border-radius: 5px; /* 둥근 모서리 */
+	cursor: pointer;
+	font-size: 16px; /* 폰트 크기 */
+	margin-right: 10px; /* 오른쪽 여백 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+	display: inline-block; /* 인라인 요소로 표시 */
+	transition: background-color 0.3s; /* 호버 시 배경색 전환 효과 */
+}
+
+/* 호버 시 배경색 변경 */
+.order-all:hover, .order-check:hover {
+	background-color: #0056b3; /* 호버 시 배경색 변경 */
+}
+
+.order-button {
+	text-align: center;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	// 전체 선택/해제 체크 박스 클릭 시
+	$(document).ready(function() {
+		$('#selectAllCheckbox').on('click', function() {
+			$('.cart-item-checkbox').prop('checked', this.checked);
+		});
+	});
+
+	// 페이지가 로드될 때 실행
+	window.addEventListener('load', function() {
+		// 전체 상품 주문 버튼 클릭 시
+		var orderAllButton = document.querySelector('.order-all');
+		orderAllButton.addEventListener('click', function() {
+			// 모든 체크박스 선택
+			var cartItemCheckboxes = document
+					.querySelectorAll('.cart-item-checkbox');
+			for (var i = 0; i < cartItemCheckboxes.length; i++) {
+				cartItemCheckboxes[i].checked = true;
+			}
+
+			// 주문 페이지로 이동 (cartn2.html로 가정)
+			location.href = 'cartn2.html';
+		});
+
+		// 선택 상품 주문 버튼 클릭 시
+		var orderSelectedButton = document.querySelector('.order-check');
+		orderSelectedButton.addEventListener('click', function() {
+			// 선택된 체크박스 찾기
+			var selectedItems = [];
+			var cartItemCheckboxes = document
+					.querySelectorAll('.cart-item-checkbox');
+			for (var i = 0; i < cartItemCheckboxes.length; i++) {
+				if (cartItemCheckboxes[i].checked) {
+					selectedItems.push(i); // 선택된 상품 인덱스 추가
+				}
+			}
+
+			// 선택된 상품들에 대한 처리 (예: 선택된 상품만 주문 처리)
+			if (selectedItems.length > 0) {
+				// 주문 페이지로 이동 (cartn2.html로 가정)
+				location.href = 'cartn2.html';
+			} else {
+				alert('선택된 상품이 없습니다.');
+			}
+		});
+	});
+</script>
+
+<script src="/js/cart.js"></script>
+</head>
+<body>
+	<div th:replace="header.html"></div>
+
+	<div class="container">
+		<h2>장바구니</h2>
+		<hr>
+		<!-- 페이지 단계 -->
+		<div class="page-steps">
+			<div class="page-step">
+				<div class="page-step-icon">1</div>
+				<div class="page-step-title">장바구니</div>
+			</div>
+			<div class="page-step">
+				<div class="page-step-icon">2</div>
+				<div class="page-step-title">주문서 작성</div>
+			</div>
+			<div class="page-step">
+				<div class="page-step-icon">3</div>
+				<div class="page-step-title">결제 완료</div>
+			</div>
+			<div class="page-step">
+				<div class="page-step-icon">4</div>
+				<div class="page-step-title">주문 완료</div>
+			</div>
+		</div>
+
+		<hr>
+		<!-- 혜택 정보 -->
+		<div class="benefit-info">
+			<p>혜택정보</p>
+			<p>이도형 님은, [일반회원] 회원이십니다.</p>
+			<p>가용적립금 : 4,000원 | 쿠폰 : 0개</p>
+		</div>
+		<!-- 장바구니 항목 -->
+		<div class="cart-items">
+			<table>
+				<!-- 항목 헤더 -->
+				<thead>
+					<tr>
+						<th><input type="checkbox" class="cart-item-checkbox"
+							id="selectAllCheckbox">전체 선택</th>
+						<th class="cart-item-image">이미지</th>
+						<th class="cart-item-details">상품 정보</th>
+						<th class="cart-item-price">판매가</th>
+						<th class="cart-item-quantity">수량</th>
+						<th class="cart-item-earnings">적립금</th>
+						<th class="cart-item-shipping">배송구분</th>
+						<th class="cart-item-shipping-fee">배송비</th>
+						<th class="cart-item-total">합계</th>
+						<th class="cart-item-select">선택</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="cart-item">
+						<td><input type="checkbox" class="cart-item-checkbox"></td>
+						<td class="cart-item-image"><img src="product1.jpg"
+							alt="상품 이미지"></td>
+						<td class="cart-item-details">
+							<h3>Embroidery Flower Shirt White</h3>
+							<p>옵션 : [M]</p>
+						</td>
+						<td class="cart-item-price">₩189,000</td>
+						<td class="cart-item-quantity">
+							<p>수량: 1</p>
+							<div>
+								<button>+</button>
+								<button>-</button>
+							</div>
+						</td>
+						<td class="cart-item-earnings"></td>
+						<td class="cart-item-shipping">기본구분</td>
+						<td class="cart-item-shipping-fee">무료</td>
+						<td class="cart-item-total">₩189,000</td>
+
+						<td class="delete-buttons">
+							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
+							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
+						</td>
+					</tr>
+					<tr class="cart-item">
+						<td><input type="checkbox" class="cart-item-checkbox"></td>
+						<td class="cart-item-image"><img src="product1.jpg"
+							alt="상품 이미지"></td>
+						<td class="cart-item-details">
+							<h3>Embroidery Flower Shirt White</h3>
+							<p>옵션 : [M]</p>
+						</td>
+						<td class="cart-item-price">₩189,000</td>
+						<td class="cart-item-quantity">
+							<p>수량: 1</p>
+							<div>
+								<button>+</button>
+								<button>-</button>
+							</div>
+						</td>
+						<td class="cart-item-earnings"></td>
+						<td class="cart-item-shipping">기본구분</td>
+						<td class="cart-item-shipping-fee">무료</td>
+						<td class="cart-item-total">₩189,000</td>
+
+						<td class="delete-buttons">
+							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
+							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<table class="summary-table">
+				<!-- 테이블 내용 -->
+				<thead>
+					<tr>
+						<th>총 상품금액</th>
+						<th>총 배송비</th>
+						<th>결제예정금액</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="total-price">/*여기에 총 상품 금액이 나와야함*/</td>
+						<td class="delivery-price">/*여기에 배송비가 나와야함 4000천원으로 가정*/</td>
+						<td class="total-price">/*여기에 총 상품 금액이 나와야함*/</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="order-button">
+			<button class="order-all">전체 상품 주문</button>
+			<button class="order-check">선택 상품 주문</button>
+		</div>
+	</div>
+</body>
+</html>

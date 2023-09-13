@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 추가된 스타일 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+        	margin-top:150px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .select-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        select {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="header.html"></div> 
+    <div class="container">
+        <h2>회원 가입</h2>
+        <form class="form-signin" id='join_form'>
+            <div class="form-group">
+                <label for="user-type">회원 구분 <span>*</span></label>
+                <div class="select-group">
+                    <select id="user-type" name="user-type" required>
+                        <option value="individual">개인회원</option>
+                        <option value="business">사업자회원</option>
+                        <option value="foreigner">외국인회원</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">이메일 <span>*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">비밀번호 <span>*</span></label>
+                <input type="password" id="password" name="password" pattern="[a-zA-Z0-9]{4,16}" title="영문 대소문자/숫자 4자~16자" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">비밀번호 확인 <span>*</span></label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <div class="form-group">
+                <label for="name">이름 <span>*</span></label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">주소 <span>*</span></label>
+                <div class="select-group">
+                    <input type="text" id="postal-code" name="postalCode" placeholder="우편번호" required>
+                    <input type="text" id="address-basic" name="addressBasic" placeholder="기본주소" required>
+                    <input type="text" id="address-rest" name="addressRest" placeholder="나머지주소 (선택입력가능)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">일반전화</label>
+                <div class="select-group">
+                    <input type="text" id="phone-area" name="phoneArea" placeholder="02">
+                    <input type="text" id="phone-number" name="phoneNumber" placeholder="-">
+                    <input type="text" id="phone-ext" name="phoneExt" placeholder="-">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mobile">휴대전화 <span>*</span></label>
+                <div class="select-group">
+                    <input type="text" id="mobile-area" name="mobileArea" placeholder="010">
+                    <input type="text" id="mobile-number" name="mobileNumber" placeholder="-">
+                    <input type="text" id="mobile-ext" name="mobileExt" placeholder="-">
+                </div>
+            </div>
+            
+            
+            
+            <div class="form-group">
+    <label for="birth">생년월일</label>
+    <div class="select-group">
+        <input type="number" id="birth-year" name="birthYear" placeholder="년">
+        <input type="number" id="birth-month" name="birthMonth" placeholder="월">
+        <input type="number" id="birth-day" name="birthDay" placeholder="일">
+        <select id="birth-calendar" name="birthCalendar">
+            <option value="solar">양력</option>
+            <option value="lunar">음력</option>
+        </select>
+    </div>
+
+
+
+            </div>
+            <button class="btn-primary" type="submit">회원 가입</button>
+            </form>
+        
+        <p>이미 계정이 있으신가요? <a href="/login">로그인</a></p>
+        
+        
+        <script>
+        const form = document.getElementById('join_form');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const data = new FormData(form);
+            const param = JSON.stringify(Object.fromEntries(data));
+
+            fetch('/auth/join', {
+                method: 'POST',
+                body: param,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                debugger;
+                if (response.status == 200) {
+                    window.location.href = '/view/login';
+                    alert("회원가입 성공")
+                } else {
+                    alert("회원가입 실패")
+                }
+            })
+            .catch(error => console.log(error))
+        });
+    </script>
+    </div>
+</body>
+</html>
