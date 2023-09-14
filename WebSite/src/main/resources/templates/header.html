@@ -193,6 +193,18 @@ a {
             </div>
         </div>
     </header>
+<script>
+        // Cart 메뉴 클릭 시 알림 표시 후 로그인 페이지로 이동
+        var cartMenuItem = document.querySelector('.menu-item a[href="/cart"]');
+        cartMenuItem.addEventListener('click', function (event) {
+            event.preventDefault(); // 링크 클릭 기본 동작 방지
 
+            // 알림 표시
+            alert("로그인 후 이용 가능합니다. 로그인 페이지로 이동합니다.");
+
+            // 로그인 페이지로 이동
+            window.location.href = "/view/login"; // 로그인 페이지 URL로 이동
+        });
+    </script>
 </body>
 </html>
