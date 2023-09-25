@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Website</title>
+<title>Insert title here</title>
 <style>
 /* 기본 스타일 */
 body {
@@ -180,11 +179,39 @@ a {
         transform: translateX(100%); /* 가로로 반만큼 스크롤하면 다시 시작 */
     }
 }
+.board-list{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10%;
+	margin-left: 35%;
+	margin-right: 35%;
+}
+
+.board-list a {
+    color: red;
+    text-decoration: none;
+}
+.notice-board {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 50px;
+	margin-left: 25%;
+	margin-right: 25%;
+	border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+.notice-board.tr, th, td {
+	
+	width: 200px;
+	height: 50px;
+}
 
 </style>
 
 <script src="/js/menu.js"></script>
-
 </head>
 <body>
 	<header>
@@ -195,7 +222,7 @@ a {
 				</div>
 
 				<div class="menu-item">
-					<a href="/newarrivals">Online Store</a>
+					<a href="/my/newarrivals">Online Store</a>
 					<div class="sub-menu">
 						<a href="/my/newarrivals">NEW ARRIVALS</a> <a href="/my/outers">OUTERS</a>
 						<a href="/my/tops">TOPS</a> <a href="/my/bottoms">BOTTOMS</a> <a
@@ -206,12 +233,12 @@ a {
 				<div class="menu-item">
 					<a href="/my/collection">Collection</a>
 					<div class="sub-menu">
-						<a href="/my/22fw">22fw</a> <a href="/my/23ss">23ss</a> <a href="/my/23fw">23fw</a>
+						<a href="/22fw">22fw</a> <a href="/my/23ss">23ss</a> <a href="/my/23fw">23fw</a>
 					</div>
 				</div>
 
 				<div class="menu-item">
-					<a href="/my/community">Community</a>
+					<a href="/my/notice">Community</a>
 					<div class="sub-menu">
 						<a href="/my/notice">Notice</a> <a href="/my/contact">Contact</a>
 					</div>
@@ -219,100 +246,79 @@ a {
 			</div>
 
 			<div class="logo">
-				<img src="/Long" alt="로고">
+				<img src="/Long.png" alt="로고">
 				<div class="small-logo">
-					<img src="/short" alt="작은 로고">
+					<img src="/short.png" alt="작은 로고">
 				</div>
 			</div>
 
 			<div class="menu-right">
-				<div class="menu-item">
-					<a href="/my/login">Login</a>
+				<div id="sub-menu-login">
+					<div id="sub-menu-login">
+						<a href="/login">Login</a>
+					</div>
 				</div>
 
 				<div class="menu-item">
 					<div id="sub-menu-join">
-						<a href="/my/join">Join</a>
+						<a href="/join">Join</a>
 					</div>
 				</div>
 
 				<div class="menu-item">
 					<div class="menu-item">
 						<div id="sub-menu-cart">
-							<a href="/my/cart">Cart</a>
+							<a href="/cart">Cart</a>
 						</div>
 					</div>
 				</div>
 
 				<div class="menu-item">
-					<a href="/my/sns">SNS</a>
+					<a href="/sns">SNS</a>
 				</div>
 			</div>
 		</div>
 	</header>
 
-
-	<!-- 본문 부분 -->
-	<div class="content">
-		<div class="large-photos">
-			<div class="photo">
-				<a href="/my/newarrivals"> <img src="/top1.jpg" alt="Photo 1">
-					<p>New Arrivals</p>
-				</a>
-			</div>
-			<div class="photo">
-				<a href="/my/collection"> <img src="/top2.jpg" alt="Photo 2">
-					<p>Collection</p>
-				</a>
-			</div>
-			<div class="photo">
-				<a href="/my/aboutus"> <img src="/top3.jpg" alt="Photo 3">
-					<p>About Us</p>
-				</a>
-			</div>
-			<div class="photo">
-				<a href="/my/contact"> <img src="/top4.jpg" alt="Photo 4">
-					<p>Contact</p>
-				</a>
-			</div>
-		</div>
-		<div class="small-photos">
-			<div class="photo">
-				<img src="/outer1.jpg" alt="Photo 5">
-			</div>
-			<div class="photo">
-				<img src="/outer2.jpg" alt="Photo 6">
-			</div>
-			<div class="photo">
-				<img src="/outer3.jpg" alt="Photo 7">
-			</div>
-			<div class="photo">
-				<img src="/outer4.jpg" alt="Photo 8">
-			</div>
-			<div class="photo">
-				<img src="/outer5.jpg" alt="Photo 9">
-			</div>
-			<div class="photo">
-				<img src="/outer6.jpg" alt="Photo 10">
-			</div>
-		</div>
+	<div class="board-list">
+			<a href="/my/notice">Notice</a>
+			<a href="/my/qna">QnA</a>
+			<a href="/my/review">Review</a>
 	</div>
-	 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:inline="javascript">
-    /* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
-    var message = /*[[${param.message}]]*/ '';
-    
-    $(document).ready(function() {
-        // 로그인 성공 또는 실패 메시지를 가져와서 표시
-        console.log('message 변수 값:', message[0]); // 변수 값을 로깅
-        if (message[0] === '탈퇴완료') {
-            console.log(message[0]);
-            alert("회원탈퇴가 정상적으로 처리되었습니다.");
-        } 
-    });
-    </script>
-	
-	
-	
+
+<div class="notice-board">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <th>
+                    글번호
+                </th>
+                <td>
+                    제목
+                </td>
+                <td>
+                    이름
+                </td>
+                <td>
+                    1
+                </td>
+                <td>
+                    1
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

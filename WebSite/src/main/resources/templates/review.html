@@ -179,17 +179,58 @@ a {
         transform: translateX(100%); /* 가로로 반만큼 스크롤하면 다시 시작 */
     }
 }
-
-.test-review {
-	margin: 0 auto;
+.review-list{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10%;
+	margin-left: 35%;
+	margin-right: 35%;
 }
-.test-review.tr, th, td {
+
+.review-list a {
+    color: red;
+    text-decoration: none;
+}
+.review-board {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 50px;
+	margin-left: 25%;
+	margin-right: 25%;
+	border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+.review-board.tr, th, td {
 	
 	width: 200px;
 	height: 50px;
-	text-align: center;
+}
+.review-number ul li{
+	justify-content: center;
+	align-items: center;
 }
 
+.pagination {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    margin-top: 30px; /* review-board 아래 30px로 조정 */
+}
+
+/* 아래의 페이징 스타일은 별도로 수정할 필요 없습니다. */
+.pagination span {
+    margin: 0 5px; /* 페이지 번호 사이 여백 조정 */
+}
+
+.pagination a {
+    color: black;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
 </style>
 
 <script src="/js/menu.js"></script>
@@ -199,29 +240,29 @@ a {
 		<div class="menu-container">
 			<div class="menu-left">
 				<div class="menu-item">
-					<a href="/aboutus">About Us</a>
+					<a href="/my/aboutus">About Us</a>
 				</div>
 
 				<div class="menu-item">
-					<a href="/newarrivals">Online Store</a>
+					<a href="/my/newarrivals">Online Store</a>
 					<div class="sub-menu">
-						<a href="/newarrivals">NEW ARRIVALS</a> <a href="/outers">OUTERS</a>
-						<a href="/tops">TOPS</a> <a href="/bottoms">BOTTOMS</a> <a
-							href="/acc">ACC</a> <a href="/seasonoff">SEASON OFF</a>
+						<a href="/my/newarrivals">NEW ARRIVALS</a> <a href="/my/outers">OUTERS</a>
+						<a href="/my/tops">TOPS</a> <a href="/my/bottoms">BOTTOMS</a> <a
+							href="/my/acc">ACC</a> <a href="/my/seasonoff">SEASON OFF</a>
 					</div>
 				</div>
 
 				<div class="menu-item">
-					<a href="/collection">Collection</a>
+					<a href="/my/collection">Collection</a>
 					<div class="sub-menu">
-						<a href="/22fw">22fw</a> <a href="/23ss">23ss</a> <a href="/23fw">23fw</a>
+						<a href="/22fw">22fw</a> <a href="/my/23ss">23ss</a> <a href="/my/23fw">23fw</a>
 					</div>
 				</div>
 
 				<div class="menu-item">
-					<a href="/community">Community</a>
+					<a href="/my/notice">Community</a>
 					<div class="sub-menu">
-						<a href="/Notice">Notice</a> <a href="/Contact">Contact</a>
+						<a href="/my/notice">Notice</a> <a href="/my/qna">QnA</a>
 					</div>
 				</div>
 			</div>
@@ -260,29 +301,25 @@ a {
 			</div>
 		</div>
 	</header>
-<div class="test-item">
-	<table>
-		<tr>
-			<td><img src="./bottom1.jpg"></td>
-		</tr>
-	</table>
-</div>
 
-<button id="showReview">리뷰</button>
-<button id="showQnA">QnA</button>
+	<div class="review-list">
+			<a href="/my/notice">Notice</a>
+			<a href="/my/qna">QnA</a>
+			<a href="/my/review">Review</a>
+	</div>
 
-<!-- 리뷰 댓글란. -->
-<div class="test-item" id="reviewContent">
-    <table class="test-review">
+<div class="review-board">
+    <table>
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">제목</th>
-                <th scope="col">글쓴이</th>
+                <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
+                <th scope="col">조회수</th>
             </tr>
         </thead>
-        <!-- ReviewPageResultDTO.dtoList 의 이름으로 호출. -->
+
         <tbody>
             <tr th:each="dto : ${reviewResult.dtoList}">
                 <th scope="row">
@@ -297,108 +334,24 @@ a {
                 <td>
                     [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
                 </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- 버튼 클릭시 입력 영역이 나타나도록 JavaScript 사용 -->
-    <button id="showReviewInput">리뷰 작성</button>
-    <!-- 글 입력하는 영역(기본적으로 히든상태) -->
-    <div id="reviewInputArea" style="display: none;">
-        <form th:action="@{/addReview}" method="post">
-            <input type="text" name="text" placeholder="리뷰 내용 입력">
-            <button type="submit">작성 완료</button>
-            <button type="button" id="cancelReviewInput">취소</button>
-        </form>
-    </div>
-</div>
-
-<div id="qnaContent" style="display: none;">
-    <!-- QnA 테이블 내용 -->
-    <table class="test-review" id="qnaContent">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">제목</th>
-                <th scope="col">글쓴이</th>
-                <th scope="col">작성일</th>
-            </tr>
-        </thead>
-        <!-- QnAPageResultDTO.dtoList 의 이름으로 호출. -->
-        <tbody>
-            <tr th:each="dto : ${qnaResult.dtoList}">
-                <th scope="row">
-                    [[${dto.qno}]]
-                </th>
                 <td>
-                    [[${dto.text}]]
-                </td>
-                <td>
-                    <div th:text="${#strings.substring(#authentication.name, 0 , 3) + '********'}"></div>
-                </td>
-                <td>
-                    [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
+                	5
                 </td>
             </tr>
         </tbody>
     </table>
-    <!-- QnA 작성 폼 -->
-    <button id="showQnAInput">QnA 작성</button>
-    <div id="qnaInputArea" style="display: none;">
-        <!-- QnA 작성 폼 내용 -->
-        <form th:action="@{/addQnA}" method="post">
-            <input type="text" name="text" placeholder="QnA 내용 입력">
-            <button type="submit">작성 완료</button>
-            <button type="button" id="cancelQnAInput">취소</button>
-        </form>
-    </div>
 </div>
-
-<div>
-<br>
-<br>
-<br>
-<br>
-</div>	
-
-<!-- JavaScript 코드 -->
-<script>
-    // 리뷰 버튼 클릭 시
-    document.getElementById("showReview").addEventListener("click", function() {
-        document.getElementById("reviewContent").style.display = "block";
-        document.getElementById("reviewInputArea").style.display = "none"; // 리뷰 작성 폼 숨김
-        
-        document.getElementById("qnaContent").style.display = "none";
-        document.getElementById("qnaInputArea").style.display = "none"; // QnA 작성 폼 숨김
-    });
-
-    // QnA 버튼 클릭 시
-    document.getElementById("showQnA").addEventListener("click", function() {
-        document.getElementById("reviewContent").style.display = "none";
-        document.getElementById("reviewInputArea").style.display = "none"; // 리뷰 작성 폼 숨김
-        
-        document.getElementById("qnaContent").style.display = "block";
-        document.getElementById("qnaInputArea").style.display = "none"; // QnA 작성 폼 숨김
-    });
-
-    // 리뷰 작성 버튼 클릭 시
-    document.getElementById("showReviewInput").addEventListener("click", function() {
-        document.getElementById("reviewInputArea").style.display = "block";
-    });
-
-    // 리뷰 작성 취소 버튼 클릭 시
-    document.getElementById("cancelReviewInput").addEventListener("click", function() {
-        document.getElementById("reviewInputArea").style.display = "none";
-    });
-
-    // QnA 작성 버튼 클릭 시
-    document.getElementById("showQnAInput").addEventListener("click", function() {
-        document.getElementById("qnaInputArea").style.display = "block";
-    });
-
-    // QnA 작성 취소 버튼 클릭 시
-    document.getElementById("cancelQnAInput").addEventListener("click", function() {
-        document.getElementById("qnaInputArea").style.display = "none";
-    });
-</script>
+<!-- 페이징 관련 정보를 표시하는 부분 -->
+    <div class="pagination">
+        <span th:if="${reviewResult.prev}">
+            <a href="#" th:href="@{'/my/review?page=' + ${reviewResult.page - 1}}">이전</a>
+        </span>
+        <span th:each="pageNum : ${reviewResult.pageList}">
+            <a href="#" th:href="@{'/my/review?page=' + ${pageNum}}" th:text="${pageNum}"></a>
+        </span>
+        <span th:if="${reviewResult.next}">
+            <a href="#" th:href="@{'/my/review?page=' + ${reviewResult.page + 1}}">다음</a>
+        </span>
+    </div>
 </body>
 </html>
