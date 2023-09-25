@@ -3,7 +3,7 @@ let cartItems = [];
 
 // 상품 추가 버튼 클릭 이벤트 핸들러
 document.querySelector('#add-to-cart-button').addEventListener('click', () => {
-	const product = {
+	const outer = {
 		name: 'Embroidery Flower Shirt White',
 		option: '옵션 : [M]',
 		price: '₩189,000',
@@ -12,12 +12,12 @@ document.querySelector('#add-to-cart-button').addEventListener('click', () => {
 		shippingFee: '무료',
 	};
 
-	addToCart(product);
+	addToCart(outer);
 });
 
 // 장바구니에 상품을 추가하는 함수
-function addToCart(product) {
-	cartItems.push(product);
+function addToCart(outer) {
+	cartItems.push(outer);
 	updateCart();
 }
 
@@ -50,7 +50,7 @@ function updateCart() {
 		];
 
 		columns[0].innerHTML = '<input type="checkbox" class="cart-item-checkbox">';
-		columns[1].innerHTML = '<img src="product1.jpg" alt="상품 이미지">';
+		columns[1].innerHTML = '<img src="outer1.jpg" alt="상품 이미지">';
 		columns[2].innerHTML = `<h3>${item.name}</h3><p>${item.option}</p>`;
 		columns[3].textContent = item.price;
 		columns[4].innerHTML = `<p>수량: ${item.quantity}</p><div><button>+</button><button>-</button></div>`;
@@ -77,8 +77,8 @@ function updateCart() {
 }
 
 // 장바구니에서 상품을 삭제하는 함수
-function removeFromCart(product) {
-	const index = cartItems.indexOf(product);
+function removeFromCart(outer) {
+	const index = cartItems.indexOf(outer);
 	if (index !== -1) {
 		cartItems.splice(index, 1);
 		updateCart();
@@ -96,7 +96,7 @@ function updateTotalPrice() {
 
 // 상품 추가 버튼 클릭 이벤트 핸들러
 document.querySelector('#add-to-cart-button').addEventListener('click', () => {
-	const product = {
+	const outer = {
 		name: 'Embroidery Flower Shirt White',
 		option: '옵션 : [M]',
 		price: '₩189,000',
@@ -105,12 +105,12 @@ document.querySelector('#add-to-cart-button').addEventListener('click', () => {
 		shippingFee: '무료',
 	};
 
-	addToCart(product);
+	addToCart(outer);
 });
 
 // 장바구니에 상품을 추가하는 함수
-function addToCart(product) {
-	cartItems.push(product);
+function addToCart(outer) {
+	cartItems.push(outer);
 	updateCart();
 }
 
@@ -143,7 +143,7 @@ function updateCart() {
 		];
 
 		columns[0].innerHTML = '<input type="checkbox" class="cart-item-checkbox">';
-		columns[1].innerHTML = '<img src="product1.jpg" alt="상품 이미지">';
+		columns[1].innerHTML = '<img src="outer1.jpg" alt="상품 이미지">';
 		columns[2].innerHTML = `<h3>${item.name}</h3><p>${item.option}</p>`;
 		columns[3].textContent = item.price;
 		columns[4].innerHTML = `<p>수량: ${item.quantity}</p><div><button>+</button><button>-</button></div>`;
@@ -224,20 +224,20 @@ deleteButtons.forEach(function(button) {
   window.addEventListener('load', function () {
     // 각 상품의 가격을 가져와서 총 상품 금액 계산
     var cartItems = document.querySelectorAll('.cart-item');
-    var totalProductPrice = 0;
+    var totalouterPrice = 0;
     for (var i = 0; i < cartItems.length; i++) {
       var priceElement = cartItems[i].querySelector('.cart-item-price');
       var price = parseInt(priceElement.textContent.replace('₩', '').replace(',', ''));
-      totalProductPrice += price;
+      totalouterPrice += price;
     }
 
     // 배송비 계산 (여기서는 고정 배송비로 가정)
     var shippingFee = 4000;
 
     // 총 상품 금액과 배송비를 화면에 표시
-    var totalProductPriceElement = document.querySelectorAll('.total-product-price');
-    for (var i = 0; i < totalProductPriceElement.length; i++) {
-      totalProductPriceElement[i].textContent = '₩' + totalProductPrice.toLocaleString();
+    var totalouterPriceElement = document.querySelectorAll('.total-outer-price');
+    for (var i = 0; i < totalouterPriceElement.length; i++) {
+      totalouterPriceElement[i].textContent = '₩' + totalouterPrice.toLocaleString();
     }
     var shippingFeeElement = document.querySelectorAll('.shipping-fee');
     for (var i = 0; i < shippingFeeElement.length; i++) {
@@ -247,7 +247,7 @@ deleteButtons.forEach(function(button) {
     // 결제 예정 금액 계산 및 화면에 표시
     var totalPriceElements = document.querySelectorAll('.total-price');
     for (var i = 0; i < totalPriceElements.length; i++) {
-      var totalPrice = totalProductPrice + shippingFee;
+      var totalPrice = totalouterPrice + shippingFee;
       totalPriceElements[i].textContent = '₩' + totalPrice.toLocaleString();
     }
   });
