@@ -41,9 +41,9 @@ public class QnAPageResultDTO<DTO, EN> {
 		this.page = pageable.getPageNumber() + 1;
 		this.size = pageable.getPageSize();
 		
-		int tempEnd = (int)(Math.ceil(page / 10.0)) * 10;
+		int tempEnd = (int)(Math.ceil(page / 5.0)) * 10;
 		
-		start = tempEnd -9;
+		start = tempEnd -4;
 		
 		prev = start > 1;
 		end = totalPage > tempEnd ? tempEnd : totalPage;
