@@ -36,7 +36,7 @@ li {
 	<h1>Online Store</h1>
 	<ul>
 		<li th:each="items : ${list}">
-			<a th:href="'/productdetail/' + ${items.itemcount}">
+			<a th:href="'/my/productdetail/' + ${items.itemcount}">
 			<img th:src="${items.imglink}" alt="">
 				<p>썸네일 사진 </p>
 			</a>
