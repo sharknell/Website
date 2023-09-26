@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상세 페이지</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* 중앙 정렬 */
+            margin: 20px;
+        }
+
+        /* 컨테이너 */
+        .container {
+            display: flex;
+            flex-wrap: wrap; /* 화면 크기에 따라 요소들이 줄 바꿈될 수 있도록 설정 */
+            max-width: 1200px; /* 최대 너비 설정 */
+            height:2000px;
+            align-items: flex-start; /* 이미지 영역을 위로 정렬 */
+        }
+
+        /* 왼쪽 이미지 리스트 영역 */
+        .image-list {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto; /* 이미지 리스트가 넘칠 경우 스크롤 생성 */
+            max-height: calc(100vh - 120px); /* 뷰포트 높이에서 하단 영역을 뺀 만큼의 높이 설정 */
+            width: 200px; /* 원하는 왼쪽 이미지 리스트의 너비 설정 */
+            align-self: flex-start; /* 오른쪽 영역과 간격을 조절하기 위해 추가 */
+            margin-right: -200px; /*왼쪽 큰 이미지와의 여백 간격 조절*/
+            margin-top: 50px;
+        }
+
+        /* 이미지 스타일링 */
+        .image-list img {
+            cursor: pointer;
+            width: 100%;
+            max-width: 100px;
+        }
+
+        /* 큰 이미지 영역 */
+        .main-image {
+            max-width: 100%;
+            /* 이미지를 부모 요소의 크기에 맞게 표시 */
+            display: block;
+            margin: 0 auto;
+            /* 이미지를 가운데 정렬 */
+            height: auto;
+            /* 세로 비율을 유지하면서 이미지 크기 조정 */
+            max-height: 100%; /* 이미지 높이를 왼쪽 이미지 리스트와 동일하게 설정 */
+        }
+
+        /* 가운데 큰 사진 영역 */
+        .description {
+            flex: 2;
+            margin-top: 50px;
+            padding: 30px;
+            margin-left: -10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* 오른쪽 영역의 내용을 위로 정렬 */
+        }
+
+        /* Details 섹션 스타일링 */
+        .details {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 160px;
+        }
+
+        .details h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        /* Description 섹션 스타일링 */
+        .description h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        /* Size + Fit 섹션 스타일링 */
+        .size-fit h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* 버튼 공통 스타일 */
+        .buttons button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* 버튼 호버 효과 */
+        .buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 첫 번째 버튼 스타일 */
+        .buttons button:nth-child(1) {
+            background-color: #28a745;
+        }
+
+        /* 첫 번째 버튼 호버 효과 */
+        .buttons button:nth-child(1):hover {
+            background-color: #1e7e34;
+        }
+        /* 큰 이미지 영역 */
+        .main-image {
+            max-width: 100%;
+            /* 이미지를 부모 요소의 크기에 맞게 표시 */
+            display: block;
+            margin: 0 auto;
+            /* 이미지를 가운데 정렬 */
+            height: auto;
+            /* 세로 비율을 유지하면서 이미지 크기 조정 */
+            max-height: 100%; /* 이미지 높이를 왼쪽 이미지 리스트와 동일하게 설정 */
+        }
+        /* 라디오 버튼 스타일링 */
+        label {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 5px;
+            border-radius: 50px;
+            border: 2px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        /* 선택된 라디오 버튼 스타일 */
+        label input:checked {
+            background-color: #007BFF;
+            border-color: #007BFF;
+            color: #fff;
+        }
+        /* 상세 설명 섹션의 기본적으로 숨겨진 상태 */
+        #details-section, #description-section, #size-fit-section {
+            display: none;
+        }
+
+        .footer {
+            position: absolute; /* 추가: 위치를 고정 */
+            text-align:center;
+            top:100px;
+            bottom: 0; /* 추가: 아래에 고정 */
+            left: 0; /* 추가: 왼쪽에 고정 */
+            right: 0; /* 추가: 오른쪽에 고정 */
+        }
+    </style>
+</head>
+<body>
+<div th:replace="header.html"></div>
+<div class="container">
+
+
+    <div class="image-list">
+    <img th:src="'/' + ${Product.imglink}" alt="제품 이미지 1" onclick="displayImage('outer1.jpg')">
+        <img th:src="'/' + ${Product.imglink1}" alt="제품 이미지 2" onclick="displayImage('outer2.jpg')">
+        <img th:src="'/' + ${Product.imglink2}" alt="제품 이미지 3" onclick="displayImage('outer3.jpg')">
+        <img th:src="'/' + ${Product.imglink3}" alt="제품 이미지 4" onclick="displayImage('outer4.jpg')">
+</div>
+
+    <!-- 우측 설명 영역 -->
+    <div class="description">
+        <!-- 큰 이미지 영역 -->
+        <img th:src="'/' + ${Product.mainLink}" alt="제품 이미지 1" class="main-image"
+             id="mainImage">
+    </div>
+    <div class="details">
+        <!-- 제품 상세 정보 -->
+        <h2 th:text="${Product.itemname}"></h2>
+        <p th:text="${Product.price}"></p>
+        <!-- Details 섹션 -->
+        <h3 onclick="toggleSection('details-section')">Details</h3>
+        <div id="details-section">
+            <p th:text="${Product.description}"></p>
+        </div>
+        <!-- Size + Fit 섹션 -->
+        <h3 onclick="toggleSection('size-fit-section')">Size + Fit</h3>
+        <div id="size-fit-section">
+            <p th:text="${Product.sizefit}"></p>
+        </div>
+
+        <h3 onclick="toggleSection('description-section')">Description</h3>
+        <div id="description-section">
+            <p th:text ="${Product.asd}"> </p>
+        </div>
+        <!-- Description 섹션 (토글 기능 추가) -->
+        <select>
+            <option th:each="sizeOption : ${#strings.arraySplit(Product.size, ',')}" th:value="${sizeOption}" th:text="${sizeOption}"></option>>
+        </select>
+        <!-- Buy Now와 Add to Cart 버튼 -->
+        <div class="buttons">
+            <button>Buy Now</button>
+            <input type="submit" value="Add - To - Cart"/>
+        </div>
+    </div>
+</div>
+
+
+<!-- JavaScript를 통한 이미지 표시 및 토글 기능 구현 -->
+<script>
+    var currentImage = '/outer1.jpg'; // 현재 표시 중인 이미지 파일
+
+    function displayImage(imageUrl) {
+        // 현재 이미지를 변경된 이미지로 업데이트
+        currentImage = imageUrl;
+
+        // 큰 이미지를 변경된 이미지로 설정
+        var mainImage = document.getElementById("mainImage");
+        mainImage.src = imageUrl;
+    }
+
+    function toggleSection(sectionId) {
+        var section = document.getElementById(sectionId);
+        if (section.style.display === "none"
+            || section.style.display === "") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

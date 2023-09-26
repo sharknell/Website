@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Store</title>
+<style>
+/* 그리드 스타일 설정 */
+ul {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개의 열로 정렬 */
+	grid-gap: 20px; /* 열 간격 설정 */
+	list-style: none;
+}
+
+li {
+	border: 1px solid #ccc;
+	padding: 10px;
+	text-align: center;
+}
+/* 제품 스타일 설정 */
+.product {
+	border: 1px solid #ccc;
+	padding: 10px;
+	text-align: center;
+}
+
+.product img {
+	max-width: 100%;
+	height: auto;
+}
+</style>
+</head>
+<body>
+	<div th:replace="header.html"></div>
+	<h1>Online Store</h1>
+	<ul>
+		<li th:each="items : ${list}">
+			<a th:href="'/productdetail/' + ${items.itemcount}">
+			<img th:src="${items.imglink}" alt="">
+				<p>썸네일 사진 </p>
+			</a>
+				<p th:text="'Price:' + ${items.price}">여기는 아이템 가격</p>
+		</li>
+	</ul>
+</body>
+</html>
