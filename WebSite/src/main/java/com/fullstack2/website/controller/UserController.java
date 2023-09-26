@@ -1,17 +1,23 @@
 package com.fullstack2.webSite.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fullstack2.webSite.dtos.ReviewDTO;
 import com.fullstack2.webSite.dtos.ReviewPageRequestDTO;
 import com.fullstack2.webSite.dtos.ReviewPageResultDTO;
+import com.fullstack2.webSite.entity.Product;
 import com.fullstack2.webSite.entity.Review;
-import com.fullstack2.webSite.repository.ReviewRepository;
+import com.fullstack2.webSite.service.MemberService;
+import com.fullstack2.webSite.service.Product_Service;
 import com.fullstack2.webSite.service.ReviewService;
 
 @Controller
@@ -19,10 +25,14 @@ import com.fullstack2.webSite.service.ReviewService;
 public class UserController {
 
 	private final ReviewService reviewService;
+	private final Product_Service productService;
+    private final MemberService memberService;
 	
 	@Autowired // 생성자에 대한 자동 주입 어노테이션
-	public UserController(ReviewService reviewService){
+	public UserController(ReviewService reviewService, Product_Service productService, MemberService memberService){
 		this.reviewService = reviewService;
+		this.productService = productService;
+		this.memberService = memberService;
 	}
 
 	@GetMapping("/login")
@@ -81,12 +91,6 @@ public class UserController {
    public String collection() {
       // Collection 페이지 로직 처리
       return "collection"; // collection.html 페이지로 이동
-   }
-
-   @GetMapping("/newarrivals")
-   public String newArrivals() {
-      // NEW ARRIVALS 서브메뉴 페이지 로직 처리
-      return "newarrivals"; // newarrivals.html 페이지로 이동
    }
 
    @GetMapping("/orderhistory")
@@ -166,17 +170,7 @@ public class UserController {
       // SNS 페이지 로직 처리
       return "cart2"; // manageacc.html 페이지로 이동
    }
-   @GetMapping("/outer")
-   public String outerPage() {
-      // SNS 페이지 로직 처리
-      return "outer"; // manageacc.html 페이지로 이동
-   }
    
-   @GetMapping("/outer/outer1")
-   public String outer1Page() {
-      // SNS 페이지 로직 처리
-      return "/outer/outer1"; // manageacc.html 페이지로 이동
-   }
    
    @GetMapping("/notice")
    public String notice() {
@@ -191,6 +185,24 @@ public class UserController {
 	   model.addAttribute("reviewResult", reviewResult);
 	   
 	   return "review";
+   }
+
+   //벨트 제품 리스트로 맵핑belt
+   @GetMapping(value = "/product/{id}")
+   public String Product(Model model, @PathVariable("id") String id){
+       List<Product> entity = productService.Category_item_All(id);
+       model.addAttribute("list" ,entity);
+       return "product";
+   }
+
+   @GetMapping(value = "/productdetail/{itemcount}")
+   public String beltdetail(Product product, Model model){
+       System.out.println(product.getItemcount());
+       Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+       model.addAttribute("Product", productOptional.get());
+       //주입하면 명칭을 알수가 없다.
+
+       return "/productdetail";
    }
 
 }
