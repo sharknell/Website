@@ -5,3 +5,6 @@
 0905 이교진 - MemberController,MemberRepository,MemberService,MemberServiceImple 생성 후 로그인, 회원관리 join, login view에 테스트 완료 
 0913 이교진 - 시큐리티 적용, 테스트 완료
 0914 이교진 - 비밀번호 찾기 완료
+
+
+2023.09.26 형상관리 완료
