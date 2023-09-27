@@ -5,7 +5,7 @@
     <ul>
         <li><strong>백승현&lt;PM&gt;</strong> - Product 및 Detail 페이지 개발</li>
         <li><strong>이교진</strong> - User Information 관련 기능 개발</li>
-        <li><strong>이승민</strong> - QnA 및 Review 기능 개발</li>
+        <li><strong>이승민</strong> - Forum 기능 개발</li>
         <li><strong>이도형</strong> - View 개발</li>
         <li><strong>김규호</strong> - 데이터베이스 관리 (Maria DB)</li>
     </ul>
