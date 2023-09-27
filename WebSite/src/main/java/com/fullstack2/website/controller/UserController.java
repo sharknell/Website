@@ -29,7 +29,7 @@ public class UserController {
     private final MemberService memberService;
 	
 	@Autowired // 생성자에 대한 자동 주입 어노테이션
-	public UserController(ReviewService reviewService, Product_Service productService, MemberService memberService){
+	public UserController(ReviewService reviewService, Product_Service productService,MemberService memberService){
 		this.reviewService = reviewService;
 		this.productService = productService;
 		this.memberService = memberService;
@@ -196,9 +196,13 @@ public class UserController {
    }
 
    @GetMapping(value = "/productdetail/{itemcount}")
-   public String beltdetail(Product product, Model model){
-       System.out.println(product.getItemcount());
+   public String beltdetail(@ModelAttribute("Product") Product product, 
+		   					@ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO,
+		   					Model model){
+       ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
        Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+       
+       model.addAttribute("reviewResult", reviewResult);
        model.addAttribute("Product", productOptional.get());
        //주입하면 명칭을 알수가 없다.
 
