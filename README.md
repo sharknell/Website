@@ -28,3 +28,7 @@
     <p>1. 장바구니 (Cart) 기능 추가</p>
     <p>2. 컨틀롤러(Mapping) 버그 수정 예정</p>
     <p>3. 비로그인시 메인로고 안보이는 버그 수정 예정</p>
+
+    상품DB에 임시로 인서트해서 테스트 할 때 사용하세요.
+    INSERT INTO product (itemcount, category, description, imglink, imglink1, imglink2, imglink3, itemname, price, size, main_link, sizefit, asd) 
+    VALUES (1, 'outers', null, 'top1.jpg', 'top2.jpg', 'top3.jpg', 'top4.jpg', 'Shwal Collar Coat Black', 429000, 'M,L', 'top5.jpg', 'asdsadsaffas', ' 1. 교환/반품 시 신청서 작성은 필수입니다.');
