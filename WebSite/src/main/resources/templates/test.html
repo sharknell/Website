@@ -303,7 +303,7 @@ a {
     <!-- 버튼 클릭시 입력 영역이 나타나도록 JavaScript 사용 -->
     <button id="showReviewInput">리뷰 작성</button>
     <!-- 글 입력하는 영역(기본적으로 히든상태) -->
-    <div id="reviewInputArea" style="display: none;">
+    <div id="reviewInputArea" style="display: block;">
         <form th:action="@{/addReview}" method="post">
             <input type="text" name="text" placeholder="리뷰 내용 입력">
             <button type="submit">작성 완료</button>
