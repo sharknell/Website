@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쇼핑몰 관리자 모드</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* 스타일링을 원하는 대로 추가하세요 */
+body {
+   font-family: Arial, sans-serif;
+   background-color: #f0f0f0;
+   margin: 0;
+   padding: 0;
+}
+
+.admin-panel {
+   margin-top: 100px;
+   margin-left: auto;
+   margin-right: auto;
+   background-color: #fff;
+   border: 1px solid #ccc;
+   width: 80%;
+   max-width: 600px;
+   padding: 20px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+label {
+   font-weight: bold;
+}
+
+select, input[type="text"], input[type="number"], textarea {
+   width: 90%;
+   padding: 10px;
+   margin-bottom: 15px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+input[type="file"] {
+   margin-bottom: 20px;
+}
+
+input[type="submit"] {
+   background-color: #007BFF;
+   color: #fff;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   font-weight: bold;
+}
+
+input[type="submit"]:hover {
+   background-color: #0056b3;
+}
+
+/* 메뉴 스타일 */
+.sidebar {
+   background-color: #007BFF;
+   color: #fff;
+   padding: 20px;
+   width: 20%;
+   float: left;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+   font-size: 20px;
+   margin-bottom: 20px;
+   text-align: center;
+}
+
+.sidebar ul {
+   list-style: none;
+   padding: 0;
+}
+
+.sidebar ul li {
+   margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+   text-decoration: none;
+   color: #fff;
+   display: block;
+   padding: 10px 0;
+   text-align: center;
+   font-weight: bold;
+   transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+   background-color: #0056b3;
+}
+
+.admin-panel {
+   margin-left: 25%;
+}
+</style>
+</head>
+<body>
+   <!-- <div th:replace="header.html"></div> -->
+   <h2>관리자 메뉴</h2>
+   <div class="sidebar">
+      <ul>
+         <li><a href="admin">상품 등록</a></li>
+         <li><a href="product_list">상품 목록</a></li>
+         <li><a href="product_reviews">상품 소감</a></li>
+         <li><a href="user_list">유저 목록</a></li>
+      </ul>
+   </div>
+   <h1>상품 등록</h1>
+   <div class="admin-panel">
+      <form action="admin" method="POST"
+         enctype="multipart/form-data">
+         <label for="category">분류:</label> <select name="category"
+            id="category">
+            <option value="outer">아우터</option>
+            <option value="top">상의</option>
+            <option value="bottom">하의</option>
+            <option value="acc">액세서리</option>
+         </select> <br> <label for="productName">상품명:</label> <input type="text"
+            name="productName" id="productName" required> <br> <label
+            for="productPrice">상품가격:</label> <input type="number"
+            name="productPrice" id="productPrice" required> <br> <label
+            for="productStock">상품재고:</label> <input type="number"
+            name="productStock" id="productStock" required> <br> <label
+            for="productDescription">상품소개:</label>
+         <textarea name="productDescription" id="productDescription" required></textarea>
+         <br> <label for="productImage">상품 이미지:</label> <input
+            type="file" name="productImage" id="productImage" accept="image/*"
+            required> <br> <input type="submit" value="등록">
+      </form>
+   </div>
+      <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 등록된 상품을 저장하는 배열
+    var products = [];
+
+    // 상품 추가 함수
+    function addProduct(productName, price, quantity) {
+        var product = {
+            name: productName,
+            price: price,
+            quantity: quantity,
+        };
+
+        products.push(product);
+        updateProductList();
+    }
+
+    // 상품 목록 업데이트 함수
+    function updateProductList() {
+        var productTableBody = document.getElementById("product-table-body");
+        productTableBody.innerHTML = "";
+
+        for (var i = 0; i < products.length; i++) {
+            var product = products[i];
+            var totalPrice = product.price * product.quantity;
+
+            var newRow = productTableBody.insertRow();
+            newRow.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>${product.quantity}</td>
+                <td>${totalPrice}</td>
+            `;
+        }
+    }
+
+    // 초기 상품 목록 업데이트
+    updateProductList();
+});
+</script>
+
+</body>
+</html>
