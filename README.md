@@ -20,6 +20,7 @@
         <li><strong>0913 이교진</strong> - 보안 시스템 적용 및 테스트 완료</li>
         <li><strong>0914 이교진</strong> - 비밀번호 찾기 기능 추가 및 완료</li>
         <li><strong>2023.09.26</strong> - 형상 관리 완료</li>
+        <li><strong>2023.1002</strong> - 카트 업데이트 완료 </li>
     </ul>
 
     
