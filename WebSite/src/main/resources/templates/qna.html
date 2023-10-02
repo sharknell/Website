@@ -309,73 +309,7 @@ tbody tr:hover {
 <script src="/js/menu.js"></script>
 </head>
 <body>
-	<header>
-		<div class="menu-container">
-			<div class="menu-left">
-				<div class="menu-item">
-					<a href="/my/aboutus">About Us</a>
-				</div>
-
-				<div class="menu-item">
-					<a href="/my/product/outers">Online Store</a>
-					<div class="sub-menu">
-						<a href="/my/product/outers">OUTERS</a> <a href="/my/product/tops">TOPS</a>
-						<a href="/my/product/bottoms">BOTTOMS</a> <a
-							href="/my/product/acc">ACC</a> <a href="/my/product/seasonoff">SEASON
-							OFF</a>
-					</div>
-				</div>
-
-				<div class="menu-item">
-					<a href="/my/collection">Collection</a>
-					<div class="sub-menu">
-						<a href="/22fw">22fw</a> <a href="/my/23ss">23ss</a> <a
-							href="/my/23fw">23fw</a>
-					</div>
-				</div>
-
-				<div class="menu-item">
-					<a href="/my/notice">Community</a>
-					<div class="sub-menu">
-						<a href="/my/notice">Notice</a> <a href="/my/contact">Contact</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="logo">
-				<img src="/Long.png" alt="로고">
-				<div class="small-logo">
-					<img src="/short.png" alt="작은 로고">
-				</div>
-			</div>
-
-			<div class="menu-right">
-				<div id="sub-menu-login">
-					<div id="sub-menu-login">
-						<a href="/login">Login</a>
-					</div>
-				</div>
-
-				<div class="menu-item">
-					<div id="sub-menu-join">
-						<a href="/join">Join</a>
-					</div>
-				</div>
-
-				<div class="menu-item">
-					<div class="menu-item">
-						<div id="sub-menu-cart">
-							<a href="/cart">Cart</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="menu-item">
-					<a href="/sns">SNS</a>
-				</div>
-			</div>
-		</div>
-	</header>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
 
 	<div class="board-list">
 		<a href="/my/notice" class="list1">Notice</a> <a href="/my/qna" class="list2">Q & A</a> <a
