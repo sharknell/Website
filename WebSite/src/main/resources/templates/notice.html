@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <style>
 /* 기본 스타일 */
 body {
@@ -182,9 +183,12 @@ a {
 
 .board-list a {
 	color: red;
+	font-size:20px;
+	 font-family: 'Noto Sans KR', sans-serif; /* 글꼴 설정 */
 	text-decoration: none;
 	padding: 5px 10px; /* 텍스트 주변 여백 추가 */
 	border-radius: 5px; /* 테두리를 둥글게 만듭니다. */
+	
 }
 
 .notice-board {
@@ -194,8 +198,7 @@ a {
 	margin-top: 50px;
 	margin-left: 25%;
 	margin-right: 25%;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+	/* border: 3px dashed red ; */
 	padding: 10px;
 }
 
@@ -256,9 +259,20 @@ tbody tr:hover {
 		font-weight: bold;
 	}
 }
+.menu-item a {
+    color: gray;
+    text-decoration: none;
+    transition: color 0.3s;
+}
 
-.list1, .list2 , .list3{
- border: 1px dashed red; /* 점선으로 빨간 사각형 테두리 추가 */
+.list1:hover,
+.list2:hover,
+.list3:hover {
+    color: rgba(173, 216, 230); /* 글자 색상 설정 (예: 검은색) */
+    padding: 5px 10px; /* 텍스트 주변 여백 추가 */
+    border-radius: 5px; /* 테두리를 둥글게 만듭니다. */
+    background-color: rgba(173, 216, 230, 0.5); /* 호버 시 배경 색상 변경 (예: 빨간색) */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
 }
 </style>
 
@@ -334,7 +348,7 @@ tbody tr:hover {
 	</header>
 
 	<div class="board-list">
-		<a href="/my/notice" class="list1">Notice</a> <a href="/my/qna" class="list2">QnA</a> <a
+		<a href="/my/notice" class="list1">Notice</a> <a href="/my/qna" class="list2">Q & A</a> <a
 			href="/my/review" class="list3">Review</a>
 	</div>
 
