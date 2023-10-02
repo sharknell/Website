@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>이메일 찾기</title>
+<style type="text/css">
+body {
+   background-image: url('logout1.jpg'); /* 배경 이미지 파일 경로를 수정하세요 */
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-position: center top 50px; /* 배경 이미지를 수직으로 50px 아래로 이동 */
+}
+
+.login-form {
+   background-color: rgba(255, 255, 255, 0.5); /* 로그인 폼 배경색 및 투명도 조절 */
+   padding: 20px;
+   border-radius: 5px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+   width: 30%;
+   text-align: center;
+   margin: 150px auto; /* 수평 가운데 정렬 */
+}
+
+.login-form h1 {
+   font-size: 28px;
+   color: #333;
+   margin-bottom: 20px;
+}
+
+.login-form p {
+   font-size: 16px;
+   color: #333;
+   margin-bottom: 10px;
+}
+
+.login-form input[type="text"] {
+   width: 70%;
+   padding: 10px;
+   margin-bottom: 20px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+}
+
+.login-form button {
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   padding: 10px 20px;
+   font-size: 18px;
+   cursor: pointer;
+   transition: background-color 0.3s;
+   margin-top: 10px;
+   display: block; /* 버튼을 블록 레벨 요소로 설정하여 아래로 이동 */
+   margin-left: 40%;
+   width: 20%;
+}
+
+.login-form button:hover {
+   background-color: #0056b3;
+}
+
+.register-button {
+   margin-top: 20px;
+}
+
+.register-button a {
+   text-decoration: none;
+   color: blue;
+   font-size: 16px;
+}
+
+.find-links {
+   margin-top: 10px;
+}
+
+.find-links a {
+   text-decoration: none;
+   color: #333;
+}
+
+.find-links a:hover {
+   text-decoration: underline;
+}
+</style>
+</head>
+<body>
+   <div th:replace="header.html"></div>
+   <div class="login-form">
+      <form action="/findEmail" method="post">
+         <h1>이메일 찾기</h1>
+         <p>전화번호를 입력하세요</p>
+         <input type="text" id="phoneNumber" name="mobile">
+         <button class="register-button" type="submit">찾기</button>
+         <p id="result"></p>
+      </form>
+   </div>
+
+   <script th:inline="javascript">
+      /* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
+      var message = /*[[${param.message}]]*/'';
+
+      $(document).ready(function() {
+         
+         console.log('message 변수 값:', message[0]); // 변수 값을 로깅
+         if (message[0] === 'err') {
+            console.log(message[0]);
+            alert("전화번호가 존재하지 않습니다.");
+         }
+      });
+   </script>
+</body>
+</html>

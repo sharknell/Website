@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>나의 이메일</title>
+</head>
+<body>
+<h2 th:text="'회원님의 이메일은 ' + ${dto.email} + ' 입니다.'"></h2>
+<a href="/view/login">login 으로 가기</a>
+</body>
+</html>
