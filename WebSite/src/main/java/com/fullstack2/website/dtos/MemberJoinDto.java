@@ -22,6 +22,7 @@ public class MemberJoinDto {
     private String postalCode;
     private String addressBasic;
     private String addressRest;
+    private String Provider;
     
     
     private String mobile;
