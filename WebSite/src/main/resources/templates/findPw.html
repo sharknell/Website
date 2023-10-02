@@ -1,67 +1,172 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="styles.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <meta charset="UTF-8">
-    <title>메일 발송</title>
+<title>비밀번호 찾기</title>
+
+<style>
+body {
+   background-image: url('logout2.jpg'); /* fixed 까지 배경 관리 하는 코드 */
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   font-family: Arial, sans-serif;
+   background-color: #f4f4f4;
+   background-position: center top 40px;
+}
+
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+.modal {
+   max-width: 400px;
+   width: 100%;
+   background-color: #fff;
+   border-radius: 5px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+   background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경에 60% 투명도 설정 */
+   margin-top: -7%;
+}
+
+.modal-header {
+   background-color: #333;
+   color: #fff;
+   padding: 15px;
+   text-align: center;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+}
+
+.modal-title {
+   margin: 0;
+}
+
+.modal-body {
+   padding: 20px;
+}
+
+.info {
+   color: #ac2925;
+   text-align: center;
+}
+
+.form-group {
+   margin-bottom: 20px;
+}
+
+label {
+   font-weight: bold;
+}
+
+.form-control {
+   width: 70%;
+   margin-left: 5px;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+.btn-success {
+   background-color: #5bc0de;
+   border: none;
+   color: #fff;
+   padding: 10px;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.btn-success:hover {
+   background-color: #2aabd2;
+}
+
+.message {
+   text-align: center;
+   color: red;
+   margin-top: 10px;
+}
+
+.modal-footer {
+   padding: 15px;
+   text-align: right;
+   border-bottom-left-radius: 5px;
+   border-bottom-right-radius: 5px;
+}
+
+.btn-danger {
+   background-color: #d9534f;
+   border: none;
+   color: #fff;
+   padding: 10px 20px;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.btn-danger:hover {
+   background-color: #c9302c;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
+   <div th:replace="header.html"></div>
+   <div class="container">
+      <!-- Modal -->
+      <div class="modal" id="myModal">
+         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header" style="padding:35px 50px;">
-                    <h4><span class="glyphicon glyphicon-lock"></span> 비밀번호 찾기</h4>
-                </div>
-                <div class="modal-body" style="padding:40px 50px;">
-                    <div style="color: #ac2925">
-                        <center>입력된 정보로 임시 비밀번호가 전송됩니다.</center>
-                    </div>
-                    <hr>
-                    <form role="form" method="post" action="/findPw">
-                        <div class="form-group">
-                            <label for="userEmail"><span class="glyphicon glyphicon-user"></span>email</label>
-                            <input type="text" class="form-control" id="userEmail" name ="userEmail" placeholder="가입시 등록한 이메일을 입력하세요.">
-                        </div>
-                        <div class="form-group">
-                            <label for="userName"><span class="glyphicon glyphicon-eye-open"></span> name</label>
-                            <input type="text" class="form-control" id="userName" name ="userName" placeholder="가입시 등록한 이름을 입력하세요.">
-                        </div>
-                        <button type="submit" class="btn btn-success btn-block" id="checkEmail">OK</button>
-                    </form>
-                    <hr>
-                    <div class="text-center small mt-2" id="checkMsg" style="color: red"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span
-                            class="glyphicon glyphicon-remove"></span> Cancel
-                    </button>
-                </div>
+               <div class="modal-header">
+                  <h4 class="modal-title">비밀번호 찾기</h4>
+               </div>
+               <div class="modal-body">
+                  <p class="info">입력된 정보로 임시 비밀번호가 전송됩니다.</p>
+                  <hr>
+                  <form role="form" method="post" action="/findPw">
+                     <div class="form-group">
+                        <label for="userEmail">Email</label> <input type="text"
+                           class="form-control" id="userEmail" name="userEmail"
+                           placeholder="가입시 등록한 이메일을 입력하세요.">
+                     </div>
+                     <div class="form-group">
+                        <label for="userName">이름</label> <input type="text"
+                           class="form-control" id="userName" name="userName"
+                           placeholder="가입시 등록한 이름을 입력하세요.">
+                     </div>
+                     <button type="submit" class="btn btn-success btn-block"
+                        id="checkEmail">OK</button>
+                  </form>
+                  <hr>
+                  <div class="message" id="checkMsg"></div>
+               </div>
+               <div class="modal-footer">
+                  <form method="get" action="/login">
+                     <input type="submit" class="btn btn-danger" value="Cancel">
+                  </form>
+               </div>
             </div>
+         </div>
+      </div>
+   </div>
+   <script th:inline="javascript">
+      /* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
+      var message = /*[[${param.message}]]*/'';
 
-        </div>
-    </div>
-</div>
-<script th:inline="javascript">
-    /* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
-    var message = /*[[${param.message}]]*/ '';
-    
-    $(document).ready(function() {
-        // 로그인 성공 또는 실패 메시지를 가져와서 표시
-        console.log('message 변수 값:', message[0]); // 변수 값을 로깅
-        if (message[0] === '이메일전송') {
+      $(document).ready(function() {
+         // 로그인 성공 또는 실패 메시지를 가져와서 표시
+         console.log('message 변수 값:', message[0]); // 변수 값을 로깅
+         if (message[0] === '이메일전송') {
             console.log(message[0]);
             alert("등록하신 이메일로 임시비밀번호를 전송했습니다.");
-        } else if(message[0] === '이메일전송실패') {
+         } else if (message[0] === '이메일전송실패') {
             console.log(message[0]);
             alert("등록하신 이메일로 임시비밀번호를 전송을 실패했습니다.");
-        }
-    });
-    </script>
-
-
+         }
+      });
+   </script>
 </body>
 </html>
