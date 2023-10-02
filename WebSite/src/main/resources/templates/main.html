@@ -219,9 +219,9 @@ a {
 			</div>
 
 			<div class="logo">
-				<img src="/Long" alt="로고">
+				<img src="/Long.png" alt="로고">
 				<div class="small-logo">
-					<img src="/short" alt="작은 로고">
+					<img src="/short.png" alt="작은 로고">
 				</div>
 			</div>
 
@@ -247,6 +247,14 @@ a {
 				<div class="menu-item">
 					<a href="/my/sns">SNS</a>
 				</div>
+				
+				<div class="menu-item">
+					<!--화면 우측 상단에 로그인 시 userName 출력  -->
+					
+						<a href="/view/login">로그인 후 이용해주세요.</span></a>
+
+					</div>
+				
 			</div>
 		</div>
 	</header>
@@ -310,6 +318,20 @@ a {
             alert("회원탈퇴가 정상적으로 처리되었습니다.");
         } 
     });
+    </script>
+    
+    <script>
+        // Cart 메뉴 클릭 시 알림 표시 후 로그인 페이지로 이동
+        var cartMenuItem = document.querySelector('.menu-item a[href="/my/cart"]');
+        cartMenuItem.addEventListener('click', function (event) {
+            event.preventDefault(); // 링크 클릭 기본 동작 방지
+
+            // 알림 표시
+            alert("로그인 후 이용 가능합니다. 로그인 페이지로 이동합니다.");
+
+            // 로그인 페이지로 이동
+            window.location.href = "/view/login"; // 로그인 페이지 URL로 이동
+        });
     </script>
 	
 	
