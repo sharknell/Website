@@ -146,7 +146,7 @@ input[type="password"] {
 	padding: 8px; /* 비밀번호 입력칸 내부 여백 조절 */
 	width: 30%; /* 비밀번호 입력칸 너비 조절 */
 	display: inline-block; /* 입력칸들을 옆으로 배치 */
-	margin-left:75px;
+	margin-left: 75px;
 }
 
 #confirmPassword {
@@ -167,30 +167,28 @@ input[type="password"] {
 </style>
 </head>
 <body>
-	<div th:replace="header.html"></div>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+
 	<div class="container">
 		<h2>전화번호 변경</h2>
 		<div class="form-container">
 			<form action="/info/managemobile" method="post">
 				<div class="form-group">
 					<label for="oldPhoneNumber">기존 전화번호</label> <input type="tel"
-						id="oldPhoneNumber" name="oldPhoneNumber" th:value="${dto.mobile}" readonly >
+						id="oldPhoneNumber" name="oldPhoneNumber" th:value="${dto.mobile}"
+						readonly>
 				</div>
-			
+
 				<div class="form-group">
 					<label for="newPhoneNumber">새 전화번호</label> <input type="tel"
 						id="newPhoneNumber" name="newPhoneNumber">
 				</div>
-				<div class="form-group">
-					<label for="password">비밀번호 확인</label> <input type="password"
-						id="password" name="password">
-				<button type="button" class="btn-primary" id="confirmPassword">확인</button>
-				</div>
-
-				<button type="submit" class="btn-primary">수정 완료</button>
-			</form>
 		</div>
 
+		<button type="submit" class="btn-primary">수정 완료</button>
+
 	</div>
+
+
 </body>
 </html>
