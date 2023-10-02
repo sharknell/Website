@@ -76,8 +76,11 @@
     </style>
 </head>
 <body>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+	
     <div class="user-info-form">
     <h2>회원 정보</h2>
+    
     <!-- 폼 시작 -->
     <form method="post">
     <div class="form-group">
