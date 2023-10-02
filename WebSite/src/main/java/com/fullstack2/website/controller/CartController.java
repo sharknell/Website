@@ -28,7 +28,6 @@ public class CartController {
     public String cartView(@AuthenticationPrincipal User user, Model model){
         Member member = memberService.findOne(user.getUsername()).get();
         List<Cart> carts = cartRepository.findAllByMember(member.getId());
-        System.out.println(carts.get(0).getSize());
         model.addAttribute("list",carts);
         model.addAttribute("username", member.getName());
         return "/cart";
@@ -36,9 +35,7 @@ public class CartController {
 
         @PostMapping("/cart")
         public String Cart(Cart cart, @AuthenticationPrincipal User user){
-            System.out.println(cart.getProduct().getPrice());
             cart.setMember(memberService.findOne(user.getUsername()).get().getId());
-            System.out.println(cart.getMember());
 
             cartRepository.save(cart);
             return "redirect:/cart";
