@@ -126,8 +126,15 @@ body {
 		<div class="register-button">
 			<a href="join.html">회원가입</a>
 		</div>
+		<form action="/login" method="POST">
+			<a href="/oauth2/authorization/kakao" class="btn btn-third active" role="button">Kakao Login</a><br>
+			<a href="/oauth2/authorization/google" class="btn btn-sm btn-success active" role="button">Google Login</a><br>
+			<a href="/oauth2/authorization/naver" class="btn btn-sm btn-success active" role="button">Naver Login</a><br>
+		</form>
+
 		<div class="find-links">
-			<a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a>
+		 <a href="/findEmail">아이디 찾기</a>| <a href="/findPw">비밀번호 찾기</a>
+		 
 		</div>
 	</div>
 	<script th:inline="javascript">
