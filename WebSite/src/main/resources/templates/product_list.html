@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상품 목록</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* 스타일링을 원하는 대로 추가하세요 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 상품 목록 스타일 */
+.product-list {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.product-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+</style>
+</head>
+<body>
+<h1>상품 목록</h1>
+<div class="product-list">
+    <table>
+        <thead>
+            <tr>
+                <th>선택</th>
+                <th>상품명</th>
+                <th>개당 가격</th>
+                <th>구입 수량</th>
+                <th>최종 가격</th>
+            </tr>
+        </thead>
+        <tbody id="product-table-body">
+            <!-- 이 부분에 등록된 상품이 동적으로 추가될 것입니다. -->
+        </tbody>
+    </table>
+</div>
+<div class="product-actions">
+    <button id="delete-selected">선택된 상품 삭제</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 등록된 상품을 저장하는 배열
+    var products = [];
+
+    // 상품 추가 함수
+    function addProduct(productName, price, quantity) {
+        var product = {
+            name: productName,
+            price: price,
+            quantity: quantity,
+        };
+
+        products.push(product);
+        updateProductList();
+    }
+
+    // 상품 삭제 함수
+    function deleteSelectedProducts() {
+        var selectedProducts = [];
+        var remainingProducts = [];
+
+        // 선택된 상품들을 찾아서 selectedProducts에 추가
+        for (var i = 0; i < products.length; i++) {
+            var checkbox = document.getElementById("checkbox-" + i);
+            if (checkbox.checked) {
+                selectedProducts.push(i);
+            } else {
+                remainingProducts.push(products[i]);
+            }
+        }
+
+        // products 배열을 업데이트
+        products = remainingProducts;
+
+        // 테이블 다시 그리기
+        updateProductList();
+    }
+
+    // 상품 목록을 업데이트하는 함수
+    function updateProductList() {
+        var productTableBody = document.getElementById("product-table-body");
+        productTableBody.innerHTML = "";
+
+        for (var i = 0; i < products.length; i++) {
+            var product = products[i];
+
+            // 총 가격 계산
+            var totalPrice = product.price * product.quantity;
+
+            // 새로운 행 추가
+            var newRow = productTableBody.insertRow();
+            newRow.innerHTML = `
+                <td><input type="checkbox" id="checkbox-${i}"></td>
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>${product.quantity}</td>
+                <td>${totalPrice}</td>
+            `;
+        }
+    }
+
+    // "선택된 상품 삭제" 버튼 클릭 시 동작
+    var deleteButton = document.getElementById("delete-selected");
+    deleteButton.addEventListener("click", deleteSelectedProducts);
+
+    // 초기 상품 목록 업데이트
+    updateProductList();
+});
+</script>
+</body>
+</html>
