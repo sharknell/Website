@@ -141,7 +141,8 @@ input[type="password"] {
 </head>
 <body>
 
-	<div th:replace="header2.html"></div>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+
 	<div class="container">
 		<h2>주소 변경</h2>
 		<div class="form-container">
@@ -154,8 +155,7 @@ input[type="password"] {
 						id="address-rest" name="newAddressRest"
 						th:value="${dto.addressRest}">
 				</div>
-				<input type="password" id="password" name="password"
-					placeholder="비밀번호를 입력해주세요.">
+				
 				<div class="password-mismatch" id="passwordMismatch"></div>
 				<button type="submit" class="btn-primary">수정 완료</button>
 			</form>
