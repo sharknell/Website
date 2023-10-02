@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final MemberQuery query;
-    private final MemberRepository memberRepository;
+   private final MemberQuery query;
+  private final MemberRepository memberRepository;
 
     public boolean userEmailCheck(String email, String userName) {
 	String findEmail = query.selectEmail(email);
