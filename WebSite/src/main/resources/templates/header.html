@@ -134,7 +134,7 @@ a {
         <div class="menu-container">
             <div class="menu-left">
                 <div class="menu-item">
-                    <a href="/aboutus">About Us</a>
+                    <a href="/my/aboutus">About Us</a>
                 </div>
 
                 <div class="menu-item">
@@ -164,7 +164,7 @@ a {
             </div>
 
             <div class="logo">
-             	<a href="/main">
+             	<a href="/my/main">
                 <img src="/Long.png" alt="로고">
                 </a>
                 <div class="small-logo">
@@ -183,18 +183,26 @@ a {
                 </div>
 
                 <div class="menu-item">
-                    <a href="/cart">Cart</a>
+                    <a href="/my/cart">Cart</a>
                 </div>
 
                 <div class="menu-item">
-                    <a href="/sns">SNS</a>
+                    <a href="/my/sns">SNS</a>
                 </div>
+                <div class="menu-item">
+					<!--화면 우측 상단에 로그인 시 userName 출력  -->
+					
+						<a href="/view/login">로그인 후 이용해주세요.</span></a>
+
+					</div>
+				
+                
             </div>
         </div>
     </header>
 <script>
         // Cart 메뉴 클릭 시 알림 표시 후 로그인 페이지로 이동
-        var cartMenuItem = document.querySelector('.menu-item a[href="/cart"]');
+        var cartMenuItem = document.querySelector('.menu-item a[href="/my/cart"]');
         cartMenuItem.addEventListener('click', function (event) {
             event.preventDefault(); // 링크 클릭 기본 동작 방지
 
