@@ -138,32 +138,31 @@ a {
 				</div>
 
 				<div class="menu-item">
-					<a href="/newarrivals">Online Store</a>
+					<a href="/my/product/outers">Online Store</a>
 					<div class="sub-menu">
-						<a href="/my/newarrivals">NEW ARRIVALS</a> <a href="/outers">OUTERS</a>
-						<a href="/my/tops">TOPS</a> <a href="/my/bottoms">BOTTOMS</a> <a
-							href="/my/acc">ACC</a> <a href="/my/seasonoff">SEASON OFF</a>
+						<a href="/my/product/outers">OUTERS</a>
+						<a href="/my/product/tops">TOPS</a> <a href="/my/product/bottoms">BOTTOMS</a> <a
+							href="/my/product/acc">ACC</a> <a href="/my/product/seasonoff">SEASON OFF</a>
 					</div>
 				</div>
 
 				<div class="menu-item">
 					<a href="/my/collection">Collection</a>
 					<div class="sub-menu">
-						<a href="/my/22fw">22fw</a> <a href="/my/23ss">23ss</a> <a href="/23fw">23fw</a>
+						<a href="/my/22fw">22fw</a> <a href="/my/23ss">23ss</a> <a href="/my/23fw">23fw</a>
 					</div>
 				</div>
 
 				<div class="menu-item">
-					<a href="/my/community">Community</a>
+					<a href="/my/notice">Community</a>
 					<div class="sub-menu">
-						<a href="/my/Notice">Notice</a> <a href="/my/Contact">Contact</a>
+						<a href="/my/notice">Notice</a> <a href="/my/contact">Contact</a>
 					</div>
 				</div>
 			</div>
 
 			<div class="logo">
-				<a href="/view/mainLog"> <img src="/Long.png" alt="로고">
-				</a>
+				<img src="/Long.png" alt="로고">
 				<div class="small-logo">
 					<img src="/short.png" alt="작은 로고">
 				</div>
@@ -182,17 +181,21 @@ a {
 				</div>
 
 				<div class="menu-item">
-					<a href="/my/cart">Cart</a>
+					<div class="menu-item">
+						<div id="sub-menu-cart">
+							<a href="/my/cart">Cart</a>
+						</div>
+					</div>
 				</div>
 
 				<div class="menu-item">
 					<a href="/my/sns">SNS</a>
 				</div>
+
 				<div class="menu-item">
 					<!--화면 우측 상단에 로그인 시 userName 출력  -->
 					<div th:if="${dto.name != null}">
-						<a href="/info/mypage"><span id="welcome"
-							th:text="'환영합니다 ' + ${dto.name} + ' 님!'"></span></a>
+						<a href="/info/mypage"><span id="welcome" th:text="'환영합니다 ' + ${dto.name} + ' 님!'"></span></a>
 
 					</div>
 
