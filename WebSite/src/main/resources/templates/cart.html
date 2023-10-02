@@ -281,8 +281,8 @@ th {
 		<!-- 혜택 정보 -->
 		<div class="benefit-info">
 			<p>혜택정보</p>
-			<p>이도형 님은, [일반회원] 회원이십니다.</p>
-			<p>가용적립금 : 4,000원 | 쿠폰 : 0개</p>
+			<p th:text = "${username} + '님은, [일반회원] 회원이십니다.'">여기 이름하고 일반회원이십니다.. 인데 일반회원..?></p>
+			<p>가용적립금 : 4,000원 | 쿠폰 : 0개 </p>
 		</div>
 		<!-- 장바구니 항목 -->
 		<div class="cart-items">
@@ -290,74 +290,39 @@ th {
 				<!-- 항목 헤더 -->
 				<thead>
 					<tr>
-						<th><input type="checkbox" class="cart-item-checkbox"
-							id="selectAllCheckbox">전체 선택</th>
+						<th><input type="checkbox" class="cart-item-checkbox" id="selectAllCheckbox">전체 선택</th>
 						<th class="cart-item-image">이미지</th>
 						<th class="cart-item-details">상품 정보</th>
-						<th class="cart-item-price">판매가</th>
-						<th class="cart-item-quantity">수량</th>
 						<th class="cart-item-earnings">적립금</th>
 						<th class="cart-item-shipping">배송구분</th>
 						<th class="cart-item-shipping-fee">배송비</th>
-						<th class="cart-item-total">합계</th>
+						<th class="cart-item-total">판매가</th>
 						<th class="cart-item-select">선택</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="cart-item">
+					<tr class="cart-item" th:each="lists : ${list}">
 						<td><input type="checkbox" class="cart-item-checkbox"></td>
-						<td class="cart-item-image"><img src="product1.jpg"
-							alt="상품 이미지"></td>
+						<td class="cart-item-image">
+							<img style = "width : 80px; height: 80px;" th:src="${lists.product.imglink}" alt="상품 이미지"></td>
 						<td class="cart-item-details">
-							<h3>Embroidery Flower Shirt White</h3>
-							<p>옵션 : [M]</p>
-						</td>
-						<td class="cart-item-price">₩189,000</td>
-						<td class="cart-item-quantity">
-							<p>수량: 1</p>
-							<div>
-								<button>+</button>
-								<button>-</button>
-							</div>
+							<h3 th:text = "${lists.product.itemname}">여기에 아이템 이름 들어감</h3>
+							<p th:text="'옵션 : ' + ${lists.size}">옵션 : [M]</p>
 						</td>
 						<td class="cart-item-earnings"></td>
 						<td class="cart-item-shipping">기본구분</td>
 						<td class="cart-item-shipping-fee">무료</td>
-						<td class="cart-item-total">₩189,000</td>
+						<td class="cart-item-price" th:text = "'₩'+${lists.product.price}">₩189,000</td>
 
 						<td class="delete-buttons">
 							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
 							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
 						</td>
 					</tr>
-					<tr class="cart-item">
-						<td><input type="checkbox" class="cart-item-checkbox"></td>
-						<td class="cart-item-image"><img src="product1.jpg"
-							alt="상품 이미지"></td>
-						<td class="cart-item-details">
-							<h3>Embroidery Flower Shirt White</h3>
-							<p>옵션 : [M]</p>
-						</td>
-						<td class="cart-item-price">₩189,000</td>
-						<td class="cart-item-quantity">
-							<p>수량: 1</p>
-							<div>
-								<button>+</button>
-								<button>-</button>
-							</div>
-						</td>
-						<td class="cart-item-earnings"></td>
-						<td class="cart-item-shipping">기본구분</td>
-						<td class="cart-item-shipping-fee">무료</td>
-						<td class="cart-item-total">₩189,000</td>
-
-						<td class="delete-buttons">
-							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
-							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
-						</td>
-					</tr>
-
 				</tbody>
+				
+
+				
 			</table>
 			<table class="summary-table">
 				<!-- 테이블 내용 -->
