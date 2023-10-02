@@ -141,7 +141,8 @@ input[type="password"] {
 </head>
 <body>
 
-	<div th:replace="header2.html"></div>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+
 	<div class="container">
 		<h2>나의 배송지</h2>
 		<div class="form-container">
@@ -155,7 +156,7 @@ input[type="password"] {
 						th:value="${dto.addressRest}">
 				</div>
 
-				<button type="submit" class="btn-primary">배송지 변경하러가기</button>
+				<button type="submit" class="btn-primary">배송지 변경</button> | <button type="submit" class="btn-primary">배송지 추가</button>
 			</form>
 		</div>
 	</div>
