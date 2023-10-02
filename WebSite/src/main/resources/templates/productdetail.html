@@ -426,18 +426,20 @@ ul.minimenu li a:hover {
          <div id="description-section">
             <p th:text="${Product.asd}"></p>
          </div>
-         <!-- Description 섹션 (토글 기능 추가) -->
-         <select>
-            <option
-               th:each="sizeOption : ${#strings.arraySplit(Product.size, ',')}"
-               th:value="${sizeOption}" th:text="${sizeOption}"></option>
-         </select>
-         <!-- Buy Now와 Add to Cart 버튼 -->
-         <div class="buttons">
-            <button>Buy Now</button>
-            <input type="submit" value="Add - To - Cart" />
-         </div>
-      </div>
+         
+            <form action="/cart" method="post">
+            <div class="form-group">
+                <label for="size">SIZE:</label>
+                <select class="form-control" id="size" name="size">
+                    <option th:each="sizeOption : ${#strings.arraySplit(Product.size, ',')}" th:value="${sizeOption}" th:text="${sizeOption}"></option>
+                </select>
+            </div>
+            <!-- Buy Now와 Add to Cart 버튼 -->
+            <div class="buttons">
+                <button>Buy Now</button>
+                <button type="submit" th:value="${Product.itemcount}" name="product">cart</button>
+            </div>
+            </form>
    </div>
 
    <div class="footer">
