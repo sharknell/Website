@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Team Introduction</title>
@@ -35,7 +35,7 @@ body {
 </style>
 </head>
 <body>
-	<div th:replace="header.html"></div>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
 	<p class="team">Meet Our Team - GBO (GaeBal Office)</p>
 
 	<div class="team-member">
