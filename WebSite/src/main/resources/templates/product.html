@@ -32,7 +32,7 @@ li {
 </style>
 </head>
 <body>
-	<div th:replace="header.html"></div>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
 	<h1>Online Store</h1>
 	<ul>
 		<li th:each="items : ${list}">
