@@ -35,35 +35,20 @@ public class UserController {
 		this.memberService = memberService;
 	}
 
-	@GetMapping("/login")
-   public String loginPage() {
-      // 로그인 페이지 로직 처리
-      return "login"; // login.html 페이지로 이동
-   }
 
-   @GetMapping("/join")
-   public String joinPage() {
-      // 회원 가입 페이지 로직 처리
-      return "join"; // join.html 페이지로 이동
-   }
+ @GetMapping("/sns")
+public String snsPage(HttpSession session,Model model) {
+	if (dtoObject instanceof MemberJoinDto) {
+		MemberJoinDto dto = (MemberJoinDto) dtoObject;
+		model.addAttribute("dto", dto);
+		return "sns";
 
-   @GetMapping("/mypage")
-   public String mypage() {
-      // 회원 가입 페이지 로직 처리
-      return "mypage"; // mypage.html 페이지로 이동
-   }
-
-   @GetMapping("/cart")
-   public String cartPage() {
-      // 장바구니 페이지 로직 처리
-      return "cart"; // cart.html 페이지로 이동
-   }
-
-   @GetMapping("/sns")
-   public String snsPage() {
-      // SNS 페이지 로직 처리
-      return "sns"; // sns.html 페이지로 이동
-   }
+	} else if (dtoObject instanceof UserProfile) {
+		UserProfile userProfile = (UserProfile) dtoObject;	
+		model.addAttribute("dto", userProfile);
+		return "sns"; // online-store.html 페이지로 이동
+  }
+}
 
    @GetMapping("/")
    public String home() {
@@ -75,35 +60,54 @@ public class UserController {
       return "main"; // 메인 페이지
    }
 
-   @GetMapping("/aboutus")
-   public String aboutUs() {
-      // About Us 페이지 로직 처리
-      return "aboutUs"; // AboutUs.html 페이지로 이동
-   }
+ @GetMapping("/aboutus")
+	public String aboutUs(HttpSession session,Model model) {
+		// About Us 페이지 로직 처리
+		if (dtoObject instanceof MemberJoinDto) {
+			MemberJoinDto dto = (MemberJoinDto) dtoObject;
+			model.addAttribute("dto", dto);
+			return "aboutus";
 
-   @GetMapping("/onlinestore")
-   public String onlineStore() {
-      // Online Store 페이지 로직 처리
-      return "onlinestore"; // online-store.html 페이지로 이동
-   }
+		} else if (dtoObject instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) dtoObject;	
+			model.addAttribute("dto", userProfile);
+		return "aboutus"; // online-store.html 페이지로 이동
+	}
+}
 
-   @GetMapping("/collection")
-   public String collection() {
-      // Collection 페이지 로직 처리
-      return "collection"; // collection.html 페이지로 이동
-   }
+  @GetMapping("/onlinestore")
+	public String onlineStore(HttpSession session,Model model) {
+		// Online Store 페이지 로직 처리
+		if (dtoObject instanceof MemberJoinDto) {
+			MemberJoinDto dto = (MemberJoinDto) dtoObject;
+			model.addAttribute("dto", dto);
+			return "onlinestore";
 
+		} else if (dtoObject instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) dtoObject;	
+			model.addAttribute("dto", userProfile);
+		return "onlinestore"; // online-store.html 페이지로 이동
+	}
+}
+  @GetMapping("/collection")
+	public String collection(HttpSession session,Model model) {
+		if (dtoObject instanceof MemberJoinDto) {
+			MemberJoinDto dto = (MemberJoinDto) dtoObject;
+			model.addAttribute("dto", dto);
+			return "collection";
+
+		} else if (dtoObject instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) dtoObject;	
+			model.addAttribute("dto", userProfile);
+		return "collection"; // online-store.html 페이지로 이동
+	}
+}
    @GetMapping("/orderhistory")
    public String orderhistoryPage() {
       // SNS 페이지 로직 처리
       return "orderhistory"; // manageacc.html 페이지로 이동
    }
 
-   @GetMapping("/manageacc")
-   public String manageaccPage() {
-      // SNS 페이지 로직 처리
-      return "manageacc"; // manageacc.html 페이지로 이동
-   }
 
    @GetMapping("/points")
    public String pointsPage() {
@@ -117,54 +121,6 @@ public class UserController {
       return "manageposts"; // manageacc.html 페이지로 이동
    }
 
-   @GetMapping("/managename")
-   public String managenamePage() {
-      // SNS 페이지 로직 처리
-      return "managename"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/managepw")
-   public String managepwPage() {
-      // SNS 페이지 로직 처리
-      return "managepw"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/findpassword")
-   public String testpasswordPage() {
-      // SNS 페이지 로직 처리
-      return "findpassword"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/findpassword_drag")
-   public String testpassword_dragPage() {
-      // SNS 페이지 로직 처리
-      return "findpassword_drag"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/findemail")
-   public String findemailPage() {
-      // SNS 페이지 로직 처리
-      return "findemail"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/managemobile")
-   public String managemobilePage() {
-      // SNS 페이지 로직 처리
-      return "managemobile"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/manageaddress")
-   public String manageaddressPage() {
-      // SNS 페이지 로직 처리
-      return "manageaddress"; // manageacc.html 페이지로 이동
-   }
-
-   @GetMapping("/withdraw")
-   public String withdrawPage() {
-      // SNS 페이지 로직 처리
-      return "withdraw"; // manageacc.html 페이지로 이동
-   }
-
    @GetMapping("/cart2")
    public String cart2Page() {
       // SNS 페이지 로직 처리
@@ -173,40 +129,90 @@ public class UserController {
    
    
    @GetMapping("/notice")
-   public String notice() {
-	   return "notice";
-   }
+   public String notice(HttpSession session,Model model) {
+	  if (dtoObject instanceof MemberJoinDto) {
+			MemberJoinDto dto = (MemberJoinDto) dtoObject;
+			model.addAttribute("dto", dto);
+			return "notice";
+
+		} else if (dtoObject instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) dtoObject;	
+			model.addAttribute("dto", userProfile);
+		return "notice"; 
+	}
+}
    
-   @GetMapping("/review")
-   public String review(@ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO, Model model) {
+	@GetMapping("/review")
+	public String review(@ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO,
+			HttpSession session,Model model) {
+		if (dtoObject instanceof MemberJoinDto) {
+			MemberJoinDto dto = (MemberJoinDto) dtoObject;
+			ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
 
-	   ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
-	   
-	   model.addAttribute("reviewResult", reviewResult);
-	   
-	   return "review";
-   }
+			model.addAttribute("reviewResult", reviewResult);
+			model.addAttribute("dto", dto);
 
-   //벨트 제품 리스트로 맵핑belt
-   @GetMapping(value = "/product/{id}")
-   public String Product(Model model, @PathVariable("id") String id){
-       List<Product> entity = productService.Category_item_All(id);
-       model.addAttribute("list" ,entity);
-       return "product";
-   }
+			return "review";
 
-   @GetMapping(value = "/productdetail/{itemcount}")
+		} else if (dtoObject instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) dtoObject;
+			ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+
+			model.addAttribute("reviewResult", reviewResult);
+			model.addAttribute("dto", userProfile);
+
+			return "review";
+
+		}
+
+	}
+
+	// 벨트 제품 리스트로 맵핑belt
+	@GetMapping(value = "/product/{id}")
+	public String Product(HttpSession session,Model model, @PathVariable("id") String id) {
+		if (dtoObject instanceof MemberJoinDto) {
+			MemberJoinDto dto = (MemberJoinDto) dtoObject;
+			List<Product> entity = productService.Category_item_All(id);
+			model.addAttribute("dto", dto);
+			model.addAttribute("list", entity);
+			return "product";
+
+		} else if (dtoObject instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) dtoObject;
+			List<Product> entity = productService.Category_item_All(id);
+			model.addAttribute("dto", userProfile);
+			model.addAttribute("list", entity);
+			return "product";
+
+		}
+	}
+
+	@GetMapping(value = "/productdetail/{itemcount}")
    public String beltdetail(@ModelAttribute("Product") Product product, 
-		   					@ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO,
-		   					Model model){
-       ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
-       Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+		   	  @ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO,
+		   	  HttpSession session,
+			  Model model){
        
-       model.addAttribute("reviewResult", reviewResult);
-       model.addAttribute("Product", productOptional.get());
-       //주입하면 명칭을 알수가 없다.
+       if (dtoObject instanceof MemberJoinDto) {
+           MemberJoinDto dto = (MemberJoinDto) dtoObject;
+           ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+           Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+           model.addAttribute("dto",dto);
 
-       return "/productdetail";
-   }
+           model.addAttribute("reviewResult", reviewResult);
+           model.addAttribute("Product", productOptional.get());
+           return "/productdetail";
 
+        } else if (dtoObject instanceof UserProfile) {
+           UserProfile userProfile = (UserProfile) dtoObject;
+           ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+           Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+           model.addAttribute("dto",userProfile);
+
+           model.addAttribute("reviewResult", reviewResult);
+           model.addAttribute("Product", productOptional.get());
+         
+           return "/productdetail";
+
+        }
 }
