@@ -42,6 +42,10 @@ public class SpringSecurityConfig {
                         .requestMatchers("/status", "/static/**", "/view/join", "/auth/join","/my/","/my/main").permitAll()
                         .requestMatchers("/findEmail","/resultFindEmail","/findPw").permitAll()
                         .requestMatchers("/my/**").permitAll()
+                        .requestMatchers("/static/**").permitAll()
+                        .requestMatchers("/my/product/**").permitAll()
+                        .requestMatchers("/my/productdetail/**").permitAll()
+                        .requestMatchers("/my/onlinestore/**").permitAll()
                         
                         
                         .requestMatchers("/view/admin").hasRole("ADMIN")
