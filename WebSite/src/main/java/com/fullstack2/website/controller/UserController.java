@@ -199,7 +199,12 @@ public class UserController {
 	    return "review";
 
 	}
-	return "review";
+	else {
+	    ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+	    model.addAttribute("reviewResult", reviewResult);
+	    return "review";
+	}
+	
 
     }
 
@@ -222,8 +227,12 @@ public class UserController {
 	    model.addAttribute("list", entity);
 	    return "product";
 
+	}else {
+	    List<Product> entity = productService.Category_item_All(id);
+	    model.addAttribute("list", entity);
+	    return "product";
 	}
-	return "product";
+	
     }
 
     @GetMapping(value = "/productdetail/{itemcount}")
@@ -252,7 +261,13 @@ public class UserController {
 
 	    return "/productdetail";
 
+	}else {
+	    ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+	    Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+	    model.addAttribute("reviewResult", reviewResult);
+	    model.addAttribute("Product", productOptional.get());
+	    return "/productdetail";
 	}
-	return "/productdetail";
+	
     }
 }
