@@ -282,7 +282,7 @@ th {
 		<!-- 혜택 정보 -->
 		<div class="benefit-info">
 			<p>혜택정보</p>
-			<p th:text = "${dto.name} + '님은, [일반회원] 회원이십니다.'">여기 이름하고 일반회원이십니다.. 인데 일반회원..?></p>
+			<p th:text = "${username} + '님은, [일반회원] 회원이십니다.'">여기 이름하고 일반회원이십니다.. 인데 일반회원..?></p>
 			<p>가용적립금 : 4,000원 | 쿠폰 : 0개 </p>
 		</div>
 		<!-- 장바구니 항목 -->
@@ -305,7 +305,7 @@ th {
 					<tr class="cart-item" th:each="lists : ${list}">
 						<td><input type="checkbox" class="cart-item-checkbox"></td>
 						<td class="cart-item-image">
-							<img style = "width : 80px; height: 80px;" th:src="'/' + ${lists.product.imglink}" alt="상품 이미지"></td>
+							<img style = "width : 80px; height: 80px;" th:src="${lists.product.imglink}" alt="상품 이미지"></td>
 						<td class="cart-item-details">
 							<h3 th:text = "${lists.product.itemname}">여기에 아이템 이름 들어감</h3>
 							<p th:text="'옵션 : ' + ${lists.size}">옵션 : [M]</p>
@@ -344,7 +344,7 @@ th {
 			</table>
 		</div>
 		<div class="order-button">
-			<a href="/cart2" class="order-all">전체 상품 주문</a> <a href="/cart2"
+			<a href="/my/cart2" class="order-all">전체 상품 주문</a> <a href="/my/cart2"
 				class="order-check">선택 상품 주문</a>
 		</div>
 	</div>

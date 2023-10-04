@@ -1,380 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>장바구니</title>
-<link rel="stylesheet" href="styles.css">
-<style>
-/* 추가된 스타일 */
-body {
-	background-color: #f4f4f4;
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-}
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>결제 방법</title>
+   <link rel="stylesheet" href="styles.css">
+   <style>
+      /* 추가된 스타일 */
+      body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 100vh;
+         margin: 0;
+         background-color: #f4f4f4;
+      }
 
-.container {
-	margin-top: 40px;
-	margin-left: 20px;
-	margin-right: 20px;
-	margin-bottom: 20px;
-	padding: 20px;
-	background-color: #fff;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+      .container {
+         margin-top: 150px;
+         background-color: #fff;
+         padding: 20px;
+         border-radius: 5px;
+         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+         text-align: center;
+      }
 
-h2 {
-	margin-bottom: 20px;
-	color: #333;
-}
+      h2 {
+         margin-bottom: 20px;
+      }
 
-.cart-items {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	margin-bottom: 20px;
-	overflow-x: auto; /* 가로 스크롤 활성화 */
-}
+      .form-group {
+         margin-bottom: 20px;
+         text-align: left;
+      }
 
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
+      label {
+         display: block;
+         margin-bottom: 5px;
+         font-weight: bold;
+      }
 
-th, td {
-	text-align: center;
-	padding: 10px;
-}
+      input[type="text"],
+      input[type="password"] {
+         width: 100%;
+         padding: 10px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+      }
 
-th {
-	background-color: #f0f0f0;
-}
+      .select-group {
+         display: flex;
+         justify-content: space-between;
+      }
 
-.cart-item-checkbox {
-	appearance: none;
-	width: 18px;
-	height: 18px;
-	background-color: #fff;
-	border: 2px solid #ccc;
-	border-radius: 3px;
-	cursor: pointer;
-	position: relative;
-	margin-right: 10px;
-}
+      select {
+         width: 30%;
+         padding: 10px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+      }
 
-.cart-item-checkbox::before {
-	content: '';
-	display: block;
-	width: 100%;
-	height: 100%;
-	background-color: #007BFF;
-	border-radius: 2px;
-	opacity: 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	transition: opacity 0.2s ease-in-out;
-}
+      /* 추가된 스타일 */
+      .radio-group {
+         margin-top: 10px;
+         text-align: left;
+      }
 
-.cart-item-checkbox:checked::before {
-	opacity: 1;
-}
+      .radio-group label {
+         display: block;
+         margin-bottom: 5px;
+      }
 
-.page-steps {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 20px;
-}
+      .radio-group input[type="radio"] {
+         margin-right: 10px;
+      }
 
-.page-step {
-	flex: 1;
-	text-align: center;
-}
+      /* 추가된 스타일 */
+      .card-number-group {
+         display: none; /* 초기에는 숨김 */
+         margin-top: 20px;
+         text-align: left;
+      }
 
-.page-step-icon {
-	font-size: 24px;
-	margin-bottom: 5px;
-	color: #007BFF;
-}
+      .card-number-group label {
+         display: block;
+         margin-bottom: 5px;
+      }
 
-.page-step-title {
-	font-size: 18px;
-	font-weight: bold;
-	color: #333;
-}
+      .card-number-group input[type="text"] {
+         width: 20%; /* 크기 조정 */
+         padding: 10px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         margin-right: 10px;
+      }
 
-.benefit-info {
-	background-color: white;
-	color: black;
-	border-radius: 5px;
-	padding: 20px;
-	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-	margin-bottom: 20px;
-	font-family: "Arial", sans-serif;
-}
+      /* 추가된 스타일 */
+      .account-number-group {
+         display: none; /* 초기에는 숨김 */
+         margin-top: 20px;
+         text-align: left;
+      }
 
-.benefit-info p {
-	margin: 10px 0; /* 글자 사이 여백 추가 */
-	font-size: 16px;
-}
+      .account-number-group label {
+         display: block;
+         margin-bottom: 5px;
+      }
 
-.benefit-info p:first-child {
-	font-size: 20px;
-	font-weight: bold;
-	margin-bottom: 20px; /* 첫 번째 항목 아래 여백 추가 */
-}
-/* 두 번째 테이블 스타일 */
-.summary-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
+      .account-number-group input[type="text"] {
+         width: 50%;
+         padding: 10px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         margin-right: 10px;
+      }
 
-.summary-table th, .summary-table td {
-	text-align: center;
-	padding: 10px;
-}
+      .btn-primary {
+         background-color: #007bff;
+         color: #fff;
+         padding: 10px 20px;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+      }
 
-.summary-table th {
-	background-color: #f0f0f0;
-	font-weight: bold;
-	color: #333;
-}
-
-/* 두 번째 테이블 내용 행 스타일 */
-.summary-table tbody tr {
-	font-size: 18px;
-	font-weight: bold;
-	color: #007BFF;
-}
-
-.summary-table tbody td {
-	padding: 10px 20px;
-	border-top: 1px solid #ccc;
-	font-size: 18px;
-}
-
-/* 두 번째 테이블 총합 금액 스타일 */
-.summary-table tfoot {
-	background-color: #f0f0f0;
-}
-
-.summary-table tfoot tr td {
-	font-size: 18px;
-	font-weight: bold;
-	color: #333;
-	padding: 10px 20px;
-}
-
-/* 버튼 스타일 */
-.order-all, .order-check {
-	padding: 10px 20px; /* 버튼 내부 여백 */
-	background-color: #007BFF; /* 배경색 */
-	color: #fff; /* 텍스트 색상 */
-	border: none; /* 테두리 제거 */
-	border-radius: 5px; /* 둥근 모서리 */
-	cursor: pointer;
-	font-size: 16px; /* 폰트 크기 */
-	margin-right: 10px; /* 오른쪽 여백 */
-	text-align: center; /* 텍스트 가운데 정렬 */
-	display: inline-block; /* 인라인 요소로 표시 */
-	transition: background-color 0.3s; /* 호버 시 배경색 전환 효과 */
-}
-
-/* 호버 시 배경색 변경 */
-.order-all:hover, .order-check:hover {
-	background-color: #0056b3; /* 호버 시 배경색 변경 */
-}
-
-.order-button {
-	text-align: center;
-}
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-	// 전체 선택/해제 체크 박스 클릭 시
-	$(document).ready(function() {
-		$('#selectAllCheckbox').on('click', function() {
-			$('.cart-item-checkbox').prop('checked', this.checked);
-		});
-	});
-
-	// 페이지가 로드될 때 실행
-	window.addEventListener('load', function() {
-		// 전체 상품 주문 버튼 클릭 시
-		var orderAllButton = document.querySelector('.order-all');
-		orderAllButton.addEventListener('click', function() {
-			// 모든 체크박스 선택
-			var cartItemCheckboxes = document
-					.querySelectorAll('.cart-item-checkbox');
-			for (var i = 0; i < cartItemCheckboxes.length; i++) {
-				cartItemCheckboxes[i].checked = true;
-			}
-
-			// 주문 페이지로 이동 (cartn2.html로 가정)
-			location.href = 'cartn2.html';
-		});
-
-		// 선택 상품 주문 버튼 클릭 시
-		var orderSelectedButton = document.querySelector('.order-check');
-		orderSelectedButton.addEventListener('click', function() {
-			// 선택된 체크박스 찾기
-			var selectedItems = [];
-			var cartItemCheckboxes = document
-					.querySelectorAll('.cart-item-checkbox');
-			for (var i = 0; i < cartItemCheckboxes.length; i++) {
-				if (cartItemCheckboxes[i].checked) {
-					selectedItems.push(i); // 선택된 상품 인덱스 추가
-				}
-			}
-
-			// 선택된 상품들에 대한 처리 (예: 선택된 상품만 주문 처리)
-			if (selectedItems.length > 0) {
-				// 주문 페이지로 이동 (cartn2.html로 가정)
-				location.href = 'cartn2.html';
-			} else {
-				alert('선택된 상품이 없습니다.');
-			}
-		});
-	});
-</script>
-
-<script src="/js/cart.js"></script>
+      .btn-primary:hover {
+         background-color: #0056b3;
+      }
+   </style>
 </head>
 <body>
-	<div th:replace="header.html"></div>
+<div th:replace="${dto != null ? (dto.provider == '일반가입' ? 'header2.html' : (dto.provider == 'kakao' || dto.provider == 'naver' || dto.provider == 'google' ? 'header3.html' : 'header.html')) : 'header.html'}"></div>
+<div class="container">
+   <h2>배송지 주소 및 결제 방법</h2>
+   <form class="form-signin" id='join_form'>
+      <div class="form-group">
+         <label for="email">이메일</label>
+         <input type="email" id="email" name="email" required>
+      </div>
 
-	<div class="container">
-		<h2>장바구니</h2>
-		<hr>
-		<!-- 페이지 단계 -->
-		<div class="page-steps">
-			<div class="page-step">
-				<div class="page-step-icon">1</div>
-				<div class="page-step-title">장바구니</div>
-			</div>
-			<div class="page-step">
-				<div class="page-step-icon">2</div>
-				<div class="page-step-title">주문서 작성</div>
-			</div>
-			<div class="page-step">
-				<div class="page-step-icon">3</div>
-				<div class="page-step-title">결제 완료</div>
-			</div>
-			<div class="page-step">
-				<div class="page-step-icon">4</div>
-				<div class="page-step-title">주문 완료</div>
-			</div>
-		</div>
+      <div class="form-group">
+         <label for="name">배송 받으시는 분 이름 <span>*</span></label>
+         <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+         <label for="address">주소 <span>*</span></label>
+         <div class="select-group">
+            <input type="text" id="postal-code" name="postalCode" placeholder="우편번호" required>
+            <input type="text" id="address-basic" name="addressBasic" placeholder="기본주소" required>
+            <input type="text" id="address-rest" name="addressRest" placeholder="나머지주소 (선택입력가능)">
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="mobile">휴대전화 <span>*</span></label>
+         <div class="select-group">
+            <input type="text" id="mobile-area" name="mobileArea" placeholder="010">
+            <input type="text" id="mobile-number" name="mobileNumber" placeholder="-">
+            <input type="text" id="mobile-ext" name="mobileExt" placeholder="-">
+         </div>
+      </div>
 
-		<hr>
-		<!-- 혜택 정보 -->
-		<div class="benefit-info">
-			<p>혜택정보</p>
-			<p>이도형 님은, [일반회원] 회원이십니다.</p>
-			<p>가용적립금 : 4,000원 | 쿠폰 : 0개</p>
-		</div>
-		<!-- 장바구니 항목 -->
-		<div class="cart-items">
-			<table>
-				<!-- 항목 헤더 -->
-				<thead>
-					<tr>
-						<th><input type="checkbox" class="cart-item-checkbox"
-							id="selectAllCheckbox">전체 선택</th>
-						<th class="cart-item-image">이미지</th>
-						<th class="cart-item-details">상품 정보</th>
-						<th class="cart-item-price">판매가</th>
-						<th class="cart-item-quantity">수량</th>
-						<th class="cart-item-earnings">적립금</th>
-						<th class="cart-item-shipping">배송구분</th>
-						<th class="cart-item-shipping-fee">배송비</th>
-						<th class="cart-item-total">합계</th>
-						<th class="cart-item-select">선택</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="cart-item">
-						<td><input type="checkbox" class="cart-item-checkbox"></td>
-						<td class="cart-item-image"><img src="product1.jpg"
-							alt="상품 이미지"></td>
-						<td class="cart-item-details">
-							<h3>Embroidery Flower Shirt White</h3>
-							<p>옵션 : [M]</p>
-						</td>
-						<td class="cart-item-price">₩189,000</td>
-						<td class="cart-item-quantity">
-							<p>수량: 1</p>
-							<div>
-								<button>+</button>
-								<button>-</button>
-							</div>
-						</td>
-						<td class="cart-item-earnings"></td>
-						<td class="cart-item-shipping">기본구분</td>
-						<td class="cart-item-shipping-fee">무료</td>
-						<td class="cart-item-total">₩189,000</td>
+      <!-- 결제 방법 선택 (라디오 버튼) -->
+      <div class="radio-group">
+         <label>결제 방법:</label>
+         <input type="radio" id="cardPayment" name="paymentMethod" value="card" required>
+         <label for="cardPayment">카드 결제</label>
 
-						<td class="delete-buttons">
-							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
-							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
-						</td>
-					</tr>
-					<tr class="cart-item">
-						<td><input type="checkbox" class="cart-item-checkbox"></td>
-						<td class="cart-item-image"><img src="product1.jpg"
-							alt="상품 이미지"></td>
-						<td class="cart-item-details">
-							<h3>Embroidery Flower Shirt White</h3>
-							<p>옵션 : [M]</p>
-						</td>
-						<td class="cart-item-price">₩189,000</td>
-						<td class="cart-item-quantity">
-							<p>수량: 1</p>
-							<div>
-								<button>+</button>
-								<button>-</button>
-							</div>
-						</td>
-						<td class="cart-item-earnings"></td>
-						<td class="cart-item-shipping">기본구분</td>
-						<td class="cart-item-shipping-fee">무료</td>
-						<td class="cart-item-total">₩189,000</td>
+         <input type="radio" id="bankTransfer" name="paymentMethod" value="bank" required>
+         <label for="bankTransfer">무통장 입금</label>
+      </div>
 
-						<td class="delete-buttons">
-							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
-							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
-						</td>
-					</tr>
-					
-				</tbody>
-			</table>
-			<table class="summary-table">
-				<!-- 테이블 내용 -->
-				<thead>
-					<tr>
-						<th>총 상품금액</th>
-						<th>총 배송비</th>
-						<th>결제예정금액</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="total-price">/*여기에 총 상품 금액이 나와야함*/</td>
-						<td class="delivery-price">/*여기에 배송비가 나와야함 4000천원으로 가정*/</td>
-						<td class="total-price">/*여기에 총 상품 금액이 나와야함*/</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="order-button">
-			<button class="order-all">전체 상품 주문</button>
-			<button class="order-check">선택 상품 주문</button>
-		</div>
-	</div>
+      <!-- 카드 번호 입력 -->
+      <div class="card-number-group">
+         <label for="cardNumber">카드 번호:</label>
+         <input type="text" id="cardNumber1" name="cardNumber1" maxlength="4" required>
+         <input type="text" id="cardNumber2" name="cardNumber2" maxlength="4" required>
+         <input type="text" id="cardNumber3" name="cardNumber3" maxlength="4" required>
+         <input type="text" id="cardNumber4" name="cardNumber4" maxlength="4" required>
+      </div>
+
+      <!-- 무통장 입금 계좌번호 입력 -->
+      <div class="account-number-group">
+         <label for="accountNumber">은행 선택:</label>
+         <select id="bankSelection" name="bankSelection">
+         		<option value="non">------</option>
+            <option value="shinhan">신한은행</option>
+            <option value="kb">국민은행</option>
+            <option value="woori">우리은행</option>
+            <!-- 다른 은행 옵션을 추가할 수 있습니다. -->
+         </select>
+         <p>선택한 은행 계좌번호: <span id="accountNumber">은행을 선택하세요.</span></p>
+      </div>
+
+   </form>
+   <button class="btn-primary" type="submit">결제하기</button>
+</div>
+<!-- 버튼 클릭 시 모달 창을 열기 위한 HTML 추가 -->
+<div id="myModal" class="modal" style="display: none;">
+   <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>결제 완료</h3>
+      <p id="paymentMessage"></p>
+   </div>
+</div>
+
+<script>
+   const paymentButton = document.querySelector('.btn-primary');
+   paymentButton.disabled = true; // 초기에 비활성화
+
+   // 필수 입력란의 값을 모두 입력했는지 확인하는 함수
+   function isFormValid() {
+      const email = document.getElementById('email').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const postalCode = document.getElementById('postal-code').value.trim();
+      const addressBasic = document.getElementById('address-basic').value.trim();
+      const addressRest = document.getElementById('address-rest').value.trim();
+      const mobileArea = document.getElementById('mobile-area').value.trim();
+      const mobileNumber = document.getElementById('mobile-number').value.trim();
+      const mobileExt = document.getElementById('mobile-ext').value.trim();
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      const cardNumberInputs = document.querySelectorAll('.card-number-group input[type="text"]');
+      const bankSelection = document.getElementById('bankSelection');
+      const bankAccountNumber = document.getElementById('accountNumber').textContent.trim();
+
+      if (
+         email !== '' &&
+         name !== '' &&
+         postalCode !== '' &&
+         addressBasic !== '' &&
+         mobileArea !== '' &&
+         mobileNumber !== '' &&
+         paymentMethod !== null
+      ) {
+         if (paymentMethod.value === 'card') {
+            // 카드 결제 선택 시 카드 번호 확인
+            const cardNumber = Array.from(cardNumberInputs).map(input => input.value.trim()).join('');
+            return cardNumber.length === 16; // 카드 번호는 16자리여야 함
+         } else if (paymentMethod.value === 'bank') {
+            // 무통장 입금 선택 시 은행 선택 및 계좌번호 확인
+            return bankSelection.value !== '' && bankAccountNumber !== '은행을 선택하세요.';
+         }
+      }
+      return false;
+   }
+
+   // 입력란의 값을 변경할 때마다 폼의 유효성을 검사하여 결제 버튼을 활성화 또는 비활성화
+   const formInputs = document.querySelectorAll('.form-signin input, .form-signin select');
+   formInputs.forEach(input => {
+      input.addEventListener('input', function () {
+         paymentButton.disabled = !isFormValid();
+      });
+   });
+
+   // 결제 방법 라디오 버튼 변경 시 이벤트 처리
+   const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+   paymentMethodRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+         paymentButton.disabled = !isFormValid();
+      });
+   });
+
+   // 결제 버튼 클릭 시 이벤트 처리
+   paymentButton.addEventListener('click', function () {
+      if (isFormValid()) {
+         // 결제 정보 가져오기
+         const name = document.getElementById('name').value.trim();
+         const postalCode = document.getElementById('postal-code').value.trim();
+         const addressBasic = document.getElementById('address-basic').value.trim();
+         const addressRest = document.getElementById('address-rest').value.trim();
+         const mobileArea = document.getElementById('mobile-area').value.trim();
+         const mobileNumber = document.getElementById('mobile-number').value.trim();
+         const mobileExt = document.getElementById('mobile-ext').value.trim();
+         const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+         const orderMessage = '주문번호: ' + generateRandomOrderNumber();
+
+         // 새 창을 열어 결과를 표시
+         const resultWindow = window.open('', '결제 결과', 'width=500,height=500');
+         resultWindow.document.write('<h3>결제가 완료되었습니다.</h3>');
+         resultWindow.document.write('<p>결제 정보:</p>');
+         resultWindow.document.write('<p>이름: ' + name + '</p>');
+         resultWindow.document.write('<p>주소: ' + postalCode + ', ' + addressBasic + ', ' + addressRest + '</p>');
+         resultWindow.document.write('<p>휴대전화: ' + mobileArea + '-' + mobileNumber + '-' + mobileExt + '</p>');
+         resultWindow.document.write('<p>' + orderMessage + '</p>');
+
+         if (paymentMethod === 'bank') {
+            // 무통장 입금인 경우 은행 및 계좌번호 표시
+            const bankSelection = document.getElementById('bankSelection').value;
+            const bankAccountNumber = document.getElementById('accountNumber').textContent.trim();
+            resultWindow.document.write('<p>은행: ' + bankSelection + '</p>');
+            resultWindow.document.write('<p>계좌번호: ' + bankAccountNumber + '</p>');
+         }
+
+         // 확인 버튼 추가
+         resultWindow.document.write('<button id="confirmButton">확인</button>');
+
+         // 확인 버튼 클릭 시 새 창 닫기 및 원래 창 이동
+         resultWindow.document.getElementById('confirmButton').addEventListener('click', function () {
+            resultWindow.close(); // 새 창 닫기
+            window.location.href = '/view/mainLog'; // 원래 창 이동
+         });
+      }
+      else {
+    	  const errorWindow = window.open('', '결제 결과', 'width=500, height=500');
+    	  errorWindow.document.write('<h3>결제 실패</h3>');
+    	  errorWindow.document.write('<p>빈칸을 채우시오.</p>');
+    	  
+      }
+      
+   });
+
+   // 무작위 주문번호 생성 함수
+   function generateRandomOrderNumber() {
+      return Math.floor(1000000000 + Math.random() * 9000000000);
+   }
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+
+   const cardPaymentRadio = document.getElementById('cardPayment');
+   const bankTransferRadio = document.getElementById('bankTransfer');
+   const cardNumberGroup = document.querySelector('.card-number-group');
+   const accountNumberGroup = document.querySelector('.account-number-group');
+   const bankSelection = document.getElementById('bankSelection');
+   const accountNumber = document.getElementById('accountNumber');
+
+   cardPaymentRadio.addEventListener('change', function () {
+      cardNumberGroup.style.display = 'block';
+      accountNumberGroup.style.display = 'none';
+   });
+
+   bankTransferRadio.addEventListener('change', function () {
+      cardNumberGroup.style.display = 'none';
+      accountNumberGroup.style.display = 'block';
+   });
+
+   bankSelection.addEventListener('change', function () {
+      const selectedBank = bankSelection.value;
+      switch (selectedBank) {
+         case 'shinhan':
+            accountNumber.textContent = '신한은행 110 - 253 - 111111 이도형';
+            break;
+         case 'kb':
+            accountNumber.textContent = '국민은행 123 - 456 - 789012 홍길동';
+            break;
+         case 'woori':
+            accountNumber.textContent = '우리은행 987 - 654 - 321098 강감찬';
+            break;
+            // 다른 은행 계좌번호를 추가할 수 있습니다.
+         default:
+            accountNumber.textContent = '은행을 선택하세요.';
+            break;
+      }
+   });
+</script>
 </body>
 </html>
