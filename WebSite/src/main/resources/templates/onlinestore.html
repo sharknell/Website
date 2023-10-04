@@ -32,7 +32,7 @@ li {
 </style>
 </head>
 <body>
-	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+	<div th:replace="${dto != null ? (dto.provider == '일반가입' ? 'header2.html' : (dto.provider == 'kakao' || dto.provider == 'naver' || dto.provider == 'google' ? 'header3.html' : 'header.html')) : 'header.html'}"></div>
 	<h1>Online Store</h1>
 	<p>Select a category:</p>
 	<ul>
