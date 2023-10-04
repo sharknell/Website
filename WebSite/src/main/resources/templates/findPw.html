@@ -1,172 +1,234 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<title>비밀번호 찾기</title>
-
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<title>이메일 찾기</title>
 <style>
 body {
-   background-image: url('logout2.jpg'); /* fixed 까지 배경 관리 하는 코드 */
-   background-size: cover;
-   background-repeat: no-repeat;
-   background-attachment: fixed;
-   font-family: Arial, sans-serif;
-   background-color: #f4f4f4;
-   background-position: center top 40px;
+	background-image: url('wl4.jpg'); /* fixed 까지 배경 관리 하는 코드 */
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	background-position: center top -350px;
 }
 
 .container {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
+	cursor: grab;
+	position: absolute;
+	left: 40%;
+	top: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/*  height: 100vh;*/
+	cursor: grab;
+	top: 20%;
+	top: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 40%;
+	top: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	justify-content: center;
+	align-items: center;
+	align-items: center;
 }
 
 .modal {
-   max-width: 400px;
-   width: 100%;
-   background-color: #fff;
-   border-radius: 5px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-   background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경에 60% 투명도 설정 */
-   margin-top: -7%;
+	max-width: 400px;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경에 60% 투명도 설정 */
+	margin-top: 10%;
 }
 
 .modal-header {
-   background-color: #333;
-   color: #fff;
-   padding: 15px;
-   text-align: center;
-   border-top-left-radius: 5px;
-   border-top-right-radius: 5px;
+	background-color: #333;
+	color: #fff;
+	padding: 15px;
+	text-align: center;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 .modal-title {
-   margin: 0;
+	margin: 0;
 }
 
 .modal-body {
-   padding: 20px;
+	padding: 20px;
 }
 
 .info {
-   color: #ac2925;
-   text-align: center;
+	color: #ac2925;
+	text-align: center;
 }
 
 .form-group {
-   margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 label {
-   font-weight: bold;
+	font-weight: bold;
 }
 
 .form-control {
-   width: 70%;
-   margin-left: 5px;
-   padding: 10px;
-   border: 1px solid #ccc;
-   border-radius: 5px;
+	width: 70%;
+	margin-left: 5px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 .btn-success {
-   background-color: #5bc0de;
-   border: none;
-   color: #fff;
-   padding: 10px;
-   border-radius: 5px;
-   cursor: pointer;
+	background-color: #5bc0de;
+	border: none;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .btn-success:hover {
-   background-color: #2aabd2;
+	background-color: #2aabd2;
 }
 
 .message {
-   text-align: center;
-   color: red;
-   margin-top: 10px;
+	text-align: center;
+	color: red;
+	margin-top: 10px;
 }
 
 .modal-footer {
-   padding: 15px;
-   text-align: right;
-   border-bottom-left-radius: 5px;
-   border-bottom-right-radius: 5px;
+	padding: 15px;
+	text-align: right;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .btn-danger {
-   background-color: #d9534f;
-   border: none;
-   color: #fff;
-   padding: 10px 20px;
-   border-radius: 5px;
-   cursor: pointer;
+	background-color: #d9534f;
+	border: none;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .btn-danger:hover {
-   background-color: #c9302c;
+	background-color: #c9302c;
+}
+
+.draggable-header {
+	cursor: grab;
 }
 </style>
+<script th:inline="javascript">
+	/* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
+	var message = /*[[${param.message}]]*/'';
+
+	$(document).ready(function() {
+		// 로그인 성공 또는 실패 메시지를 가져와서 표시
+		console.log('message 변수 값:', message[0]); // 변수 값을 로깅
+		if (message[0] === '이메일전송') {
+			console.log(message[0]);
+			alert("등록하신 이메일로 임시비밀번호를 전송했습니다.");
+		} else if (message[0] === '이메일전송실패') {
+			console.log(message[0]);
+			alert("등록하신 이메일로 임시비밀번호를 전송을 실패했습니다.");
+		}
+	});
+
+	/* 드래그 함수 */
+	$(document).ready(function() {
+		$(".draggable-header").mousedown(function(e) {
+
+			var container = $(".container");
+			var isDragging = true;
+			var offsetX = e.clientX - container.offset().left;
+			var offsetY = e.clientY - container.offset().top;
+			container.css('cursor', 'grabbing');
+
+			$(document).mousemove(function(e) {
+				if (isDragging) {
+					var currentX = e.clientX - offsetX;
+					var currentY = e.clientY - offsetY;
+					container.css('left', currentX + 'px');
+					container.css('top', currentY + 'px');
+				}
+			});
+
+			$(document).mouseup(function() {
+				if (isDragging) {
+					isDragging = false;
+					container.css('cursor', 'grab');
+				}
+			});
+		});
+	});
+</script>
 </head>
 <body>
-   <div th:replace="header.html"></div>
-   <div class="container">
-      <!-- Modal -->
-      <div class="modal" id="myModal">
-         <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h4 class="modal-title">비밀번호 찾기</h4>
-               </div>
-               <div class="modal-body">
-                  <p class="info">입력된 정보로 임시 비밀번호가 전송됩니다.</p>
-                  <hr>
-                  <form role="form" method="post" action="/findPw">
-                     <div class="form-group">
-                        <label for="userEmail">Email</label> <input type="text"
-                           class="form-control" id="userEmail" name="userEmail"
-                           placeholder="가입시 등록한 이메일을 입력하세요.">
-                     </div>
-                     <div class="form-group">
-                        <label for="userName">이름</label> <input type="text"
-                           class="form-control" id="userName" name="userName"
-                           placeholder="가입시 등록한 이름을 입력하세요.">
-                     </div>
-                     <button type="submit" class="btn btn-success btn-block"
-                        id="checkEmail">OK</button>
-                  </form>
-                  <hr>
-                  <div class="message" id="checkMsg"></div>
-               </div>
-               <div class="modal-footer">
-                  <form method="get" action="/login">
-                     <input type="submit" class="btn btn-danger" value="Cancel">
-                  </form>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <script th:inline="javascript">
-      /* Thymeleaf 변수를 JavaScript 변수로 가져오기 */
-      var message = /*[[${param.message}]]*/'';
 
-      $(document).ready(function() {
-         // 로그인 성공 또는 실패 메시지를 가져와서 표시
-         console.log('message 변수 값:', message[0]); // 변수 값을 로깅
-         if (message[0] === '이메일전송') {
-            console.log(message[0]);
-            alert("등록하신 이메일로 임시비밀번호를 전송했습니다.");
-         } else if (message[0] === '이메일전송실패') {
-            console.log(message[0]);
-            alert("등록하신 이메일로 임시비밀번호를 전송을 실패했습니다.");
-         }
-      });
-   </script>
+	<div th:replace="header.html"></div>
+	<div class="container" id="draggable-container">
+		<!-- Modal -->
+		<div class="modal" id="myModal">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="modal-title draggable-header">
+							<h4 class="modal-title">비밀번호 찾기</h4>
+						</div>
+					</div>
+					<div class="modal-body">
+						<p class="info">입력된 정보로 임시 비밀번호가 전송됩니다.</p>
+						<hr>
+						<form role="form" method="post" action="/findPw">
+							<div class="form-group">
+								<label for="userEmail">Email</label> <input type="text"
+									class="form-control" id="userEmail" name="userEmail"
+									placeholder="가입시 등록한 이메일을 입력하세요.">
+							</div>
+							<div class="form-group">
+								<label for="userName">이름</label> <input type="text"
+									class="form-control" id="userName" name="userName"
+									placeholder="가입시 등록한 이름을 입력하세요.">
+							</div>
+							<button type="submit" class="btn btn-success btn-block"
+								id="checkEmail">OK</button>
+						</form>
+						<hr>
+						<div class="message" id="checkMsg"></div>
+					</div>
+					<div class="modal-footer">
+						<form method="get" action="/login">
+							<input type="submit" class="btn btn-danger" value="Cancel">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
