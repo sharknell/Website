@@ -337,4 +337,38 @@ public class ModifyMemberInfoController {
 		return "withdraw";
 
 	}
+    @GetMapping("/withdraw2")
+    public String withdraw2(Model model, HttpSession session) {
+	Object dtoObject = session.getAttribute("dto");
+
+	if (dtoObject instanceof UserProfile) {
+	    UserProfile userProfile = (UserProfile) dtoObject;
+	    model.addAttribute("dto", userProfile);
+
+	    return "withdraw2";
+	}
+	return "withdraw2";
+    }
+
+    @PostMapping("/withdraw2")
+    public String postWithdraw2(@RequestParam("email") String email,
+	    Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	Object dtoObject = session.getAttribute("dto");
+	if (dtoObject instanceof UserProfile) {
+	    UserProfile userProfile = (UserProfile) dtoObject;
+	    model.addAttribute("dto", userProfile);
+	    if (email.equals(userProfile.getEmail())) {
+		query.remove2(email);
+		redirectAttributes.addAttribute("message", "탈퇴완료");
+		return "redirect:/my/main";
+	     } 
+	    }
+	    else {
+		return "redirect:/info/withdraw2";
+	    }
+
+	
+	return "withdraw2";
+
+    }
 }
