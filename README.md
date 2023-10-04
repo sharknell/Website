@@ -33,6 +33,7 @@
     <p>1. 장바구니 (Cart) 기능 추가</p> <p> 2023.10.02 백승현 Cart 구현 완료 </p>
     <p>2. 컨틀롤러(Mapping) 버그 수정 예정</p>
     <p>3. 비로그인시 메인로고 안보이는 버그 수정 예정</p>
+    <p>4. 결제 기능 추가 예정</p>
 
     상품DB에 임시로 인서트해서 테스트 할 때 사용하세요.
     INSERT INTO product (itemcount, category, description, imglink, imglink1, imglink2, imglink3, itemname, price, size, main_link, sizefit, asd) 
