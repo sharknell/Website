@@ -39,10 +39,10 @@ public class SpringSecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/status", "/static/**", "/view/join", "/auth/join","/my/","/my/main").permitAll()
+                        .requestMatchers("/status", "/view/join", "/auth/join","/my/","/my/main").permitAll()
                         .requestMatchers("/findEmail","/resultFindEmail","/findPw").permitAll()
                         .requestMatchers("/my/**").permitAll()
-                        .requestMatchers("/resources/static/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/my/product/**").permitAll()
                         .requestMatchers("/my/productdetail/**").permitAll()
                         .requestMatchers("/my/onlinestore/**").permitAll()
