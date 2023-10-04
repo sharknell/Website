@@ -45,9 +45,9 @@ body {
 /* 가운데 큰 사진 영역 */
 .description {
    flex: 2;
-   margin-top: 50px;
+   margin-top: 40px;
    padding: 30px;
-   margin-left: -10px;
+   margin-left: 60px;
    display: flex;
    flex-direction: column;
    align-items: flex-start;
@@ -114,14 +114,14 @@ h2 {
 }
 /* 큰 이미지 영역 */
 .main-image {
-   max-width: 100%;
+   max-width: 80%;
    /* 이미지를 부모 요소의 크기에 맞게 표시 */
    display: block;
    margin: 0 auto;
    /* 이미지를 가운데 정렬 */
    height: auto;
    /* 세로 비율을 유지하면서 이미지 크기 조정 */
-   max-height: 100%; /* 이미지 높이를 왼쪽 이미지 리스트와 동일하게 설정 */
+   max-height: 80%; /* 이미지 높이를 왼쪽 이미지 리스트와 동일하게 설정 */
 }
 /* 라디오 버튼 스타일링 */
 label {
@@ -395,8 +395,8 @@ ul.minimenu li a:hover {
    <div class="container">
 
       <div class="image-list">
-         <img th:src="'/' + ${Product.imglink}" alt="제품 이미지 1"> <img
-            th:src="'/' + ${Product.imglink1}" alt="제품 이미지 2"> <img
+         <img th:src="'/' + ${Product.imglink}" alt="제품 이미지 1"> 
+         <img th:src="'/' + ${Product.imglink1}" alt="제품 이미지 2"> <img
             th:src="'/' + ${Product.imglink2}" alt="제품 이미지 3"> <img
             th:src="'/' + ${Product.imglink3}" alt="제품 이미지 4">
       </div>
@@ -404,7 +404,7 @@ ul.minimenu li a:hover {
       <!-- 우측 설명 영역 -->
       <div class="description">
          <!-- 큰 이미지 영역 -->
-         <img th:src="'/' + ${Product.mainLink}" alt="제품 이미지 1"
+        <img  th:src="'/' + ${Product.mainLink}" alt="상품 이미지">
             class="main-image" id="mainImage">
       </div>
       <div class="details">
@@ -440,6 +440,7 @@ ul.minimenu li a:hover {
                 <button type="submit" th:value="${Product.itemcount}" name="product">cart</button>
             </div>
             </form>
+   </div>
    </div>
 
    <div class="footer">
