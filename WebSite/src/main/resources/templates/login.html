@@ -121,17 +121,17 @@ body {
 			<label for="username">이메일</label> <input type="text" id="username"
 				name="email" required> <label for="password">비밀번호</label>
 			<input type="password" id="password" name="password" required>
-			<button type="submit">로그인</button>
+			<button type="submit">로그인</button><br>
+		</form>
+		
+		<form action="/login" method="POST">
+			<a href="/oauth2/authorization/kakao" class="btn btn-third active" role="button"><img src="/kakao_login_medium_narrow.png"></a><br>
+			<a href="/oauth2/authorization/google" class="btn btn-sm btn-success active" role="button"><img src="/btn_google_signin_light_pressed_web.png"></a><br>
+			<a href="/oauth2/authorization/naver" class="btn btn-sm btn-success active" role="button"><img src="/naver.png"></a><br>
 		</form>
 		<div class="register-button">
-			<a href="join.html">회원가입</a>
+			<a href="/view/join">회원가입</a>
 		</div>
-		<form action="/login" method="POST">
-			<a href="/oauth2/authorization/kakao" class="btn btn-third active" role="button">Kakao Login</a><br>
-			<a href="/oauth2/authorization/google" class="btn btn-sm btn-success active" role="button">Google Login</a><br>
-			<a href="/oauth2/authorization/naver" class="btn btn-sm btn-success active" role="button">Naver Login</a><br>
-		</form>
-
 		<div class="find-links">
 		 <a href="/findEmail">아이디 찾기</a>| <a href="/findPw">비밀번호 찾기</a>
 		 
