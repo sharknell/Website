@@ -391,7 +391,7 @@ ul.minimenu li a:hover {
 </style>
 </head>
 <body>
-   <div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+   <div th:replace="${dto != null ? (dto.provider == '일반가입' ? 'header2.html' : (dto.provider == 'kakao' || dto.provider == 'naver' || dto.provider == 'google' ? 'header3.html' : 'header.html')) : 'header.html'}"></div>
    <div class="container">
 
       <div class="image-list">
@@ -427,7 +427,7 @@ ul.minimenu li a:hover {
             <p th:text="${Product.asd}"></p>
          </div>
          
-            <form action="/cart" method="post">
+            <form action="/my/cart" method="post">
             <div class="form-group">
                 <label for="size">SIZE:</label>
                 <select class="form-control" id="size" name="size">
