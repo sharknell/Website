@@ -22,6 +22,9 @@
         <li><strong>2023.09.26</strong> - 형상 관리 완료</li>
         <li><strong>2023.10.02</strong> - 카트 업데이트 완료 </li>
         <li><strong>2023.10.02</strong> - 백승현 DB 에 사진 밀어 넣기 작업 중 ( ~10.03) </li>
+        <li><strong>2023.10.02</strong> - 백승현 DB 에 사진 경로 작업 끝 ( ~10.03) </li>
+        <li><strong>2023.10.04</strong> - 백승현 발표자료 종합 중</li>
+        
     </ul>
 
     
