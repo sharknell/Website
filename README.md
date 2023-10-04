@@ -9,9 +9,9 @@
         <li><strong>이도형</strong> - View 개발</li>
         <li><strong>김규호</strong> - 데이터베이스 관리 (Maria DB)</li>
     </ul>
-
-- **프로그래밍 언어**: [Spring Boot]
-- **데이터베이스**: [Maria DB]
+    
+- **프로그래밍 언어**: <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
+- **데이터베이스**: <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=MariaDB&logoColor=white">
 - **개발환경**: [Eclipse IDE][Intelli J]
 </div>
     <h2>작업 내역</h2>
