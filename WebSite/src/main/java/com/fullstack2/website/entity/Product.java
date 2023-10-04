@@ -43,7 +43,7 @@ public class Product {
 	@Column(length = 1000)
 	private String asd;
 
-	private String MainLink; //빅 이미지
+	private String mainLink; //빅 이미지
 	private String imglink; // 이미지 경로를 저장하는 필드
 	private String imglink1; // 이미지 경로를 저장하는 필드
 	private String imglink2; // 이미지 경로를 저장하는 필드
