@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UserProfile {
-
+    private long id;
     private String name; // 사용자 이름
     private String provider; // 로그인한 서비스
     private String email; // 사용자의 이메일
@@ -26,7 +26,9 @@ public class UserProfile {
     private String addressRest; 
     private String role; 
    
-
+    public void setId(long id) {
+	this.id = id;
+    }
     
     public void setRole(String role) {
 		this.role = role;
