@@ -44,6 +44,11 @@ public interface MemberQuery extends JpaRepository<Member, String> {
 	    @Query("DELETE FROM Member WHERE email = :email AND password = :pw")
 	    void remove(@Param("pw") String pw, @Param("email") String email);
 	    
+	    @Transactional
+	    @Modifying
+	    @Query("DELETE FROM Member WHERE email = :email")
+	    void remove2(@Param("email") String email);
+	    
 	    
 	    
 	 // 배송지 변경
