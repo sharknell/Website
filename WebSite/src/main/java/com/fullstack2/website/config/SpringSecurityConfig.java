@@ -58,8 +58,19 @@ public class SpringSecurityConfig {
                         .loginProcessingUrl("/login-process")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/view/mainLog", true)
-                        .permitAll()
+                        //.defaultSuccessUrl("/view/mainLog", true)
+                        .defaultSuccessUrl("/", false) 
+                        .successHandler((request, response, authentication) -> {
+                            
+                            if (authentication != null && authentication.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                                response.sendRedirect("/view/admin"); 
+                            } else {
+                                response.sendRedirect("/view/mainLog"); 
+                            }
+                        })
+                    
+                        
                 )
                .oauth2Login(oauth2Configurer -> oauth2Configurer
                        .loginPage("/view/login")
