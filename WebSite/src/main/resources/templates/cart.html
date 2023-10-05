@@ -336,10 +336,9 @@ th {
 				</thead>
 				<tbody>
 					<tr>
-						
-						<td class="total-price">
-							<span id="totalProductPrice">₩[[${totalProductPrice}]]</span>
-						</td>
+						<div class="total-price-container">
+							<span>총 상품 금액: <span id="totalProductPrice">₩0.00</span></span>
+						</div>
 					</tr>
 				</tbody>
 			</table>
@@ -350,11 +349,17 @@ th {
 		</div>
 	</div>
 </body>
-	<script>
+<script>
 	// 페이지 로드 시 호출되는 함수
 	window.addEventListener('load', function() {
 		// 페이지 로드될 때 총 상품 금액을 업데이트
 		updateTotalProductPrice();
+
+		// 전체 선택/해제 체크 박스 클릭 시
+		$('#selectAllCheckbox').on('change', function() {
+			$('.cart-item-checkbox').prop('checked', this.checked);
+			updateTotalProductPrice();
+		});
 
 		// 체크박스 상태가 변경될 때마다 총 상품 금액 업데이트
 		$('.cart-item-checkbox').on('change', function() {
@@ -367,8 +372,10 @@ th {
 		var total = 0;
 		$('.cart-item-checkbox:checked').each(function() {
 			// 선택된 항목의 상품 가격을 가져와서 총액에 더함
-			var price = parseFloat($(this).closest('tr').find('.cart-item-price').text().replace('₩', '').replace(',', ''));
-			total += price;
+			var price = parseFloat($(this).closest('tr').find('.cart-item-price').text().replace('₩', '').replace(',', '').trim()); // trim() 함수를 추가하여 공백을 제거
+			if (!isNaN(price)) {
+				total += price;
+			}
 		});
 		return total;
 	}
@@ -377,6 +384,11 @@ th {
 	function updateTotalProductPrice() {
 		var totalProductPrice = calculateTotalProductPrice();
 		$('#totalProductPrice').text('₩' + totalProductPrice.toFixed(2));
+
+		// 선택된 상품이 없을 때 메시지 표시
+		if (isNaN(totalProductPrice) || totalProductPrice === 0) {
+			$('#totalProductPrice').text('₩0.00 (선택된 상품이 없습니다)');
+		}
 	}
 </script>
 </html>
