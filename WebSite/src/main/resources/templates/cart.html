@@ -320,7 +320,7 @@ th {
 						<td class="cart-item-price" th:text="'₩'+${lists.product.price}">₩189,000</td>
 
 						<td class="delete-buttons">
-							<button class="checkout-button" onclick="deleteCartItem(this)">주문하기</button>
+							
 							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
 						</td>
 					</tr>
@@ -380,6 +380,39 @@ th {
 				});
 		return total;
 	}
+	
+	// 페이지 로드 시 호출되는 함수
+	window.addEventListener('load', function() {
+		// 페이지 로드될 때 총 상품 금액을 업데이트
+		updateTotalProductPrice();
+
+		// 전체 선택/해제 체크 박스 클릭 시
+		$('#selectAllCheckbox').on('change', function() {
+			$('.cart-item-checkbox').prop('checked', this.checked);
+			updateTotalProductPrice();
+		});
+
+		// 체크박스 상태가 변경될 때마다 총 상품 금액 업데이트
+		$('.cart-item-checkbox').on('change', function() {
+			updateTotalProductPrice();
+		});
+	});
+
+	// 상품 가격을 가져와서 총 상품 금액 계산하는 함수
+	function calculateTotalProductPrice() {
+		var total = 0;
+		$('.cart-item-checkbox:checked').each(function() {
+			// 선택된 항목의 상품 가격을 가져와서 총액에 더함
+			var price = parseFloat($(this).closest('tr').find('.cart-item-price').text().replace('₩', '').replace(',', '').trim()); // trim() 함수를 추가하여 공백을 제거
+			if (!isNaN(price)) {
+				total += price;
+			}
+		});
+		return total;
+	}
+
+	
+
 
 	// 총 상품 금액 업데이트 함수
 	function updateTotalProductPrice() {
