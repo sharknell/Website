@@ -136,19 +136,19 @@
    <form class="form-signin" id='join_form'>
       <div class="form-group">
          <label for="email">이메일</label>
-         <input type="email" id="email" name="email" required>
+         <input type="email" id="email" name="email" th:value="${dto.email}" required>
       </div>
 
       <div class="form-group">
          <label for="name">배송 받으시는 분 이름 <span>*</span></label>
-         <input type="text" id="name" name="name" required>
+         <input type="text" id="name" name="name" th:value="${dto.name}" required>
       </div>
       <div class="form-group">
          <label for="address">주소 <span>*</span></label>
          <div class="select-group">
-            <input type="text" id="postal-code" name="postalCode" placeholder="우편번호" required>
-            <input type="text" id="address-basic" name="addressBasic" placeholder="기본주소" required>
-            <input type="text" id="address-rest" name="addressRest" placeholder="나머지주소 (선택입력가능)">
+            <input type="text" id="postal-code" name="postalCode" th:value="${dto.postalCode}" required>
+            <input type="text" id="address-basic" name="addressBasic" th:value="${dto.addressBasic}" required>
+            <input type="text" id="address-rest" name="addressRest" th:value="${dto.addressBasic}">
          </div>
       </div>
       <div class="form-group">
@@ -162,17 +162,18 @@
 
       <!-- 결제 방법 선택 (라디오 버튼) -->
       <div class="radio-group">
-         <label>결제 방법:</label>
-         <input type="radio" id="cardPayment" name="paymentMethod" value="card" required>
+         <label>결제 방법</label>
+         
          <label for="cardPayment">카드 결제</label>
-
-         <input type="radio" id="bankTransfer" name="paymentMethod" value="bank" required>
+      <input type="radio" id="cardPayment" name="paymentMethod" value="card" >
+         
          <label for="bankTransfer">무통장 입금</label>
+         <input type="radio" id="bankTransfer" name="paymentMethod" value="bank" >
       </div>
 
       <!-- 카드 번호 입력 -->
       <div class="card-number-group">
-         <label for="cardNumber">카드 번호:</label>
+         <label for="cardNumber">카드 번호</label>
          <input type="text" id="cardNumber1" name="cardNumber1" maxlength="4" required>
          <input type="text" id="cardNumber2" name="cardNumber2" maxlength="4" required>
          <input type="text" id="cardNumber3" name="cardNumber3" maxlength="4" required>
@@ -183,7 +184,7 @@
       <div class="account-number-group">
          <label for="accountNumber">은행 선택:</label>
          <select id="bankSelection" name="bankSelection">
-         		<option value="non">------</option>
+               <option value="non">------</option>
             <option value="shinhan">신한은행</option>
             <option value="kb">국민은행</option>
             <option value="woori">우리은행</option>
@@ -297,14 +298,21 @@
          // 확인 버튼 클릭 시 새 창 닫기 및 원래 창 이동
          resultWindow.document.getElementById('confirmButton').addEventListener('click', function () {
             resultWindow.close(); // 새 창 닫기
-            window.location.href = '/view/mainLog'; // 원래 창 이동
+            var dtoProvider = '[[${dto.provider}]]';
+             if (dtoProvider === "일반회원") {
+                 window.location.href = '/view/mainLog';
+             } else if (dtoProvider === "kakao" || dtoProvider === "google" || dtoProvider === "naver") {
+                 window.location.href = '/view/mainLog2';
+             } else {
+                 // 다른 경우에 대한 처리나 에러 처리를 추가할 수 있습니다.
+             }
          });
       }
       else {
-    	  const errorWindow = window.open('', '결제 결과', 'width=500, height=500');
-    	  errorWindow.document.write('<h3>결제 실패</h3>');
-    	  errorWindow.document.write('<p>빈칸을 채우시오.</p>');
-    	  
+         const errorWindow = window.open('', '결제 결과', 'width=500, height=500');
+         errorWindow.document.write('<h3>결제 실패</h3>');
+         errorWindow.document.write('<p>빈칸을 채우시오.</p>');
+         
       }
       
    });
