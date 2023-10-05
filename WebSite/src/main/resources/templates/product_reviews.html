@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상세 페이지</title>
+<style>
+/*  div{border:1px solid red;}*/
+body {
+width:100%;
+   margin: 20px;
+}
+
+/* 컨테이너 */
+.container {
+   flex-wrap: wrap; /* 화면 크기에 따라 요소들이 줄 바꿈될 수 있도록 설정 */
+   max-width: 1200px; /* 최대 너비 설정 */
+   height: 1800px;
+   align-items: flex-start; /* 이미지 영역을 위로 정렬 */
+}
+
+/* 왼쪽 이미지 리스트 영역 */
+.image-list {
+   flex: 1;
+   padding: 20px;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   overflow-y: auto; /* 이미지 리스트가 넘칠 경우 스크롤 생성 */
+   max-height: calc(100vh - 120px); /* 뷰포트 높이에서 하단 영역을 뺀 만큼의 높이 설정 */
+   width: 200px; /* 원하는 왼쪽 이미지 리스트의 너비 설정 */
+   align-self: flex-start; /* 오른쪽 영역과 간격을 조절하기 위해 추가 */
+   margin-right: -200px; /*왼쪽 큰 이미지와의 여백 간격 조절*/
+   margin-top: 50px;
+}
+
+/* 이미지 스타일링 */
+.image-list img {
+   cursor: pointer;
+   width: 100%;
+   max-width: 100px;
+}
+
+/* 가운데 큰 사진 영역 */
+.description {
+   flex: 2;
+   margin-top: 50px;
+   padding: 30px;
+   margin-left: -10px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   /* 오른쪽 영역의 내용을 위로 정렬 */
+}
+
+/* Details 섹션 스타일링 */
+.details {
+   margin-bottom: 20px;
+}
+
+h2 {
+   margin-top: 160px;
+}
+
+.details h3 {
+   border-bottom: 1px solid #ddd;
+   padding-bottom: 5px;
+   cursor: pointer;
+}
+
+/* Description 섹션 스타일링 */
+.description h3 {
+   border-bottom: 1px solid #ddd;
+   padding-bottom: 5px;
+   cursor: pointer;
+}
+
+/* Size + Fit 섹션 스타일링 */
+.size-fit h3 {
+   border-bottom: 1px solid #ddd;
+   padding-bottom: 5px;
+   cursor: pointer;
+}
+
+.buttons {
+   display: flex;
+   gap: 10px;
+}
+
+/* 버튼 공통 스타일 */
+.buttons button {
+   padding: 10px 20px;
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+/* 버튼 호버 효과 */
+.buttons button:hover {
+   background-color: #0056b3;
+}
+
+/* 첫 번째 버튼 스타일 */
+.buttons button:nth-child(1) {
+   background-color: #28a745;
+}
+
+/* 첫 번째 버튼 호버 효과 */
+.buttons button:nth-child(1):hover {
+   background-color: #1e7e34;
+}
+/* 큰 이미지 영역 */
+.main-image {
+   max-width: 100%;
+   /* 이미지를 부모 요소의 크기에 맞게 표시 */
+   display: block;
+   margin: 0 auto;
+   /* 이미지를 가운데 정렬 */
+   height: auto;
+   /* 세로 비율을 유지하면서 이미지 크기 조정 */
+   max-height: 100%; /* 이미지 높이를 왼쪽 이미지 리스트와 동일하게 설정 */
+}
+/* 라디오 버튼 스타일링 */
+label {
+   display: inline-flex;
+   align-items: center;
+   cursor: pointer;
+   margin-right: 15px;
+   padding: 5px;
+   border-radius: 50px;
+   border: 2px solid #ccc;
+   margin-bottom: 20px;
+}
+
+/* 선택된 라디오 버튼 스타일 */
+label input:checked {
+   background-color: #007BFF;
+   border-color: #007BFF;
+   color: #fff;
+}
+
+/* 상세 설명 섹션의 기본적으로 숨겨진 상태 */
+#details-section, #description-section, #size-fit-section {
+   display: none;
+}
+
+.footer {
+margin-left:250px;
+display:inline-block;
+   text-align: center;
+   margin-top: 100px;
+   width: 1200px;
+   height: 30%;
+   background-color: #f2f2f2; /* 추가: 배경색 설정 */
+   padding: 30px; /* 추가: 아래 여백 설정 */
+}
+
+/* 리뷰와 Q&A 스타일링 */
+ul.minimenu {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   display: flex;
+   justify-content: center;
+}
+
+ul.minimenu li.selected a {
+   border-bottom: 2px solid black; /* 밑줄 굵기와 스타일 지정 */
+   padding-bottom: 2px; /* 밑줄과 텍스트 간격 조정 */
+}
+
+/* 리뷰와 Q&A 제목 스타일링 */
+.board h4 {
+   font-size: 24px;
+   margin-bottom: 15px;
+   color: #333; /* 제목 색상 변경 */
+}
+
+/* 리뷰와 Q&A 아이템 스타일링 */
+.board .item {
+   margin-bottom: 20px;
+   padding: 15px;
+   border: 1px solid #ddd;
+   border-radius: 10px;
+   background-color: #fff; /* 아이템 배경색 변경 */
+}
+
+/* 리뷰와 Q&A 추가 버튼 스타일링 */
+.add-button {
+   margin-top: 20px;
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   padding: 10px 20px;
+   cursor: pointer;
+}
+
+/* 리뷰와 Q&A 입력 폼 스타일링 */
+.form {
+   margin-top: 20px;
+   text-align: left;
+   background-color: #f9f9f9; /* 폼 배경색 변경 */
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form label, .form input, .form textarea {
+   display: block;
+   margin-bottom: 10px;
+   font-size: 16px; /* 폰트 크기 조정 */
+   color: #333; /* 폰트 색상 변경 */
+}
+
+.form input[type="text"], .form textarea {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+/* 제출 버튼 스타일링 */
+.submit-button {
+   padding: 10px 20px;
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+/* 제출 버튼 호버 효과 */
+.submit-button:hover {
+   background-color: #0056b3;
+}
+
+.b1, .b2 {
+   padding: 5px 10px;
+   background-color: #929090;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 16px; /* 폰트 크기 설정 */
+}
+
+/* .b1 버튼 호버 효과 */
+.b1:hover {
+   background-color: #1A1A1A;
+}
+
+.b2:hover {
+   background-color: #1A1A1A;
+}
+
+/* 리뷰와 Q&A 아이템 스타일링 */
+.board .item {
+   margin-bottom: 20px;
+   padding: 15px;
+   border: 1px solid #ddd;
+   border-radius: 10px;
+   background-color: #fff; /* 아이템 배경색 변경 */
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+}
+
+/* 리뷰와 Q&A 아이템 본문 스타일링 */
+.board .item p {
+   font-size: 16px;
+   margin-top: 10px;
+   color: #333; /* 텍스트 색상 변경 */
+}
+
+/* 리뷰와 Q&A 추가 버튼 스타일링 */
+.add-button {
+   margin-top: 20px;
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   padding: 10px 20px;
+   cursor: pointer;
+   font-size: 16px;
+}
+
+/* 추가 버튼 호버 효과 */
+.add-button:hover {
+   background-color: #0056b3;
+}
+/* 테이블 스타일 */
+table.meta {
+   width: 100%;
+   border-collapse: collapse;
+   margin: 25px 0;
+   font-size: 1.2em;
+   font-family: sans-serif;
+}
+
+table.meta thead tr {
+   background-color: #009879;
+   color: #ffffff;
+   text-align: left;
+}
+
+table.meta th, table.meta td {
+   padding: 12px 15px;
+   border: 1px solid #ddd;
+}
+
+table.meta tbody tr {
+   background-color: #f3f3f3;
+}
+
+table.meta tbody tr:nth-child(even) {
+   background-color: #ffffff;
+}
+
+/* 리뷰 제목 셀 스타일 */
+.review-title {
+   cursor: pointer;
+}
+
+/* 리뷰와 Q&A 스타일링 */
+ul.minimenu {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   display: flex;
+   justify-content: center;
+   background-color: #f2f2f2; /* 배경색 추가 */
+   padding: 10px;
+   border-radius: 10px;
+}
+
+ul.minimenu li {
+   margin-right: 20px;
+}
+
+ul.minimenu li a {
+   text-decoration: none; /* 밑줄 제거 */
+   font-weight: bold;
+   color: #333; /* 텍스트 색상 변경 */
+   transition: border-bottom 0.3s ease; /* 밑줄 변화 애니메이션 추가 */
+}
+
+ul.minimenu li a:hover {
+   border-bottom: 2px solid #007BFF; /* 호버 시 밑줄 색상 변경 */
+   padding-bottom: 2px; /* 밑줄과 텍스트 간격 조정 */
+}
+
+/* 리뷰와 Q&A 제목 스타일링 */
+.board h4 {
+   font-size: 24px;
+   margin-bottom: 15px;
+   color: #333;
+   font-weight: bold; /* 폰트 굵기 추가 */
+}
+
+/* 리뷰와 Q&A 아이템 스타일링 */
+.board .item {
+   margin-bottom: 20px;
+   padding: 15px;
+   border: 1px solid #ddd;
+   border-radius: 10px;
+   background-color: #fff;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 리뷰와 Q&A 아이템 본문 스타일링 */
+.board .item p {
+   font-size: 16px;
+   margin-top: 10px;
+   color: #333;
+}
+
+/* 리뷰 입력 폼 스타일 */
+.review-input {
+   display: none; /* 초기에 숨김 */
+}
+
+/* 리뷰 제목 클릭 시 리뷰 내용 표시 */
+.review-title:hover {
+   cursor: pointer;
+   text-decoration: underline;
+}
+
+#reviewInputArea {
+   display: none;
+}
+
+.b1 {
+   padding: 5px 10px;
+   background-color: #007BFF70; /* 버튼 배경색 변경 */
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 16px;
+}
+
+/* b1 버튼 호버 효과 */
+.b1:hover {
+   background-color:  #007BFF95; /* 호버 시 배경색 변경 */
+}
+
+/* 메뉴 스타일 */
+.sidebar {
+   display:inline-block;
+   margin-top:5%;
+   margin-left:50px;
+   margin-right:-200px;
+   background-color: #007BFF;
+   color: #fff;
+   padding: 10px;
+   width: 15%;
+   float: left;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+   font-size: 20px;
+   margin-bottom: 20px;
+   text-align: center;
+}
+
+.sidebar ul {
+   list-style: none;
+   padding: 0;
+}
+
+.sidebar ul li {
+   margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+   text-decoration: none;
+   color: #fff;
+   display: block;
+   padding: 10px 0;
+   text-align: center;
+   font-weight: bold;
+   transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+   background-color: #0056b3;
+}
+
+.sidebar ul li.active {
+   background-color: #0056b390;
+   /* border:1px dashed #ffffff; */
+   opacity: 1;
+}
+
+.admin-panel {
+   margin-left: 25%;
+}
+
+</style>
+</head>
+<body>
+   <div class="sidebar">
+      <ul>
+         <li ><a href="admin">상품 등록</a></li>
+         <li><a href="product_list">상품 목록</a></li>
+         <li class="active"><a href="product_reviews">상품 소감</a></li>
+         <li><a href="qna_manage">리뷰 관리</a></li>
+         <li><a href="user_list">유저 목록</a></li>
+      </ul>
+   </div>
+   
+   <div class="footer">
+      <div class="board">
+         <div class="item">
+            <table class="meta">
+               <thead>
+                  <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">품번</th>
+                     <th scope="col">제목</th>
+                     <th scope="col">글쓴이</th>
+                     <th scope="col">작성일</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <!-- 리뷰 항목을 Thymeleaf를 사용하여 동적으로 생성 -->
+                    <tr th:each="dto, itemStat : ${reviewResult.dtoList}" th:id="'title-' + ${itemStat.index}">
+                        <th scope="row">[[${dto.rno}]]</th>
+                        <td>[[${dto.product}]]</td>
+                        <td class="review-title">[[${dto.text}]]</td>
+                        <td>
+                            <span th:text="${#strings.substring(dto.reviewer, 0, 3) + '********'}"></span>
+                        </td>
+                        <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]</td>
+                    </tr>
+                    
+                    <!-- 리뷰 내용을 Thymeleaf를 사용하여 동적으로 생성 -->
+                    <tr th:each="dto, itemStat : ${reviewResult.dtoList}" th:id="'content-' + ${itemStat.index}" style="display: none;">
+                        <td colspan="5">
+                            [[${dto.content}]]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="review-content" style="display: none;">
+               <p>리뷰 내용 표시 부분입니다.</p>
+               <button class="b1">댓글 작성</button>
+            </div>
+         </div>
+      </div>
+      <div id="reviewInputArea">
+         <form th:action="@{/addReview}" method="post">
+            <input type="text" name="text" placeholder="리뷰 내용 입력"
+               class="review-input">
+            <button type="submit" class="b2">작성 완료</button>
+            <button type="button" id="cancelReviewInput" class="b2"
+               onclick="toggleReviewInput()">취소</button>
+         </form>
+      </div>
+   </div>
+   <!-- JavaScript를 통한 이미지 표시 및 토글 기능 구현 -->
+
+   <script>
+   document.addEventListener("DOMContentLoaded", function () {
+       const reviewTitleElements = document.querySelectorAll('.review-title'); // 모든 리뷰 제목 요소 선택
+
+       reviewTitleElements.forEach(function (titleElement, index) {
+           titleElement.addEventListener("click", function () {
+               const contentElement = document.getElementById('content-' + index); // 해당 리뷰 내용 요소 선택
+               if (contentElement.style.display === "none" || contentElement.style.display === "") {
+                   contentElement.style.display = "table-row"; // 클릭 시 해당 리뷰 내용을 보이게 함
+               } else {
+                   contentElement.style.display = "none"; // 클릭 시 해당 리뷰 내용을 숨김
+               }
+           });
+       });
+   });
+   </script>
+</body>
+</html>

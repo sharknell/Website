@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -132,44 +132,55 @@ h2 {
 		</ul>
 	</div>
 	<div class="container">
-		<h2>공지사항 작성</h2>
-		<form id="noticeForm">
-			<div class="form-group">
-				<label for="title">제목</label> <input type="text" id="title"
-					name="title" required>
-			</div>
-			<div class="form-group">
-				<label for="content">내용</label>
-				<textarea id="content" name="content" required></textarea>
-			</div>
-			<button type="submit">글 작성</button>
-		</form>
-		<p class="success-message" id="successMessage" style="display: none;">글이
-			성공적으로 작성되었습니다.</p>
-	</div>
+    <h2>공지사항 작성</h2>
+    <form id="noticeForm" th:action="@{/addNotice}" method="post">
+        <div class="form-group">
+            <label for="title">제목</label> 
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="content">내용</label>
+            <textarea id="content" name="content" required></textarea>
+        </div>
+        <button type="submit">작성 완료</button>
+    </form>
+    <p class="success-message" id="successMessage" th:if="${param.success}" style="display: none;">글이 성공적으로 작성되었습니다.</p>
+</div>
 
 	<script>
-		document
-				.getElementById('noticeForm')
-				.addEventListener(
-						'submit',
-						function(event) {
-							event.preventDefault(); // 폼 제출 방지
+	document.getElementById('noticeForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼 제출 방지
 
-							// 입력값 가져오기
-							const title = document.getElementById('title').value;
-							const content = document.getElementById('content').value;
+        // 입력값 가져오기
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
 
-							// TODO: 서버에 글 작성 요청 보내기 (Ajax 또는 Fetch API 사용)
+        // FormData를 사용하여 폼 데이터 생성
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
 
-							// 예시: 글 작성 요청 후 성공 메시지 표시
-							document.getElementById('successMessage').style.display = 'block';
-							setTimeout(
-									function() {
-										document
-												.getElementById('successMessage').style.display = 'none';
-									}, 3000); // 3초 후 메시지 숨김
-						});
-	</script>
+        // Fetch API를 사용하여 서버에 데이터를 전송
+        fetch('/addNotice', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.status === 200) {
+                // 성공 메시지 표시
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000); // 3초 후 메시지 숨김
+            } else {
+                // 실패 시 처리
+                console.error('글 작성 실패');
+            }
+        })
+        .catch(error => {
+            console.error('오류 발생: ' + error);
+        });
+    });
+</script>
 </body>
 </html>

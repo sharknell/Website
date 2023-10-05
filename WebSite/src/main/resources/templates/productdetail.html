@@ -452,10 +452,10 @@ text-align:center;
       </div>
          <!-- 큰 이미지 영역 -->
       <div class="description">
-         <div class="main-image" id="mainImage">
-           <img  th:src="'/' + ${Product.mainLink}" alt="상품 이미지">
-         </div>
-     </div>
+	      <div class="main-image" id="mainImage">
+	        <img  th:src="'/' + ${Product.mainLink}" alt="상품 이미지">
+	      </div>
+	  </div>
 
       <!-- 우측 설명 영역 -->
       <div class="details">
@@ -531,10 +531,10 @@ text-align:center;
                   </tr>
                   
                   <tr th:each="dto, itemStat : ${reviewResult.dtoList}" th:id="'content-' + ${itemStat.index}" style="display: none;">
-                <td colspan="4">
-                    [[${dto.content}]]
-                </td>
-            </tr>
+				    <td colspan="4">
+				        [[${dto.content}]]
+				    </td>
+				</tr>
                </tbody>
             </table>
          </div>
@@ -543,10 +543,9 @@ text-align:center;
 
       <div id="reviewInputArea">
    <form th:action="@{/addReview}" method="post" class="form">
-        <input type="hidden" name="itemcount" th:value="${Product.itemcount}" />
+   	  <input type="hidden" name="itemcount" th:value="${Product.itemcount}" />
       <input type="text" name="text" placeholder="리뷰 제목" class="review-input">
-      <textarea name="content" placeholder="리뷰 내용"
-            class="review-input review-input2"
+      <textarea name="content" placeholder="리뷰 내용" class="review-input review-input2"
             style="display:block; width:500px; height: 100px;"></textarea>
       <div class="buttons">
          <button type="submit" class="b2">작성 완료</button>
@@ -609,19 +608,19 @@ text-align:center;
       }
       /* 리뷰 영역 토글 끝 */
       document.addEventListener("DOMContentLoaded", function () {
-          const reviewTitleElements = document.querySelectorAll('.review-title'); // 모든 리뷰 제목 요소 선택
-      
-          reviewTitleElements.forEach(function (titleElement, index) {
-              titleElement.addEventListener("click", function () {
-                  const contentElement = document.getElementById('content-' + index); // 해당 리뷰 내용 요소 선택
-                  if (contentElement.style.display === "none" || contentElement.style.display === "") {
-                      contentElement.style.display = "table-row"; // 클릭 시 해당 리뷰 내용을 보이게 함
-                  } else {
-                      contentElement.style.display = "none"; // 클릭 시 해당 리뷰 내용을 숨김
-                  }
-              });
-          });
-      });
+		    const reviewTitleElements = document.querySelectorAll('.review-title'); // 모든 리뷰 제목 요소 선택
+		
+		    reviewTitleElements.forEach(function (titleElement, index) {
+		        titleElement.addEventListener("click", function () {
+		            const contentElement = document.getElementById('content-' + index); // 해당 리뷰 내용 요소 선택
+		            if (contentElement.style.display === "none" || contentElement.style.display === "") {
+		                contentElement.style.display = "table-row"; // 클릭 시 해당 리뷰 내용을 보이게 함
+		            } else {
+		                contentElement.style.display = "none"; // 클릭 시 해당 리뷰 내용을 숨김
+		            }
+		        });
+		    });
+		});
    </script>
 </body>
 </html>
