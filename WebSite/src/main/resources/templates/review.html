@@ -3,248 +3,416 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link
+   href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+   rel="stylesheet">
 <style>
 /* 기본 스타일 */
 body {
-	margin: 0;
-	padding: 0;
-	font-family: Arial, sans-serif;
-	overflow: auto;
+   font-family: Arial, sans-serif;
+   background-image: url('/review_img.jpg'); /* 배경 이미지 경로 설정 */
+   background-size: cover; /* 배경 이미지를 창에 맞게 확장 */
+   background-repeat: no-repeat; /* 배경 이미지 반복 비활성화 */
+   background-attachment: fixed; /* 배경 이미지를 고정 */
+   background-color: #f4f4f4;
 }
 
 header {
-	background-color: #fff;
-	border-bottom: 1px solid #ccc;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px 20px;
-	height: 40px;
-	position: fixed; /* 헤더를 화면 상단에 고정 */
-	width: 100%;
-	top: 0;
-	z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
+   background-color: #fff;
+   border-bottom: 1px solid #ccc;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px 20px;
+   height: 40px;
+   position: fixed; /* 헤더를 화면 상단에 고정 */
+   width: 100%;
+   top: 0;
+   z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
 }
 
 .menu-container {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
-	padding: 0 100px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   padding: 0 100px;
 }
 
 .menu-left, .menu-right {
-	display: flex;
-	flex: 1;
-	justify-content: center;
+   display: flex;
+   flex: 1;
+   justify-content: center;
 }
 
 .menu-item {
-	margin-right: 20px;
-	position: relative;
+   margin-right: 20px;
+   position: relative;
 }
 
 .menu-item .sub-menu {
-	display: none;
-	position: absolute;
-	top: 100%;
-	left: 0;
-	background-color: #fff;
-	border: 1px solid #ccc;
-	padding: 10px;
-	z-index: 1;
+   display: none;
+   position: absolute;
+   top: 100%;
+   left: 0;
+   background-color: #fff;
+   border: 1px solid #ccc;
+   padding: 10px;
+   z-index: 1;
 }
 
 .menu-item:hover .sub-menu {
-	display: block;
+   display: block;
 }
 
 /* 링크 스타일 */
 a {
-	color: gray;
-	text-decoration: none;
-	transition: color 0.3s;
+   color: gray;
+   text-decoration: none;
+   transition: color 0.3s;
 }
 
 /* 메뉴 항목 호버 시 스타일 변경 */
 .menu-item:hover a {
-	color: black;
-	text-decoration: underline;
+   color: black;
+   text-decoration: underline;
 }
 
 /* 기본 메뉴 항목 스타일 */
 .menu-item a {
-	color: gray;
-	text-decoration: none;
-	transition: color 0.3s;
+   color: gray;
+   text-decoration: none;
+   transition: color 0.3s;
 }
 
 /* 메뉴 아이템 호버 시 글자 색상 변경 및 밑줄 표시 */
 .menu-item:hover a {
-	color: black;
-	text-decoration: underline;
+   color: black;
+   text-decoration: underline;
 }
 
 /* 서브 메뉴 항목 스타일 */
 .sub-menu a {
-	color: gray;
-	text-decoration: none !important;
-	font-size: 12px;
-	transition: text-decoration 0.3s;
-	display: block;
-	white-space: nowrap;
+   color: gray;
+   text-decoration: none !important;
+   font-size: 12px;
+   transition: text-decoration 0.3s;
+   display: block;
+   white-space: nowrap;
 }
 
 /* 서브 메뉴 아이템 호버 시 밑줄 표시 */
 .sub-menu a:hover {
-	text-decoration: underline;
+   text-decoration: underline;
 }
 
 /* 로고 스타일 */
 .logo {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	padding: 10px 0;
-	text-align: center;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   padding: 10px 0;
+   text-align: center;
 }
 
 .logo img {
-	width: 120px;
-	height: auto;
-	margin-bottom: 0;
+   width: 120px;
+   height: auto;
+   margin-bottom: 0;
 }
 
 .small-logo {
-	margin-top: -30px;
-	text-align: center;
+   margin-top: -30px;
+   text-align: center;
 }
 
 .small-logo img {
-	width: 30px;
-	height: auto;
-	margin-right: 0;
+   width: 30px;
+   height: auto;
+   margin-right: 0;
 }
 
 /* 기본 스타일 생략 */
 .content {
-	padding: 20px;
-	margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+   padding: 20px;
+   margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 
 /* 큰 사진 스타일 수정 */
 .large-photos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* 왼쪽과 오른쪽 여백 균등하게 설정 */
-    margin-bottom: 20px;
-    margin-left:150px;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between; /* 왼쪽과 오른쪽 여백 균등하게 설정 */
+   margin-bottom: 20px;
+   margin-left: 150px;
 }
 
 .large-photos .photo {
-    flex-basis: calc(50% - 5px); /* 한 줄에 2개의 사진, 여백 균등하게 설정 */
-    margin-bottom: 10px; /* 아래 여백 추가 */
-    box-sizing: border-box; /* 요소의 경계 상자 크기를 설정합니다. */
+   flex-basis: calc(50% - 5px); /* 한 줄에 2개의 사진, 여백 균등하게 설정 */
+   margin-bottom: 10px; /* 아래 여백 추가 */
+   box-sizing: border-box; /* 요소의 경계 상자 크기를 설정합니다. */
 }
 
- 
 /* 스몰 포토 스타일 수정 */
 .small-photos {
-    display: flex;
-    overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
-    white-space: nowrap;
-    margin-top: 20px;
-    overflow-x: hidden; /* 가로 스크롤바 숨김 */
-    animation: scroll 60s linear infinite; /* 가로로 무한 스크롤 애니메이션 적용 */
+   display: flex;
+   overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
+   white-space: nowrap;
+   margin-top: 20px;
+   overflow-x: hidden; /* 가로 스크롤바 숨김 */
+   animation: scroll 60s linear infinite; /* 가로로 무한 스크롤 애니메이션 적용 */
 }
 
 .small-photos .photo {
-    margin-right: 10px; /* 사진 간 여백 */
+   margin-right: 10px; /* 사진 간 여백 */
 }
 
 .small-photos .photo:last-child {
-    margin-right: 0; /* 마지막 사진의 여백 제거 */
+   margin-right: 0; /* 마지막 사진의 여백 제거 */
 }
 
-/* 스몰 포토 가로 스크롤 애니메이션 */
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(100%); /* 가로로 반만큼 스크롤하면 다시 시작 */
-    }
-}
-.review-list{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 10%;
-	margin-left: 35%;
-	margin-right: 35%;
+.board-list {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 10%;
+   margin-left: 35%;
+   margin-right: 35%;
 }
 
-.review-list a {
-    color: red;
-    text-decoration: none;
+.board-list a {
+   color: red;
+   font-size: 20px;
+   font-family: 'Noto Sans KR', sans-serif; /* 글꼴 설정 */
+   text-decoration: none;
+   padding: 5px 10px; /* 텍스트 주변 여백 추가 */
+   border-radius: 5px; /* 테두리를 둥글게 만듭니다. */
 }
+
 .review-board {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 50px;
-	margin-left: 25%;
-	margin-right: 25%;
-	border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    padding: 10px;
-}
-.review-board.tr, th, td {
-	
-	width: 200px;
-	height: 50px;
-}
-.review-number ul li{
-	justify-content: center;
-	align-items: center;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 50px;
+   margin-left: 25%;
+   margin-right: 25%;
+   /* border: 3px dashed red ; */
+   padding: 10px;
 }
 
-.pagination {
-    text-align: center; /* 텍스트 가운데 정렬 */
-    margin-top: 30px; /* review-board 아래 30px로 조정 */
+.review-board.tr, td {
+   width: 200px;
+   height: 50px;
 }
 
-/* 아래의 페이징 스타일은 별도로 수정할 필요 없습니다. */
-.pagination span {
-    margin: 0 5px; /* 페이지 번호 사이 여백 조정 */
+.review-board.th {
+width: 100px;
+
+}
+.number {
+   width: 100px; /* 현재의 폭 설정 유지 */
+      padding-left: 5px; /* 왼쪽 여백을 줄임 */
+      padding-right: 5px; /* 오른쪽 여백을 줄임 */
+      text-align: center;
+}
+/* qna 테이블 스타일 */
+table {
+   width: 100%;
+   border-collapse: collapse;
+   background-color: white;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+   padding: 12px 15px;
+   text-align: left;
+   border-bottom: 1px solid #ddd;
+}
+
+th {
+   background-color: #f2f2f2;
+   font-weight: bold;
+   color: #333;
+}
+
+tbody tr:nth-child(even) {
+   background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+   background-color: #ddd;
+}
+
+/* qna 테이블 반응형 스타일 */
+@media ( max-width : 768px) {
+   table {
+      border: 0;
+   }
+   table thead {
+      display: none;
+   }
+   table tr {
+      margin-bottom: 20px;
+      display: block;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   }
+   table td {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 15px;
+      align-items: center;
+   }
+   table td:before {
+      content: attr(data-label);
+      font-weight: bold;
+   }
+}
+
+.menu-item a {
+   color: gray;
+   text-decoration: none;
+   transition: color 0.3s;
+}
+
+.list1:hover, .list2:hover, .list3:hover {
+   color: rgba(173, 216, 230); /* 글자 색상 설정 (예: 검은색) */
+   padding: 5px 10px; /* 텍스트 주변 여백 추가 */
+   border-radius: 5px; /* 테두리를 둥글게 만듭니다. */
+   background-color: rgba(173, 216, 230, 0.5);
+   /* 호버 시 배경 색상 변경 (예: 빨간색) */
+   transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+/* 버튼 부분 */
+.button-area {
+   text-align: center;
+   margin-top: 20px; /* 버튼과 위의 요소 간 여백 조정 */
+   margin-left: 42%;
+}
+
+.custom-button {
+   background-color: rgba(173, 216, 230, 0.3); /* 버튼 배경 색상 설정 (예: 빨간색) */
+   color: #ffffff; /* 버튼 텍스트 색상 설정 (예: 흰색) */
+   padding: 10px 20px; /* 버튼 내부 여백 설정 */
+   border: none; /* 버튼 테두리 제거 */
+   border-radius: 5px; /* 버튼 테두리를 둥글게 만듭니다. */
+   cursor: pointer; /* 포인터 커서로 변경하여 클릭 가능하게 만듭니다. */
+   font-size: 18px; /* 버튼 텍스트 크기 설정 */
+   font-family: 'Noto Sans KR', sans-serif; /* 글꼴 설정 */
+   transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+.custom-button:hover {
+   color: #585858; /* 글자 색상 설정 (예: 검은색) */
+   border-radius: 5px; /* 테두리를 둥글게 만듭니다. */
+   background-color: rgba(173, 216, 230, 0.7);
+   /* 호버 시 배경 색상 변경 (예: 빨간색) */
+   transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+/* 리뷰 입력 폼 스타일 */
+.review-input {
+   display: none; /* 초기에 숨김 */
+}
+
+/* 리뷰 제목 클릭 시 리뷰 내용 표시 */
+.review-title:hover {
+   cursor: pointer;
+   text-decoration: underline;
+}
+#reviewInputArea{
+   display:none;
+   width:1000px;
+   margin-right:auto;
+   margin-left:auto;
+}
+#cancelReviewInput{
+text-align:center;
+}
+/* 리뷰 작성 폼 토글 스타일 */
+#reviewInputArea {
+   display: none; /* 초기에는 숨겨진 상태로 시작합니다. */
+   margin-top: 20px;
+   text-align: left;
+   background-color: #f9f9f945;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+#reviewInputArea input[type="text"] {
+   width: 50%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   margin-bottom: 10px;
+}
+
+
+#reviewInputArea .buttons {
+   display: flex;
+   margin-right:100px;
+   align-items: center;
+}
+
+#reviewInputArea .buttons button {
+   padding: 10px 10px;
+   border-radius: 5px;
+   cursor: pointer;
+}
+.b2{
+   margin-right:20px;
+}
+#reviewInputArea .buttons button.b2 {
+   background-color: #929090;
+   color: #fff;
+   border: none;
+   font-size: 16px;
+}
+
+#reviewInputArea .buttons button.b2:hover {
+   background-color: #1A1A1A;
+}
+
+.review-input2{
+   height:100px;
+}
+
+.pagination{
+   margin-top: 20px; /* 테이블 아래 여백 조정 */
+    text-align: center; /* 가운데 정렬 */
 }
 
 .pagination a {
-    color: black;
-    text-decoration: none;
+    color: red; /* 텍스트 색상을 빨간색으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+    padding: 10px 10px; /* 텍스트 주변 여백 추가 */
+    border-radius: 10px; /* 테두리를 둥글게 만듭니다. */
+    background-color: rgba(173, 216, 230, 0.5); /* 배경 색상 설정 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
 }
 
 .pagination a:hover {
-    text-decoration: underline;
+    color: white; /* 호버 시 텍스트 색상 변경 */
+    background-color: red; /* 호버 시 배경 색상 변경 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
 }
 </style>
 
 <script src="/js/menu.js"></script>
 </head>
 <body>
-	<div th:replace="${dto != null ? (dto.provider == '일반가입' ? 'header2.html' : (dto.provider == 'kakao' || dto.provider == 'naver' || dto.provider == 'google' ? 'header3.html' : 'header.html')) : 'header.html'}"></div>
-
-
-
-	<div class="review-list">
-			<a href="/my/notice">Notice</a>
-			<a href="/my/qna">QnA</a>
-			<a href="/my/review">Review</a>
-	</div>
+   <div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+   
+   <div class="board-list">
+      <a href="/my/notice" class="list1">Notice</a> 
+      <a href="/my/qna" class="list2">Q & A</a> 
+      <a href="/my/review" class="list3">Review</a>
+   </div>
 
 <div class="review-board">
     <table>
@@ -254,27 +422,24 @@ a {
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
-                <th scope="col">조회수</th>
             </tr>
         </thead>
 
         <tbody>
             <tr th:each="dto : ${reviewResult.dtoList}">
-                <th scope="row">
+                <th scope="row" class="number">
                     [[${dto.rno}]]
                 </th>
                 <td>
                     [[${dto.text}]]
                 </td>
                 <td>
-                    <div th:text="${#strings.substring(#authentication.name, 0 , 3) + '********'}"></div>
+                    <span th:text="${#strings.substring(dto.reviewer, 0, 3) + '********'}"></span>
                 </td>
                 <td>
                     [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
                 </td>
-                <td>
-                	5
-                </td>
+               
             </tr>
         </tbody>
     </table>
