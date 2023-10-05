@@ -336,9 +336,10 @@ th {
 				</thead>
 				<tbody>
 					<tr>
-						<td class="total-price">/*여기에 총 상품 금액이 나와야함*/</td>
-						<td class="delivery-price">/*여기에 배송비가 나와야함 4000천원으로 가정*/</td>
-						<td class="total-price">/*여기에 총 상품 금액이 나와야함*/</td>
+						
+						<td class="total-price">
+							<span id="totalProductPrice">₩[[${totalProductPrice}]]</span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -349,4 +350,33 @@ th {
 		</div>
 	</div>
 </body>
+	<script>
+	// 페이지 로드 시 호출되는 함수
+	window.addEventListener('load', function() {
+		// 페이지 로드될 때 총 상품 금액을 업데이트
+		updateTotalProductPrice();
+
+		// 체크박스 상태가 변경될 때마다 총 상품 금액 업데이트
+		$('.cart-item-checkbox').on('change', function() {
+			updateTotalProductPrice();
+		});
+	});
+
+	// 상품 가격을 가져와서 총 상품 금액 계산하는 함수
+	function calculateTotalProductPrice() {
+		var total = 0;
+		$('.cart-item-checkbox:checked').each(function() {
+			// 선택된 항목의 상품 가격을 가져와서 총액에 더함
+			var price = parseFloat($(this).closest('tr').find('.cart-item-price').text().replace('₩', '').replace(',', ''));
+			total += price;
+		});
+		return total;
+	}
+
+	// 총 상품 금액 업데이트 함수
+	function updateTotalProductPrice() {
+		var totalProductPrice = calculateTotalProductPrice();
+		$('#totalProductPrice').text('₩' + totalProductPrice.toFixed(2));
+	}
+</script>
 </html>
