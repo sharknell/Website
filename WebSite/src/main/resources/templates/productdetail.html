@@ -15,7 +15,7 @@ body {
 .container {
    display: flex;
    flex-wrap: wrap; /* 화면 크기에 따라 요소들이 줄 바꿈될 수 있도록 설정 */
-   max-width: 1200px; /* 최대 너비 설정 */
+   max-width: 1600px; /* 최대 너비 설정 */
    height: 1800px;
    align-items: flex-start; /* 이미지 영역을 위로 정렬 */
 }
@@ -31,7 +31,7 @@ body {
    max-height: calc(100vh - 120px); /* 뷰포트 높이에서 하단 영역을 뺀 만큼의 높이 설정 */
    width: 200px; /* 원하는 왼쪽 이미지 리스트의 너비 설정 */
    align-self: flex-start; /* 오른쪽 영역과 간격을 조절하기 위해 추가 */
-   margin-right: -200px; /*왼쪽 큰 이미지와의 여백 간격 조절*/
+   margin-right: -250px; /*왼쪽 큰 이미지와의 여백 간격 조절*/
    margin-top: 50px;
 }
 
@@ -44,7 +44,7 @@ body {
 
 /* 가운데 큰 사진 영역 */
 .description {
-   flex: 2;
+   flex: 1;
    margin-top: 40px;
    padding: 30px;
    margin-left: 60px;
@@ -57,6 +57,7 @@ body {
 /* Details 섹션 스타일링 */
 .details {
    margin-bottom: 20px;
+   margin-left: 80px;
 }
 
 h2 {
@@ -150,9 +151,8 @@ label input:checked {
 .footer {
    position: absolute; /* 수정: 위치를 고정 */
    text-align: center;
-   margin-top: 1000px;
+   margin-top: 1400px;
    width: 1200px;
-   height: 30%;
    background-color: #f2f2f2; /* 추가: 배경색 설정 */
    padding: 30px; /* 추가: 아래 여백 설정 */
 }
@@ -327,7 +327,6 @@ ul.minimenu {
    list-style: none;
    padding: 0;
    margin: 0;
-   display: flex;
    justify-content: center;
    background-color: #f2f2f2; /* 배경색 추가 */
    padding: 10px;
@@ -380,6 +379,10 @@ ul.minimenu li a:hover {
    display: none; /* 초기에 숨김 */
 }
 
+.review-input2{
+   height:100px;
+}
+
 /* 리뷰 제목 클릭 시 리뷰 내용 표시 */
 .review-title:hover {
    cursor: pointer;
@@ -388,6 +391,53 @@ ul.minimenu li a:hover {
 #reviewInputArea{
    display:none;
 }
+#cancelReviewInput{
+text-align:center;
+}
+/* 리뷰 작성 폼 토글 스타일 */
+#reviewInputArea {
+   display: none; /* 초기에는 숨겨진 상태로 시작합니다. */
+   margin-top: 20px;
+   text-align: left;
+   background-color: #f9f9f9;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+#reviewInputArea input[type="text"] {
+   width: 50%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   margin-bottom: 10px;
+}
+
+
+#reviewInputArea .buttons {
+   display: flex;
+   margin-right:50px;
+   align-items: center;
+}
+
+#reviewInputArea .buttons button {
+   padding: 10px 20px;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+#reviewInputArea .buttons button.b2 {
+   background-color: #929090;
+   color: #fff;
+   border: none;
+   font-size: 16px;
+}
+
+#reviewInputArea .buttons button.b2:hover {
+   background-color: #1A1A1A;
+}
+
 </style>
 </head>
 <body>
@@ -396,17 +446,18 @@ ul.minimenu li a:hover {
 
       <div class="image-list">
          <img th:src="'/' + ${Product.imglink}" alt="제품 이미지 1"> 
-         <img th:src="'/' + ${Product.imglink1}" alt="제품 이미지 2"> <img
-            th:src="'/' + ${Product.imglink2}" alt="제품 이미지 3"> <img
-            th:src="'/' + ${Product.imglink3}" alt="제품 이미지 4">
+         <img th:src="'/' + ${Product.imglink1}" alt="제품 이미지 2"> 
+         <img th:src="'/' + ${Product.imglink2}" alt="제품 이미지 3"> 
+         <img th:src="'/' + ${Product.imglink3}" alt="제품 이미지 4">
       </div>
+         <!-- 큰 이미지 영역 -->
+      <div class="description">
+         <div class="main-image" id="mainImage">
+           <img  th:src="'/' + ${Product.mainLink}" alt="상품 이미지">
+         </div>
+     </div>
 
       <!-- 우측 설명 영역 -->
-      <div class="description">
-         <!-- 큰 이미지 영역 -->
-        <img  th:src="'/' + ${Product.mainLink}" alt="상품 이미지">
-            class="main-image" id="mainImage">
-      </div>
       <div class="details">
          <!-- 제품 상세 정보 -->
          <h2 th:text="${Product.itemname}"></h2>
@@ -440,16 +491,13 @@ ul.minimenu li a:hover {
                 <button type="submit" th:value="${Product.itemcount}" name="product">cart</button>
             </div>
             </form>
-   </div>
+      </div>
    </div>
 
    <div class="footer">
       <ul class="minimenu">
          <li class="selected">
-         	<a href="#prdReview" onclick="toggleSection('review-section')">REVIEW</a>
-         </li>
-         <li>
-         	<a href="#prdQnA" onclick="toggleSection('qna-section')">Q & A</a>
+            <p>REVIEW</p>
          </li>
       </ul>
       
@@ -465,13 +513,12 @@ ul.minimenu li a:hover {
                   </tr>
                </thead>
                <tbody>
-                  <tr th:each="dto : ${reviewResult.dtoList}">
+                  <tr th:each="dto, itemStat : ${reviewResult.dtoList}" th:id="'title-' + ${itemStat.index}">
                      <th scope="row">
-                    	[[${dto.rno}]]
+                       [[${dto.rno}]]
                      </th>
-                     
-                     <td class="review-title" onclick="toggleReviewContent()">
-                     	[[${dto.text}]]
+                     <td class="review-title">
+                       [[${dto.text}]]
                      </td>
                      
                      <td>
@@ -479,29 +526,35 @@ ul.minimenu li a:hover {
                      </td>
                      
                      <td>
-                     	[[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
+                        [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
                      </td>
                   </tr>
+                  
+                  <tr th:each="dto, itemStat : ${reviewResult.dtoList}" th:id="'content-' + ${itemStat.index}" style="display: none;">
+                <td colspan="4">
+                    [[${dto.content}]]
+                </td>
+            </tr>
                </tbody>
             </table>
-
-            <!-- 리뷰 내용 -->
-            <div class="review-content" style="display: none;">
-               <p>리뷰 내용 표시 부분입니다.</p>
-            </div>
          </div>
       </div>
       <button class="b1" onclick="toggleReviewInput()">리뷰 작성</button>
-      
+
       <div id="reviewInputArea">
-         <form th:action="@{/addReview}" method="post">
-            <input type="text" name="text" placeholder="리뷰 내용 입력"
-               class="review-input">
-            <button type="submit" class="b2">작성 완료</button>
-            <button type="button" id="cancelReviewInput" class="b2"
-               onclick="toggleReviewInput()">취소</button>
-         </form>
+   <form th:action="@{/addReview}" method="post" class="form">
+        <input type="hidden" name="itemcount" th:value="${Product.itemcount}" />
+      <input type="text" name="text" placeholder="리뷰 제목" class="review-input">
+      <textarea name="content" placeholder="리뷰 내용"
+            class="review-input review-input2"
+            style="display:block; width:500px; height: 100px;"></textarea>
+      <div class="buttons">
+         <button type="submit" class="b2">작성 완료</button>
+         <button type="button" id="cancelReviewInput" class="b2" onclick="toggleReviewInput()">취소</button>
       </div>
+   </form>
+</div>
+      
    </div>
    <!-- JavaScript를 통한 이미지 표시 및 토글 기능 구현 -->
 
@@ -554,19 +607,21 @@ ul.minimenu li a:hover {
             cancelReviewInput.style.display = "none";
          }
       }
-
-      function toggleReviewContent() {
-         var reviewContent = document.querySelector(".review-content");
-
-         if (reviewContent.style.display === "none"
-               || reviewContent.style.display === "") {
-            reviewContent.style.display = "block";
-         } else {
-            reviewContent.style.display = "none";
-         }
-      }
-
       /* 리뷰 영역 토글 끝 */
+      document.addEventListener("DOMContentLoaded", function () {
+          const reviewTitleElements = document.querySelectorAll('.review-title'); // 모든 리뷰 제목 요소 선택
+      
+          reviewTitleElements.forEach(function (titleElement, index) {
+              titleElement.addEventListener("click", function () {
+                  const contentElement = document.getElementById('content-' + index); // 해당 리뷰 내용 요소 선택
+                  if (contentElement.style.display === "none" || contentElement.style.display === "") {
+                      contentElement.style.display = "table-row"; // 클릭 시 해당 리뷰 내용을 보이게 함
+                  } else {
+                      contentElement.style.display = "none"; // 클릭 시 해당 리뷰 내용을 숨김
+                  }
+              });
+          });
+      });
    </script>
 </body>
 </html>
