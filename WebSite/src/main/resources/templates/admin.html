@@ -15,8 +15,8 @@ body {
 }
 
 .admin-panel {
+   display:inline-block;
    margin-top: 100px;
-   margin-left: auto;
    margin-right: auto;
    background-color: #fff;
    border: 1px solid #ccc;
@@ -63,10 +63,14 @@ input[type="submit"]:hover {
 
 /* 메뉴 스타일 */
 .sidebar {
+display:absolute;
+   margin-top:5%;
+   margin-left:50px;
+   margin-right:-200px;
    background-color: #007BFF;
    color: #fff;
-   padding: 20px;
-   width: 20%;
+   padding: 10px;
+   width: 15%;
    float: left;
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -100,6 +104,12 @@ input[type="submit"]:hover {
    background-color: #0056b3;
 }
 
+.sidebar ul li.active {
+   background-color: #0056b390;
+   /* border:1px dashed #ffffff; */
+   opacity: 1;
+}
+
 .admin-panel {
    margin-left: 25%;
 }
@@ -107,16 +117,16 @@ input[type="submit"]:hover {
 </head>
 <body>
    <!-- <div th:replace="header.html"></div> -->
-   <h2>관리자 메뉴</h2>
    <div class="sidebar">
       <ul>
-         <li><a href="admin">상품 등록</a></li>
+         <li class="active"><a href="admin">상품 등록</a></li>
          <li><a href="product_list">상품 목록</a></li>
          <li><a href="product_reviews">상품 소감</a></li>
+         <li><a href="qna_manage">문의 관리</a></li>
+         <li><a href="notice_manage">공지사항</a></li>
          <li><a href="user_list">유저 목록</a></li>
       </ul>
    </div>
-   <h1>상품 등록</h1>
    <div class="admin-panel">
       <form action="admin" method="POST"
          enctype="multipart/form-data">
