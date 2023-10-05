@@ -10,8 +10,11 @@ body {
 }
 
 .container {
-	max-width: 600px;
-	margin: 0 auto;
+	max-width: 900px;
+	height: 700px;
+	margin-top: 100px;
+	margin-left: 500px;
+	/* margin: 0 auto; */
 	padding: 20px;
 	background-color: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -28,7 +31,7 @@ label {
 }
 
 input[type="text"], textarea {
-	width: 80%;
+	width: 85%;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -36,7 +39,7 @@ input[type="text"], textarea {
 }
 
 textarea {
-	height: 150px;
+	height: 400px;
 }
 
 button {
@@ -61,7 +64,8 @@ button:hover {
 
 /* 메뉴 스타일 */
 .sidebar {
-	margin-top: 5%;
+	display: absolute;
+	margin-top: 0px;;
 	margin-left: 50px;
 	margin-right: -200px;
 	background-color: #007BFF;
@@ -111,17 +115,15 @@ button:hover {
 	margin-left: 25%;
 }
 
-h2{
-	text-align:center;
+h2 {
+	text-align: center;
 }
-
-
 </style>
 </head>
 <body>
 	<div class="sidebar">
 		<ul>
-			<li ><a href="admin">상품 등록</a></li>
+			<li><a href="admin">상품 등록</a></li>
 			<li><a href="product_list">상품 목록</a></li>
 			<li><a href="product_reviews">상품 소감</a></li>
 			<li><a href="qna_manage">문의 관리</a></li>
