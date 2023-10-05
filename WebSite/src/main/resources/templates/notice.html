@@ -280,6 +280,27 @@ tbody tr:hover {
     background-color: rgba(173, 216, 230, 0.5); /* 호버 시 배경 색상 변경 (예: 빨간색) */
     transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
 }
+
+.pagination{
+   margin-top: 20px; /* 테이블 아래 여백 조정 */
+    text-align: center; /* 가운데 정렬 */
+}
+
+.pagination a {
+    color: red; /* 텍스트 색상을 빨간색으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+    padding: 10px 10px; /* 텍스트 주변 여백 추가 */
+    border-radius: 10px; /* 테두리를 둥글게 만듭니다. */
+    background-color: rgba(173, 216, 230, 0.5); /* 배경 색상 설정 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+    margin-bottom: 30px;
+}
+
+.pagination a:hover {
+    color: white; /* 호버 시 텍스트 색상 변경 */
+    background-color: red; /* 호버 시 배경 색상 변경 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+}
 </style>
 
 <script src="/js/menu.js"></script>
@@ -312,7 +333,20 @@ tbody tr:hover {
 			</tbody>
 		</table>
 	</div>
-	<!-- 아래 코드를 </body> 태그 바로 위에 추가하세요 -->
+	
+	<!-- 페이징 관련 정보를 표시하는 부분 -->
+    <div class="pagination">
+        <span th:if="${noticeResult.prev}">
+            <a href="#" th:href="@{'/my/notice?page=' + ${noticeResult.page - 1}}">이전</a>
+        </span>
+        <span th:each="pageNum : ${noticeResult.pageList}">
+            <a href="#" th:href="@{'/my/notice?page=' + ${pageNum}}" th:text="${pageNum}"></a>
+        </span>
+        <span th:if="${noticeResult.next}">
+            <a href="#" th:href="@{'/my/notice?page=' + ${noticeResult.page + 1}}">다음</a>
+        </span>
+    </div>
+	
 	<script>
 		// 테이블에 새로운 행을 추가하는 함수
 		function addTableRow(data) {
