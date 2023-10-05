@@ -156,7 +156,31 @@ public class UserController {
 	}
 	return "notice";
     }
-    
+    @GetMapping("/qna")
+    public String qna(@ModelAttribute("qnaPageRequestDTO") QnAPageRequestDTO qnaPageRequestDTO,
+    		HttpSession session, Model model) {
+    	Object dtoObject = session.getAttribute("dto");
+
+    	   if (dtoObject instanceof MemberJoinDto) {
+    		   QnAPageResultDTO<QnADTO, QnA> qnaResult = qnaService.getList(qnaPageRequestDTO);
+    	       MemberJoinDto dto = (MemberJoinDto) dtoObject;
+    	       
+    	       model.addAttribute("dto", dto);
+    	       model.addAttribute("qnaResult", qnaResult);
+    	       return "qna";
+
+    	   } else if (dtoObject instanceof UserProfile) {
+    	       UserProfile userProfile = (UserProfile) dtoObject;
+    	       QnAPageResultDTO<QnADTO, QnA> qnaResult = qnaService.getList(qnaPageRequestDTO);
+    	       
+    	       model.addAttribute("dto", userProfile);
+    	       model.addAttribute("qnaResult", qnaResult);
+    	       return "qna";
+    	   }
+    	   return "qna";
+    }
+
+
     
     @GetMapping("/community")
     public String community(HttpSession session, Model model) {
@@ -236,38 +260,44 @@ public class UserController {
     }
 
     @GetMapping(value = "/productdetail/{itemcount}")
-    public String beltdetail(@ModelAttribute("Product") Product product,
-	    @ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO, HttpSession session,
-	    Model model) {
-	Object dtoObject = session.getAttribute("dto");
-	if (dtoObject instanceof MemberJoinDto) {
-	    MemberJoinDto dto = (MemberJoinDto) dtoObject;
-	    ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
-	    Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
-	    model.addAttribute("dto", dto);
+    public String beltdetail(@PathVariable Long itemcount, @ModelAttribute("Product") Product product,
+       @ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO, HttpSession session,
+       Model model) {
+   Object dtoObject = session.getAttribute("dto");
+   if (dtoObject instanceof MemberJoinDto) {
+       MemberJoinDto dto = (MemberJoinDto) dtoObject;
+       ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+       Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+      
+       model.addAttribute("dto", dto);
+       model.addAttribute("itemcount", itemcount); // 모델에 itemcount를 추가
+       model.addAttribute("reviewResult", reviewResult);
+       model.addAttribute("Product", productOptional.get());
+       return "/productdetail";
 
-	    model.addAttribute("reviewResult", reviewResult);
-	    model.addAttribute("Product", productOptional.get());
-	    return "/productdetail";
+   } else if (dtoObject instanceof UserProfile) {
+       UserProfile userProfile = (UserProfile) dtoObject;
+       ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
+       Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
+       model.addAttribute("dto", userProfile);
 
-	} else if (dtoObject instanceof UserProfile) {
-	    UserProfile userProfile = (UserProfile) dtoObject;
-	    ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
-	    Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
-	    model.addAttribute("dto", userProfile);
+       model.addAttribute("reviewResult", reviewResult);
+       model.addAttribute("Product", productOptional.get());
 
-	    model.addAttribute("reviewResult", reviewResult);
-	    model.addAttribute("Product", productOptional.get());
+       return "/productdetail";
 
-	    return "/productdetail";
+   }
+   return "/productdetail";
+}
+    
+    @GetMapping("/product_reviews")
+    public String product_reviews(@ModelAttribute("reviewPageRequestDTO") ReviewPageRequestDTO reviewPageRequestDTO,
+    							  @Param("rno") Long rno, Model model) {
+       ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
 
-	}else {
-	    ReviewPageResultDTO<ReviewDTO, Review> reviewResult = reviewService.getList(reviewPageRequestDTO);
-	    Optional<Product> productOptional = productService.SelectONE(product.getItemcount());
-	    model.addAttribute("reviewResult", reviewResult);
-	    model.addAttribute("Product", productOptional.get());
-	    return "/productdetail";
-	}
-	
+       model.addAttribute("reviewResult", reviewResult);
+
+       return "/product_reviews";
     }
+    
 }
